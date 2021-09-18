@@ -19,9 +19,8 @@ module names 'modules/_names.bicep' = {
 
 // Modules
 //////////////////////////////////////////////////
-
 module storageAccounts 'modules/storage.bicep' = {
-  name: 'storage'
+  name: 'storageAccounts'
   params: {
     location: region
     storageResourceGroupName: names.outputs.storageResourceGroupName

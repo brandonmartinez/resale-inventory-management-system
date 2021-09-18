@@ -15,9 +15,12 @@ resource storageResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = 
   location: location
 }
 
-// Storage Account
+// Primary Module
 //////////////////////////////////////////////////
-resource nsgFlowLogsStorageAccount 'Microsoft.Storage/storageAccounts@2021-01-01' existing = {
+module storageAccounts 'storageAccounts.bicep' = {
+  name: 'storageAccounts'
   scope: storageResourceGroup
-  name: storageFrontEndStorageAccountName
+  params: {
+    storageFrontEndStorageAccountName: storageFrontEndStorageAccountName
+  }
 }

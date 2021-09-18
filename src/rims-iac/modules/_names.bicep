@@ -9,17 +9,22 @@ param region string
 
 // Variables
 //////////////////////////////////////////////////
+var environmentShortCodeMap = {
+  production: 'prod'
+}
 var regionShortCodeMap = {
   eastus: 'eus'
 }
+var environmentShortCode = environmentShortCodeMap[toLower(environment)]
 var regionShortCode = regionShortCodeMap[toLower(region)]
-var envreg = 'rims-${environment}-${regionShortCode}'
+var envreg = 'rims-${environmentShortCode}-${regionShortCode}'
 
 // Outputs
 //////////////////////////////////////////////////
 
 // Basics
 output envreg string = envreg
+output environmentShortCode string = environmentShortCode
 output regionShortCode string = regionShortCode
 
 // Storage
