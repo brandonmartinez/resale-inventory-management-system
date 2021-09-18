@@ -42,5 +42,23 @@
 			""
 		],
 		"description": "Imports a component from react-bootstrap"
+	},
+	"Comment Header (C-based)": {
+		"scope": "bicep,javascript,typescript",
+		"prefix": "////",
+		"body": [
+			"// $1",
+			"//////////////////////////////////////////////////",
+			""
+		]
+	},
+	"Comment Header (Shell-based)": {
+		"scope": "shellscript,powershell",
+		"prefix": "commentheader",
+		"body": [
+			"## $1",
+			"##################################################",
+			""
+		]
 	}
 }
