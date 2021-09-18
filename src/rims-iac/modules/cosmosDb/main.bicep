@@ -7,6 +7,7 @@ targetScope = 'subscription'
 param location string
 param cosmosDbResourceGroupName string
 param cosmosDbAccountName string
+param cosmosDbDatabaseName string
 
 // Resource Group
 //////////////////////////////////////////////////
@@ -22,5 +23,6 @@ module resources 'resources.bicep' = {
   scope: cosmosDbResourceGroup
   params: {
     cosmosDbAccountName: cosmosDbAccountName
+    cosmosDbDatabaseName: cosmosDbDatabaseName
   }
 }

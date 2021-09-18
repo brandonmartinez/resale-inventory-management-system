@@ -40,6 +40,7 @@ output storageAssetsStorageAccountName string = replace('sa-${envreg}-assets', '
 // Cosmos
 output cosmosDbResourceGroupName string = 'rg-${envreg}-cosmos'
 output cosmosDbAccountName string = 'cosmos-${envreg}-db'
+output cosmosDbDatabaseName string = 'rims'
 
 // Functions
 output functionsResourceGroupName string = 'rg-${envreg}-functions'

@@ -35,5 +35,6 @@ module cosmosDb 'modules/cosmosDb/main.bicep' = {
     location: region
     cosmosDbResourceGroupName: names.outputs.cosmosDbResourceGroupName
     cosmosDbAccountName: names.outputs.cosmosDbAccountName
+    cosmosDbDatabaseName: names.outputs.cosmosDbDatabaseName
   }
 }
