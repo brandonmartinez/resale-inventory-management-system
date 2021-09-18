@@ -31,11 +31,6 @@ resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2021-06-15' = {
     ]
     databaseAccountOfferType: 'Standard'
     enableAutomaticFailover: true
-    capabilities: [
-      {
-        name: 'EnableTable'
-      }
-    ]
   }
 }
 
