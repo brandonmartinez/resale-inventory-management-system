@@ -17,8 +17,8 @@ resource storageResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = 
 
 // Primary Module
 //////////////////////////////////////////////////
-module storageAccounts 'storageAccounts.bicep' = {
-  name: 'storageAccounts'
+module resources 'resources.bicep' = {
+  name: 'resources'
   scope: storageResourceGroup
   params: {
     storageFrontEndStorageAccountName: storageFrontEndStorageAccountName

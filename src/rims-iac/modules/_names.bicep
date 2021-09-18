@@ -33,6 +33,7 @@ output storageFrontEndStorageAccountName string = replace('sa-${envreg}-frontend
 
 // Cosmos
 output cosmosDbResourceGroupName string = 'rg-${envreg}-cosmos'
+output cosmosDbAccountName string = 'cosmos-${envreg}-db'
 
 // Functions
 output functionsResourceGroupName string = 'rg-${envreg}-functions'
