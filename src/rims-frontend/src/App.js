@@ -12,10 +12,11 @@ import {
 	Switch
 } from 'react-router-dom';
 
-import Dashboard from './components/Dashboard';
-import Inventory from './components/inventory';
-import Labels from './components/labels';
 // Components
+import Dashboard from './components/dashboard';
+import Inventory from './components/inventory';
+import CreateInventoryItem from './components/inventory/create';
+import Labels from './components/labels';
 import Header from './components/layout/header';
 import Profile from './components/profile';
 import Spaces from './components/spaces';
@@ -26,6 +27,9 @@ const App = () => {
 			<Header />
 			<Container>
 				<Switch>
+					<Route path='/inventory/add'>
+						<CreateInventoryItem />
+					</Route>
 					<Route path='/inventory'>
 						<Inventory />
 					</Route>

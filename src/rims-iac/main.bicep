@@ -19,15 +19,15 @@ module names 'modules/_names.bicep' = {
 
 // Modules
 //////////////////////////////////////////////////
-module storageAccounts 'modules/storage/main.bicep' = {
-  name: 'storageAccounts'
+module storage 'modules/storage/main.bicep' = {
+  name: 'storage'
   params: {
     location: region
     storageResourceGroupName: names.outputs.storageResourceGroupName
     storageFrontEndStorageAccountName: names.outputs.storageFrontEndStorageAccountName
+    storageAssetsStorageAccountName: names.outputs.storageAssetsStorageAccountName
   }
 }
-
 
 module cosmosDb 'modules/cosmosDb/main.bicep' = {
   name: 'cosmosDb'

@@ -6,6 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Row from 'react-bootstrap/Row';
 import Table from 'react-bootstrap/Table';
+import { Link } from 'react-router-dom';
 
 const Inventory = () => {
 	return (
@@ -29,7 +30,7 @@ const Inventory = () => {
 							<Button>5</Button> <Button>6</Button> <Button>7</Button>
 						</ButtonGroup>
 						<ButtonGroup aria-label='Third group'>
-							<Button>8</Button>
+							<Button to='/inventory/add' as={Link}>Add New Item</Button>
 						</ButtonGroup>
 					</ButtonToolbar>
 				</Col>

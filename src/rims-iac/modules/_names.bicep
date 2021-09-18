@@ -1,3 +1,8 @@
+//////////////////////////////////////////////////
+// Names for RIMS Resources
+// Reference: https://bmtn.us/3hK1Tj5
+//////////////////////////////////////////////////
+
 // Scope
 //////////////////////////////////////////////////
 targetScope = 'subscription'
@@ -30,6 +35,7 @@ output regionShortCode string = regionShortCode
 // Storage
 output storageResourceGroupName string = 'rg-${envreg}-storage'
 output storageFrontEndStorageAccountName string = replace('sa-${envreg}-frontend', '-', '')
+output storageAssetsStorageAccountName string = replace('sa-${envreg}-assets', '-', '')
 
 // Cosmos
 output cosmosDbResourceGroupName string = 'rg-${envreg}-cosmos'

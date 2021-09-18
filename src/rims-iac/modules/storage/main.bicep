@@ -7,6 +7,7 @@ targetScope = 'subscription'
 param location string
 param storageResourceGroupName string
 param storageFrontEndStorageAccountName string
+param storageAssetsStorageAccountName string
 
 // Resource Group
 //////////////////////////////////////////////////
@@ -22,5 +23,6 @@ module resources 'resources.bicep' = {
   scope: storageResourceGroup
   params: {
     storageFrontEndStorageAccountName: storageFrontEndStorageAccountName
+    storageAssetsStorageAccountName: storageAssetsStorageAccountName
   }
 }
