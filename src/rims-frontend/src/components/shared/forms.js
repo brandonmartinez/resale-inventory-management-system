@@ -3,26 +3,32 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
-export const TextBox = ({ id, label, placeholder }) => (
+export const TextBox = ({ id, label, placeholder, ...rest }) => (
 	<FloatingLabel controlId={id} label={label} className='mb-3'>
-		<Form.Control type='text' placeholder={placeholder} title={placeholder} />
+		<Form.Control
+			type='text'
+			placeholder={placeholder}
+			title={placeholder}
+			{...rest}
+		/>
 	</FloatingLabel>
 );
 
-export const TextArea = ({ id, label, placeholder }) => (
+export const TextArea = ({ id, label, placeholder, ...rest }) => (
 	<FloatingLabel controlId={id} label={label} className='mb-3'>
 		<Form.Control
 			as='textarea'
 			placeholder={placeholder}
 			title={placeholder}
 			style={{ height: '5rem' }}
+			{...rest}
 		/>
 	</FloatingLabel>
 );
 
-export const DropDown = ({ id, label, placeholder, items }) => (
+export const DropDown = ({ id, label, placeholder, items, ...rest }) => (
 	<FloatingLabel controlId={id} label={label} className='mb-3'>
-		<Form.Select aria-label={placeholder}>
+		<Form.Select aria-label={placeholder} {...rest}>
 			<option></option>
 			{items.map((item, i) => (
 				<option key={`${id}-${i}`} value={item.value || item.text}>
@@ -47,8 +53,8 @@ export const FieldSuffix = ({ text, children }) => (
 	</InputGroup>
 );
 
-export const Submit = () => (
-	<Button variant='primary' type='submit'>
+export const Submit = ({ ...rest }) => (
+	<Button variant='primary' type='submit' {...rest}>
 		Submit
 	</Button>
 );
