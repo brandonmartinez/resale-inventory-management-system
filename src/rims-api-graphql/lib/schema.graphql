@@ -1,0 +1,51 @@
+enum InventoryItemCondition {
+	New
+	LikeNew
+	Good
+	Fair
+	Poor
+}
+
+type InventoryItem {
+	id: ID!
+	friendlyId: String!
+	name: String!
+	Description: String
+	Hashtags: String
+	Category: String
+	Brand: String
+	Condition: InventoryItemCondition
+	Color: String
+	Style: String
+	Price: Float
+	Cost: Float
+}
+
+input InventoryItemInput {
+	id: ID!
+	friendlyId: String!
+	name: String!
+	Description: String
+	Hashtags: String
+	Category: String
+	Brand: String
+	Condition: InventoryItemCondition
+	Color: String
+	Style: String
+	Price: Float
+	Cost: Float
+}
+
+type Query {
+	getAllInventory: [InventoryItem]
+	getInventoryById(id: ID): InventoryItem
+}
+
+type Mutation {
+	createInventoryItem(inventoryItem: InventoryItemInput): InventoryItem
+}
+
+schema {
+	query: Query
+	mutation: Mutation
+}

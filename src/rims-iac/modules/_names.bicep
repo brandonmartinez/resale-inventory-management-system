@@ -19,6 +19,8 @@ var environmentShortCodeMap = {
 }
 var regionShortCodeMap = {
   eastus: 'eus'
+  westus: 'wus'
+  southcentralus: 'scus'
 }
 var environmentShortCode = environmentShortCodeMap[toLower(environment)]
 var regionShortCode = regionShortCodeMap[toLower(region)]
