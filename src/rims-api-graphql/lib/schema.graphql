@@ -10,30 +10,29 @@ type InventoryItem {
 	id: ID!
 	friendlyId: String!
 	name: String!
-	Description: String
-	Hashtags: String
-	Category: String
-	Brand: String
-	Condition: InventoryItemCondition
-	Color: String
-	Style: String
-	Price: Float
-	Cost: Float
+	description: String
+	hashtags: String
+	category: String
+	brand: String
+	condition: InventoryItemCondition
+	color: String
+	style: String
+	price: Float
+	cost: Float
 }
 
 input InventoryItemInput {
-	id: ID!
 	friendlyId: String!
 	name: String!
-	Description: String
-	Hashtags: String
-	Category: String
-	Brand: String
-	Condition: InventoryItemCondition
-	Color: String
-	Style: String
-	Price: Float
-	Cost: Float
+	description: String
+	hashtags: String
+	category: String
+	brand: String
+	condition: InventoryItemCondition
+	color: String
+	style: String
+	price: Float
+	cost: Float
 }
 
 type Query {
