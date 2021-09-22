@@ -1,3 +1,5 @@
+# Inventory Types
+##################################################
 enum InventoryItemCondition {
 	New
 	LikeNew
@@ -8,6 +10,7 @@ enum InventoryItemCondition {
 
 type InventoryItem {
 	id: ID!
+	userId: String!
 	friendlyId: String!
 	name: String!
 	description: String
@@ -22,7 +25,6 @@ type InventoryItem {
 }
 
 input InventoryItemInput {
-	friendlyId: String!
 	name: String!
 	description: String
 	hashtags: String
@@ -35,15 +37,24 @@ input InventoryItemInput {
 	cost: Float
 }
 
+# GraphQL Types
+##################################################
 type Query {
-	getAllInventory: [InventoryItem]
-	getInventoryById(id: ID): InventoryItem
+	# Inventory Queries
+	##################################################
+	getAllInventoryItems: [InventoryItem]
+	getInventoryItemById(id: ID): InventoryItem
+	getNextInventoryFriendlyId: String
 }
 
 type Mutation {
+	# Inventory Mutations
+	##################################################
 	createInventoryItem(inventoryItem: InventoryItemInput): InventoryItem
 }
 
+# Schema
+##################################################
 schema {
 	query: Query
 	mutation: Mutation

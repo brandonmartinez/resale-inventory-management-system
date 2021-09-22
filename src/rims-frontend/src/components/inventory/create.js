@@ -55,7 +55,6 @@ const CreateInventoryItem = () => {
 					variables: {
 						createInventoryItemInput: {
 							name: name,
-							friendlyId: '0000000000',
 							description: description,
 							hashtags: [tag1, tag2, tag3].join(', '),
 							category: category,
