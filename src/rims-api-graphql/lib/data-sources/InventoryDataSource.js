@@ -12,6 +12,7 @@ class InventoryDataSource extends CosmosDataSource {
 	}
 
 	async getNextFriendlyId(userId) {
+		// Note: this method does not scale well, but it works fine in small scenarios
 		const response = await this.findManyByQuery({
 			query:
 				'SELECT MAX(c.friendlyId) as friendlyId FROM c where c.userId = @userId',
