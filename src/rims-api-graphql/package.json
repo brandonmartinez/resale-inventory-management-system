@@ -13,6 +13,7 @@
     "@graphql-tools/schema": "^8.2.0",
     "apollo-datasource-cosmosdb": "^0.0.17",
     "apollo-server-azure-functions": "^3.3.0",
-    "graphql": "^15.5.3"
+    "graphql": "^15.5.3",
+    "luxon": "^2.0.2"
   }
 }

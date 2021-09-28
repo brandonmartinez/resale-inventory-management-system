@@ -5,9 +5,22 @@ class InventoryDataSource extends CosmosDataSource {
 
 	async getAllItems() {
 		const inventoryItems = await this.findManyByQuery({
-			query: 'SELECT * FROM c where c.userId = @userId',
+			query: 'SELECT * FROM c WHERE c.userId = @userId',
 			parameters: [{ name: '@userId', value: this.temporaryUserId }]
 		});
+		return inventoryItems.resources;
+	}
+
+	async getLatestInventoryItems(numberOfItems = 5) {
+		const inventoryItems = await this.findManyByQuery({
+			query:
+				'SELECT * FROM c WHERE c.userId = @userId ORDER BY c.createdAt DESC OFFSET 0 LIMIT @limit',
+			parameters: [
+				{ name: '@userId', value: this.temporaryUserId },
+				{ name: '@limit', value: numberOfItems }
+			]
+		});
+
 		return inventoryItems.resources;
 	}
 

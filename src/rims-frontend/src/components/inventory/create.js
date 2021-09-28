@@ -1,7 +1,11 @@
-import { useState } from 'react';
+import {
+	useEffect,
+	useState
+} from 'react';
 
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import FormLabel from 'react-bootstrap/FormLabel';
 import Row from 'react-bootstrap/Row';
 
 import {
@@ -28,7 +32,10 @@ const createInventoryItemMutation = gql`
 `;
 
 const CreateInventoryItem = () => {
-	const [name, setName] = useState('test');
+	// State Variables
+	//////////////////////////////////////////////////
+	const [name, setName] = useState('');
+	const [suggestedName, setSuggestedName] = useState('');
 	const [description, setDescription] = useState('');
 	const [tag1, setTag1] = useState('');
 	const [tag2, setTag2] = useState('');
@@ -41,12 +48,48 @@ const CreateInventoryItem = () => {
 	const [cost, setCost] = useState('');
 	const [price, setPrice] = useState('');
 
-	const [createInventoryItem, { data, loading, error }] = useMutation(
+	// Effect Hooks
+	//////////////////////////////////////////////////
+	useEffect(() => {
+		const suggestedNameParts = [condition, brand, color, style, category];
+		const suggestName = suggestedNameParts.filter((n) => n).join(' ');
+
+		setSuggestedName(suggestName);
+	}, [suggestedName, condition, brand, color, style, category]);
+
+	// Mutation Hook
+	//////////////////////////////////////////////////
+	const [createInventoryItem, { loading, error }] = useMutation(
 		createInventoryItemMutation
 	);
 
-	if (loading) return 'Submitting...';
-	if (error) return `Submission error! ${error.message}`;
+	if (loading) {
+		return 'Submitting...';
+	}
+	if (error) {
+		return `Submission error! ${error.message}`;
+	}
+
+	// Helper Functions
+	//////////////////////////////////////////////////
+	const clearFields = () => {
+		setName('');
+		setDescription('');
+		setTag1('');
+		setTag2('');
+		setTag3('');
+		setCategory('');
+		setBrand('');
+		setCondition('');
+		setColor('');
+		setStyle('');
+		setCost('');
+		setPrice('');
+	};
+
+	// Render
+	//////////////////////////////////////////////////
+
 	return (
 		<Form
 			onSubmit={(e) => {
@@ -67,18 +110,7 @@ const CreateInventoryItem = () => {
 						}
 					}
 				});
-				setName('');
-				setDescription('');
-				setTag1('');
-				setTag2('');
-				setTag3('');
-				setCategory('');
-				setBrand('');
-				setCondition('');
-				setColor('');
-				setStyle('');
-				setCost('');
-				setPrice('');
+				clearFields();
 			}}
 		>
 			<Row>
@@ -96,6 +128,13 @@ const CreateInventoryItem = () => {
 						value={name}
 						onChange={(e) => setName(e.target.value)}
 					/>
+					<FormLabel
+						size='sm'
+						onClick={(e) => setName(suggestedName)}
+						style={{ display: suggestedName ? 'block' : 'none' }}
+					>
+						Suggested Name: {suggestedName}
+					</FormLabel>
 					<TextArea
 						id='description'
 						label='Description'

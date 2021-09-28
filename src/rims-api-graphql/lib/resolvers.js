@@ -1,3 +1,5 @@
+const DateTime = require('luxon').DateTime;
+
 const temporaryUserId = 'a2a5f680-37db-40ff-9ed3-205d21c47f52';
 
 const resolvers = {
@@ -14,6 +16,9 @@ const resolvers = {
 			return await dataSources.inventoryItems.getNextFriendlyId(
 				temporaryUserId
 			);
+		},
+		async getLatestInventoryItems(_, { numberOfItems }, { dataSources }) {
+			return (await dataSources.inventoryItems.getLatestInventoryItems(numberOfItems)).resources;
 		}
 	},
 	Mutation: {
@@ -26,6 +31,9 @@ const resolvers = {
 				await dataSources.inventoryItems.getNextFriendlyId(
 					inventoryItem.userId
 				);
+			inventoryItem.createdAt = DateTime.now()
+				.toUTC()
+				.toISO({ includeOffset: false });
 
 			const result = await dataSources.inventoryItems.createOne(inventoryItem);
 			return result.resource;

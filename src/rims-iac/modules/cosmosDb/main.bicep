@@ -26,3 +26,5 @@ module resources 'resources.bicep' = {
     cosmosDbDatabaseName: cosmosDbDatabaseName
   }
 }
+
+output cosmosDbResourceId string = resources.outputs.cosmosDbResourceId

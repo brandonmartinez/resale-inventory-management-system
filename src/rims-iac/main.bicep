@@ -6,6 +6,7 @@ targetScope = 'subscription'
 //////////////////////////////////////////////////
 param environment string
 param region string
+param directoryName string
 
 // Name Module Import
 //////////////////////////////////////////////////
@@ -36,5 +37,17 @@ module cosmosDb 'modules/cosmosDb/main.bicep' = {
     cosmosDbResourceGroupName: names.outputs.cosmosDbResourceGroupName
     cosmosDbAccountName: names.outputs.cosmosDbAccountName
     cosmosDbDatabaseName: names.outputs.cosmosDbDatabaseName
+  }
+}
+
+module dashboards 'modules/dashboards/main.bicep' = {
+  name: 'dashboards'
+  params: {
+    location: region
+    directoryName: directoryName
+    dashboardsResourceGroupName: names.outputs.dashboardsResourceGroupName
+    dashboardsProductionResourcesName: names.outputs.dashboardsProductionResourcesName
+    dashboardsProductionResourcesFriendlyName: names.outputs.dashboardsProductionResourcesFriendlyName
+    cosmosDbResourceId: cosmosDb.outputs.cosmosDbResourceId
   }
 }

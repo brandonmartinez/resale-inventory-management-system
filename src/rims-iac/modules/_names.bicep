@@ -46,3 +46,8 @@ output cosmosDbDatabaseName string = 'rims'
 
 // Functions
 output functionsResourceGroupName string = 'rg-${envreg}-functions'
+
+// Dashboard
+output dashboardsResourceGroupName string = 'rg-${envreg}-dashboards'
+output dashboardsProductionResourcesName string = 'dshbd-${envreg}-production'
+output dashboardsProductionResourcesFriendlyName string = 'RIMS Production Dashboard'

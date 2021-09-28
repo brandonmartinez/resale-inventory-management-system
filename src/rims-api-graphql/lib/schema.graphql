@@ -43,7 +43,8 @@ type Query {
 	# Inventory Queries
 	##################################################
 	getAllInventoryItems: [InventoryItem]
-	getInventoryItemById(id: ID): InventoryItem
+	getInventoryItemById(id: ID!): InventoryItem
+	getLatestInventoryItems(numberOfItems: Int): [InventoryItem]
 	getNextInventoryFriendlyId: String
 }
 

@@ -7,10 +7,10 @@ param cosmosDbDatabaseName string
 //////////////////////////////////////////////////
 var cosmosDbDatabaseContainerNames = [
   'Inventory'
-  'Spaces'
-  'Assets'
-  'Labels'
-  'Users'
+  // 'Spaces'
+  // 'Assets'
+  // 'Labels'
+  // 'Users'
 ]
 
 // Cosmos DB
@@ -73,3 +73,5 @@ resource cosmosDbDatabaseContainers 'Microsoft.DocumentDB/databaseAccounts/sqlDa
     }
   }
 }]
+
+output cosmosDbResourceId string = cosmosDbAccount.id
