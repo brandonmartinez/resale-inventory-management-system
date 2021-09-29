@@ -22,6 +22,7 @@ type InventoryItem {
 	style: String
 	price: Float
 	cost: Float
+	createdAt: String
 }
 
 input InventoryItemInput {

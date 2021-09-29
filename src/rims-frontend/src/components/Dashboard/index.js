@@ -30,11 +30,11 @@ const Dashboard = () => {
 		<Row>
 			<Col>
 				Latest Items:
-				{/* <ul>
+				<ul>
 					{data.getLatestInventoryItems.map((item) => (
 						<li key={`item-${item.id}`}>{item.name}</li>
 					))}
-				</ul> */}
+				</ul>
 			</Col>
 			<Col>Dashboard</Col>
 			<Col>Content</Col>

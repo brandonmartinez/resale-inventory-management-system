@@ -6,19 +6,38 @@ const resolvers = {
 	Query: {
 		// Inventory Queries
 		//////////////////////////////////////////////////
-		async getAllInventoryItems(_, __, { dataSources }) {
-			return await dataSources.inventoryItems.getAllItems();
+		async getAllInventoryItems(_, __, { dataSources, parseResolveInfo }, info) {
+			// Get info passed from GraphQL Query and set needed fields
+			const parsedResolveInfo = parseResolveInfo(info);
+			const fields = Object.keys(
+				parsedResolveInfo.fieldsByTypeName.InventoryItem
+			);
+
+			// Execute query
+			const queryResults = await dataSources.inventoryItems.getAllItems({
+				fields
+			});
+			const resources = queryResults.resources;
+
+			return resources;
 		},
 		async getInventoryItemById(_, { id }, { dataSources }) {
-			return (await dataSources.inventoryItems.findOneById(id)).resources;
+			const queryResults = await dataSources.inventoryItems.findOneById(id);
+			const resources = queryResults.resources;
+
+			return resources;
 		},
 		async getNextInventoryFriendlyId(_, __, { dataSources }) {
-			return await dataSources.inventoryItems.getNextFriendlyId(
+			const result = await dataSources.inventoryItems.getNextFriendlyId(
 				temporaryUserId
 			);
+			return result;
 		},
 		async getLatestInventoryItems(_, { numberOfItems }, { dataSources }) {
-			return (await dataSources.inventoryItems.getLatestInventoryItems(numberOfItems)).resources;
+			const queryResults =
+				await dataSources.inventoryItems.getLatestInventoryItems(numberOfItems);
+			const resources = queryResults.resources;
+			return resources;
 		}
 	},
 	Mutation: {

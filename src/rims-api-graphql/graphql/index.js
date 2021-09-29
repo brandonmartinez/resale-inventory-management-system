@@ -7,6 +7,7 @@ const addResolversToSchema =
 	require('@graphql-tools/schema').addResolversToSchema;
 const ApolloServer = require('apollo-server-azure-functions').ApolloServer;
 const join = require('path').join;
+const parseResolveInfo = require('graphql-parse-resolve-info').parseResolveInfo;
 
 const CosmosDbDataSources = require('../lib/data-sources/CosmosDbDataSources');
 const resolvers = require('../lib/resolvers');
@@ -20,7 +21,11 @@ const schema = loadSchemaSync(join(__dirname, '..', 'lib', 'schema.graphql'), {
 const server = new ApolloServer({
 	schema: addResolversToSchema({ schema, resolvers }),
 	dataSources: CosmosDbDataSources,
-	context: {}
+	// https://www.apollographql.com/docs/apollo-server/data/resolvers/#the-context-argument
+
+	context: () => ({
+		parseResolveInfo: parseResolveInfo
+	})
 });
 
 module.exports = server.createHandler();

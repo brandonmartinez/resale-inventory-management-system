@@ -3,12 +3,15 @@ const CosmosDataSource = require('apollo-datasource-cosmosdb').CosmosDataSource;
 class InventoryDataSource extends CosmosDataSource {
 	temporaryUserId = 'a2a5f680-37db-40ff-9ed3-205d21c47f52';
 
-	async getAllItems() {
+	async getAllItems({ fields }) {
+		const fieldList = fields.map((f) => `c.${f}`).join(', ');
+
 		const inventoryItems = await this.findManyByQuery({
-			query: 'SELECT * FROM c WHERE c.userId = @userId',
+			query: `SELECT ${fieldList} FROM c WHERE c.userId = @userId`,
 			parameters: [{ name: '@userId', value: this.temporaryUserId }]
 		});
-		return inventoryItems.resources;
+
+		return inventoryItems;
 	}
 
 	async getLatestInventoryItems(numberOfItems = 5) {
@@ -21,7 +24,7 @@ class InventoryDataSource extends CosmosDataSource {
 			]
 		});
 
-		return inventoryItems.resources;
+		return inventoryItems;
 	}
 
 	async getNextFriendlyId(userId) {
