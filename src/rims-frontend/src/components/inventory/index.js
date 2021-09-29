@@ -14,6 +14,7 @@ import {
 const getAllInventoryItems = gql`
 	query Query {
 		getAllInventoryItems {
+			id
 			friendlyId
 			name
 			category
@@ -23,7 +24,7 @@ const getAllInventoryItems = gql`
 
 const Inventory = () => {
 	const { loading, error, data } = useQuery(getAllInventoryItems);
-	
+
 	if (loading) {
 		return <p>Loading...</p>;
 	}
@@ -65,7 +66,13 @@ const Inventory = () => {
 										<ButtonToolbar>
 											<ButtonGroup className='me-2' aria-label='Actions'>
 												<Button variant='primary'>View</Button>
-												<Button variant='primary'>Edit</Button>
+												<Button
+													variant='primary'
+													to={`/inventory/edit/${inventoryItem.id}`}
+													as={Link}
+												>
+													Edit
+												</Button>
 											</ButtonGroup>
 											<ButtonGroup aria-label='Actions'>
 												<Button variant='danger'>Delete</Button>

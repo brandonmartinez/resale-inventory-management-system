@@ -1,3 +1,13 @@
+# File Upload Types - TODO https://github.com/jaydenseric/graphql-upload
+##################################################
+scalar Upload
+
+type File {
+	filename: String!
+	mimetype: String!
+	encoding: String!
+}
+
 # Inventory Types
 ##################################################
 enum InventoryItemCondition {

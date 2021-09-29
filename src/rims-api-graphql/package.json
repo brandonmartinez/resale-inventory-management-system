@@ -15,6 +15,7 @@
     "apollo-server-azure-functions": "^3.3.0",
     "graphql": "^15.5.3",
     "graphql-parse-resolve-info": "^4.12.0",
+    "graphql-upload": "^12.0.0",
     "luxon": "^2.0.2"
   }
 }

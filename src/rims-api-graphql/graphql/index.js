@@ -8,7 +8,7 @@ const addResolversToSchema =
 const ApolloServer = require('apollo-server-azure-functions').ApolloServer;
 const join = require('path').join;
 const parseResolveInfo = require('graphql-parse-resolve-info').parseResolveInfo;
-
+// TODO: https://github.com/jaydenseric/graphql-upload
 const CosmosDbDataSources = require('../lib/data-sources/CosmosDbDataSources');
 const resolvers = require('../lib/resolvers');
 

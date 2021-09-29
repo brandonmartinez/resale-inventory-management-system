@@ -23,9 +23,8 @@ const resolvers = {
 		},
 		async getInventoryItemById(_, { id }, { dataSources }) {
 			const queryResults = await dataSources.inventoryItems.findOneById(id);
-			const resources = queryResults.resources;
 
-			return resources;
+			return queryResults;
 		},
 		async getNextInventoryFriendlyId(_, __, { dataSources }) {
 			const result = await dataSources.inventoryItems.getNextFriendlyId(
