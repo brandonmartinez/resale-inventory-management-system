@@ -17,7 +17,6 @@ const getLatestInventoryItems = gql`
 
 const Dashboard = () => {
 	const { loading, error, data } = useQuery(getLatestInventoryItems);
-	console.log(data);
 
 	if (loading) {
 		return <p>Loading...</p>;

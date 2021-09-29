@@ -34,7 +34,7 @@ class InventoryDataSource extends CosmosDataSource {
 				'SELECT MAX(c.friendlyId) as friendlyId FROM c where c.userId = @userId',
 			parameters: [{ name: '@userId', value: userId }]
 		});
-		console.log(userId, response, response.resources[0]);
+
 		const result = response.resources[0].friendlyId || 0;
 
 		const newFriendlyId = parseInt(result) + 1;

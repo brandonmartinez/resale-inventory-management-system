@@ -20,7 +20,6 @@ const InventoryItemForm = ({
 	inventoryItem = {},
 	clearAfterSubmit
 }) => {
-	console.log(inventoryItem);
 	// State Variables
 	//////////////////////////////////////////////////
 	const [name, setName] = useState(inventoryItem.name || '');
