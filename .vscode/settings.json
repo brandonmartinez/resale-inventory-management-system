@@ -15,5 +15,12 @@
         }
     ],
     "githubIssues.issueCompletions.enabled": false,
-    "bashIde.explainshellEndpoint": "http://0.0.0.0:6000"
+    "bashIde.explainshellEndpoint": "http://0.0.0.0:6000",
+    "azureFunctions.deploySubpath": "src/rims-api-graphql",
+    "azureFunctions.postDeployTask": "npm install (functions)",
+    "azureFunctions.projectLanguage": "JavaScript",
+    "azureFunctions.projectRuntime": "~3",
+    "debug.internalConsoleOptions": "neverOpen",
+    "azureFunctions.projectSubpath": "src/rims-api-graphql",
+    "azureFunctions.preDeployTask": "npm prune (functions)"
 }
