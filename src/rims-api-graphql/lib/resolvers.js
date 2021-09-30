@@ -1,6 +1,7 @@
 const DateTime = require('luxon').DateTime;
 
 const temporaryUserId = 'a2a5f680-37db-40ff-9ed3-205d21c47f52';
+const getNow = () => DateTime.now().toUTC().toISO({ includeOffset: false });
 
 const resolvers = {
 	Query: {
@@ -43,17 +44,28 @@ const resolvers = {
 		// Inventory Mutations
 		//////////////////////////////////////////////////
 		async createInventoryItem(_, { inventoryItem }, { dataSources }) {
-			// TODO: this would be pulled from the signed in user
+			// TODO: this would be pulled from the signed in user - add auth!
 			inventoryItem.userId = temporaryUserId;
 			inventoryItem.friendlyId =
 				await dataSources.inventoryItems.getNextFriendlyId(
 					inventoryItem.userId
 				);
-			inventoryItem.createdAt = DateTime.now()
-				.toUTC()
-				.toISO({ includeOffset: false });
+			inventoryItem.createdAt = getNow();
 
 			const result = await dataSources.inventoryItems.createOne(inventoryItem);
+			return result.resource;
+		},
+		async updateInventoryItem(_, { inventoryItem }, { dataSources }) {
+			// TODO: add validation on the id existing - add auth!
+			console.log(inventoryItem);
+			const id = inventoryItem.id;
+			delete inventoryItem.id;
+
+			inventoryItem.updatedAt = getNow();
+			const result = await dataSources.inventoryItems.updateOnePartial(
+				id,
+				inventoryItem
+			);
 			return result.resource;
 		}
 	}

@@ -10,6 +10,8 @@ param dashboardsResourceGroupName string
 param dashboardsProductionResourcesName string
 param dashboardsProductionResourcesFriendlyName string
 param cosmosDbResourceId string
+param storageFrontEndStorageAccountResourceId string
+param storageAssetsStorageAccountResourceId string
 
 // Resource Group
 //////////////////////////////////////////////////
@@ -28,5 +30,7 @@ module resources 'resources.bicep' = {
     dashboardsProductionResourcesName: dashboardsProductionResourcesName
     dashboardsProductionResourcesFriendlyName: dashboardsProductionResourcesFriendlyName
     cosmosDbResourceId: cosmosDbResourceId
+    storageFrontEndStorageAccountResourceId: storageFrontEndStorageAccountResourceId
+    storageAssetsStorageAccountResourceId: storageAssetsStorageAccountResourceId
   }
 }

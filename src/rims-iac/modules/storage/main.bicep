@@ -26,3 +26,6 @@ module resources 'resources.bicep' = {
     storageAssetsStorageAccountName: storageAssetsStorageAccountName
   }
 }
+
+output storageFrontEndStorageAccountResourceId string = resources.outputs.storageFrontEndStorageAccountResourceId
+output storageAssetsStorageAccountResourceId string = resources.outputs.storageAssetsStorageAccountResourceId

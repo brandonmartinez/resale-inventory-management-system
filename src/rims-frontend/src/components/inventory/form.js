@@ -10,6 +10,7 @@ import Row from 'react-bootstrap/Row';
 
 import {
 	DropDown,
+	FileUpload,
 	Submit,
 	TextArea,
 	TextBox
@@ -75,7 +76,9 @@ const InventoryItemForm = ({
 		<Form
 			onSubmit={(e) => {
 				e.preventDefault();
-				mutationEvent({
+
+				// Build the item we're going to post
+				const itemToSend = {
 					name: name,
 					description: description,
 					hashtags: [tag1, tag2, tag3].join(', '),
@@ -86,7 +89,13 @@ const InventoryItemForm = ({
 					style: style,
 					cost: parseFloat(cost),
 					price: parseFloat(price)
-				});
+				};
+				if (inventoryItem.id) {
+					itemToSend.id = inventoryItem.id;
+				}
+
+				mutationEvent(itemToSend);
+
 				if (clearAfterSubmit) {
 					clearFields();
 				}
@@ -98,7 +107,9 @@ const InventoryItemForm = ({
 				</Col>
 			</Row>
 			<Row>
-				<Col>Image upload</Col>
+				<Col>
+					<FileUpload id='images' label='Item Images' multiple />
+				</Col>
 				<Col>
 					<TextBox
 						id='name'

@@ -1,4 +1,4 @@
-# File Upload Types - TODO https://github.com/jaydenseric/graphql-upload
+# File Upload Types
 ##################################################
 scalar Upload
 
@@ -36,6 +36,7 @@ type InventoryItem {
 }
 
 input InventoryItemInput {
+	id: ID
 	name: String!
 	description: String
 	hashtags: String
@@ -63,6 +64,7 @@ type Mutation {
 	# Inventory Mutations
 	##################################################
 	createInventoryItem(inventoryItem: InventoryItemInput): InventoryItem
+	updateInventoryItem(inventoryItem: InventoryItemInput): InventoryItem
 }
 
 # Schema

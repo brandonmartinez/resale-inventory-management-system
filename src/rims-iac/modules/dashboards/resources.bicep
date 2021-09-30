@@ -4,6 +4,8 @@ param directoryName string
 param dashboardsProductionResourcesName string
 param dashboardsProductionResourcesFriendlyName string
 param cosmosDbResourceId string
+param storageFrontEndStorageAccountResourceId string
+param storageAssetsStorageAccountResourceId string
 
 // Dashboards
 //////////////////////////////////////////////////
@@ -84,6 +86,42 @@ resource productionDashboard 'Microsoft.Portal/dashboards@2019-01-01-preview' = 
                 type: 'DocumentDBDatabaseAccount'
               }
               deepLink: '#@${directoryName}/resource${cosmosDbResourceId}/overview'
+            }
+          }
+          '3': {
+            position: {
+              x: 1
+              y: 4
+              colSpan: 1
+              rowSpan: 1
+            }
+            metadata: {
+              inputs: [
+                {
+                  name: 'storageAccountId'
+                  value: storageFrontEndStorageAccountResourceId
+                }
+              ]
+              type: 'Extension/Microsoft_Azure_Storage/PartType/BlobServicePinnedPart'
+              deepLink: '#@${directoryName}/resource${storageFrontEndStorageAccountResourceId}/containersList'
+            }
+          }
+          '4': {
+            position: {
+              x: 2
+              y: 4
+              colSpan: 1
+              rowSpan: 1
+            }
+            metadata: {
+              inputs: [
+                {
+                  name: 'storageAccountId'
+                  value: storageAssetsStorageAccountResourceId
+                }
+              ]
+              type: 'Extension/Microsoft_Azure_Storage/PartType/BlobServicePinnedPart'
+              deepLink: '#@${directoryName}/resource${storageAssetsStorageAccountResourceId}/containersList'
             }
           }
         }

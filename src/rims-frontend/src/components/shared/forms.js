@@ -39,6 +39,13 @@ export const DropDown = ({ id, label, placeholder, items, ...rest }) => (
 	</FloatingLabel>
 );
 
+export const FileUpload = ({ id, label, multiple, ...rest }) => (
+	<Form.Group controlId={id} className='mb-3'>
+		<Form.Label>{label}</Form.Label>
+		<Form.Control type='file' multiple={multiple} {...rest} />
+	</Form.Group>
+);
+
 export const FieldPrefix = ({ text, children }) => (
 	<InputGroup className='mb-3'>
 		<InputGroup.Text>{text}</InputGroup.Text>

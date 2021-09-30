@@ -49,5 +49,7 @@ module dashboards 'modules/dashboards/main.bicep' = {
     dashboardsProductionResourcesName: names.outputs.dashboardsProductionResourcesName
     dashboardsProductionResourcesFriendlyName: names.outputs.dashboardsProductionResourcesFriendlyName
     cosmosDbResourceId: cosmosDb.outputs.cosmosDbResourceId
+    storageFrontEndStorageAccountResourceId: storage.outputs.storageFrontEndStorageAccountResourceId
+    storageAssetsStorageAccountResourceId: storage.outputs.storageAssetsStorageAccountResourceId
   }
 }

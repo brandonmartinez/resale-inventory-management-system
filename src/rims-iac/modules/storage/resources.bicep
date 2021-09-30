@@ -14,6 +14,7 @@ resource storageFrontEndStorageAccount 'Microsoft.Storage/storageAccounts@2021-0
   }
   properties: {
     allowBlobPublicAccess: true
+    accessTier: 'Hot'
   }
 }
 
@@ -26,5 +27,23 @@ resource storageAssetsStorageAccount 'Microsoft.Storage/storageAccounts@2021-04-
   }
   properties: {
     allowBlobPublicAccess: true
+    accessTier: 'Hot'
   }
 }
+
+resource storageAssetsInventoryItemImageUploadsContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-04-01' = {
+  name: '${storageAssetsStorageAccount.name}/default/inventoryitemimageuploads'
+  properties: {
+    publicAccess: 'None'
+  }
+}
+
+resource storageAssetsInventoryItemImagesContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-04-01' = {
+  name: '${storageAssetsStorageAccount.name}/default/inventoryitemimages'
+  properties: {
+    publicAccess: 'Blob'
+  }
+}
+
+output storageFrontEndStorageAccountResourceId string = storageFrontEndStorageAccount.id
+output storageAssetsStorageAccountResourceId string = storageAssetsStorageAccount.id

@@ -19,7 +19,7 @@ REGION=$2
 ##################################################
 echo "Retrieving the Tenant Name"
 AZURE_TOKEN_ID=$(az account get-access-token --resource-type ms-graph --query accessToken --output tsv)
-TENANT_NAME=$(curl --header "Authorization: Bearer ${AZURE_TOKEN_ID}" --request GET 'https://graph.microsoft.com/v1.0/domains' | jq -r '.value[] | select(.isDefault == true) | {id}[]')
+TENANT_NAME=$(curl -s --header "Authorization: Bearer ${AZURE_TOKEN_ID}" --request GET 'https://graph.microsoft.com/v1.0/domains' | jq -r '.value[] | select(.isDefault == true) | {id}[]')
 
 echo "Deploying RIMS $ENVIRONMENT Infrastructure to $REGION in $TENANT_NAME tenant"
 

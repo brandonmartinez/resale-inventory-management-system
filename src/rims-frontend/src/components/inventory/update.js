@@ -6,11 +6,11 @@ import {
 
 import InventoryItemForm from './form';
 
-const createInventoryItemMutation = gql`
-	mutation CreateInventoryItemMutation(
-		$createInventoryItemInput: InventoryItemInput!
+const updateInventoryItemMutation = gql`
+	mutation UpdateInventoryItemMutation(
+		$updateInventoryItemInput: InventoryItemInput!
 	) {
-		createInventoryItem(inventoryItem: $createInventoryItemInput) {
+		updateInventoryItem(inventoryItem: $updateInventoryItemInput) {
 			id
 		}
 	}
@@ -48,9 +48,9 @@ const UpdateInventoryItem = ({ id }) => {
 	});
 
 	const [
-		createInventoryItem,
+		updateInventoryItem,
 		{ loading: mutationLoading, error: mutationError }
-	] = useMutation(createInventoryItemMutation);
+	] = useMutation(updateInventoryItemMutation);
 
 	if (queryLoading) {
 		return 'Loading...';
@@ -77,9 +77,9 @@ const UpdateInventoryItem = ({ id }) => {
 	return (
 		<InventoryItemForm
 			mutationEvent={(inventoryItem) =>
-				createInventoryItem({
+				updateInventoryItem({
 					variables: {
-						createInventoryItemInput: inventoryItem
+						updateInventoryItemInput: inventoryItem
 					}
 				})
 			}
