@@ -9,14 +9,14 @@ const { applyMiddleware } = require('graphql-middleware');
 const { ApolloServer } = require('apollo-server-azure-functions');
 const { processRequest } = require('graphql-upload-minimal');
 
-const middleware = require('../lib/middleware');
-const resolvers = require('../lib/resolvers');
-const CosmosDbDataSources = require('../lib/data-sources/CosmosDbDataSources');
+const middleware = require('./lib/middleware');
+const resolvers = require('./lib/resolvers');
+const CosmosDbDataSources = require('./lib/data-sources/CosmosDbDataSources');
 
 // Load Apollo
 //////////////////////////////////////////////////
 const schema = addResolversToSchema({
-	schema: loadSchemaSync(join(__dirname, '..', 'lib', 'schema.graphql'), {
+	schema: loadSchemaSync(join(__dirname, 'lib', 'schema.graphql'), {
 		loaders: [new GraphQLFileLoader()]
 	}),
 	resolvers

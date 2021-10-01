@@ -1,8 +1,40 @@
 const DateTime = require('luxon').DateTime;
+const { BlobServiceClient } = require('@azure/storage-blob');
+const blobServiceClient = BlobServiceClient.fromConnectionString(
+	process.env.StorageConnectionString
+);
+const containerClient = blobServiceClient.getContainerClient(
+	'inventoryitemimageuploads'
+);
 
 const temporaryUserId = 'a2a5f680-37db-40ff-9ed3-205d21c47f52';
 const getNow = () => DateTime.now().toUTC().toISO({ includeOffset: false });
 const { GraphQLUpload } = require('graphql-upload-minimal');
+
+const uploadImage = async (image, id) => {
+	try {
+		const { createReadStream, filename } = await image;
+		const stream = createReadStream();
+		const storedFileName = `${id}-${filename}`;
+
+		// Store the file in the filesystem.
+		await new Promise(async (resolve, reject) => {
+			const blobName = `${id}/${filename}`;
+			const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+			const uploadBlobResponse = await blockBlobClient.uploadData(image)
+
+			// In Node.js <= v13, errors are not automatically propagated between piped
+			// streams. If there is an error receiving the upload, destroy the write
+			// stream with the corresponding error.
+			stream.on('error', (error) => writeStream.destroy(error));
+
+			// Pipe the upload into the write stream.
+			stream.pipe(writeStream);
+		});
+	} catch (error) {
+		console.log('File upload failed', error);
+	}
+};
 
 const resolvers = {
 	Upload: GraphQLUpload,
@@ -55,23 +87,15 @@ const resolvers = {
 			return result.resource;
 		},
 		async updateInventoryItem(_, { inventoryItem, images }, { dataSources }) {
-			try {
-				//https://www.npmjs.com/package/graphql-upload-minimal
-				for (const image of await images) {
-					const { createReadStream, filename /*, mimetype, encoding */ } =
-						(await image).file;
-					const key = `${id}/${filename}`;
-					console.log(key);
-				}
+			const id = inventoryItem.id;
 
-				return { success: true };
-			} catch (error) {
-				console.log('File upload failed', error);
-				return { success: false, message: error.message };
-			}
+			const results = await Promise.allSettled(
+				images.map((image) => uploadImage(image, id))
+			);
+			console.log(results);
 
 			// TODO: add validation on the id existing - add auth!
-			const id = inventoryItem.id;
+
 			delete inventoryItem.id;
 
 			inventoryItem.updatedAt = getNow();
