@@ -55,8 +55,22 @@ const resolvers = {
 			return result.resource;
 		},
 		async updateInventoryItem(_, { inventoryItem, images }, { dataSources }) {
+			try {
+				//https://www.npmjs.com/package/graphql-upload-minimal
+				for (const image of await images) {
+					const { createReadStream, filename /*, mimetype, encoding */ } =
+						(await image).file;
+					const key = `${id}/${filename}`;
+					console.log(key);
+				}
+
+				return { success: true };
+			} catch (error) {
+				console.log('File upload failed', error);
+				return { success: false, message: error.message };
+			}
+
 			// TODO: add validation on the id existing - add auth!
-			const awaitedImages = await images;
 			const id = inventoryItem.id;
 			delete inventoryItem.id;
 
