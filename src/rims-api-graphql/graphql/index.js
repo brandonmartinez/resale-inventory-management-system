@@ -40,20 +40,17 @@ const wrappedHandler = async (context, request) => {
 			typeof contentType === 'string' &&
 			contentType.includes('multipart/form-data;')
 		) {
-			console.debug('In multipart context');
 			const body = await processRequest(
-				request,
+				{ req: request },
 				{},
 				{
 					environment: 'azure'
 				}
-			).catch((e) => console.log(e));
-			console.debug('###body', request.body, '####body ', body);
+			);
 			request.body = body;
 		}
 	} catch (e) {
-		console.debug('ERROR');
-		console.debug(e);
+		console.error('ERROR', e);
 	}
 
 	return new Promise((resolve, reject) => {

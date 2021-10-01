@@ -56,7 +56,7 @@ const resolvers = {
 		},
 		async updateInventoryItem(_, { inventoryItem, images }, { dataSources }) {
 			// TODO: add validation on the id existing - add auth!
-			console.info(inventoryItem, await images);
+			const awaitedImages = await images;
 			const id = inventoryItem.id;
 			delete inventoryItem.id;
 
