@@ -22,46 +22,55 @@ const schema = addResolversToSchema({
 	resolvers
 });
 
-// TODO: https://dev.to/seancwalsh/how-to-write-graphql-middleware-node-apollo-server-express-2h87
-const server = new ApolloServer({
-	schema: applyMiddleware(schema, ...middleware),
-	dataSources: CosmosDbDataSources,
-	context: async (req, res) => ({ req, res: res || {} })
-});
+const createHandler = async () => {
+	const server = new ApolloServer({
+		schema: applyMiddleware(schema, ...middleware),
+		dataSources: CosmosDbDataSources,
+		context: (req, res) => ({ req, res: res || {} })
+	});
 
-const handler = server.createHandler({
-	cors: {
-		origin: '*'
+	return server.createHandler();
+};
+
+const wrappedHandler = async (context, request) => {
+	const handler = await createHandler();
+	try {
+		const contentType = request.headers['content-type'];
+		if (
+			typeof contentType === 'string' &&
+			contentType.includes('multipart/form-data;')
+		) {
+			console.debug('In multipart context');
+			const body = await processRequest(
+				request,
+				{},
+				{
+					environment: 'azure'
+				}
+			).catch((e) => console.log(e));
+			console.debug('###body', request.body, '####body ', body);
+			request.body = body;
+		}
+	} catch (e) {
+		console.debug('ERROR');
+		console.debug(e);
 	}
-});
 
-module.exports = handler;
+	return new Promise((resolve, reject) => {
+		const originalDone = context.done;
 
-// module.exports = async () => {
-// 	const request = arguments[1];
-// 	try {
-// 		const contentType =
-// 			request && request.headers && request.headers['content-type'];
-// 		if (
-// 			typeof contentType === 'string' &&
-// 			contentType.includes('multipart/form-data;')
-// 		) {
-// 			console.debug('In multipart context');
-// 			const body = await processRequest(
-// 				request,
-// 				{},
-// 				{
-// 					environment: 'azure'
-// 				}
-// 			).catch((e) => console.log(e));
-// 			console.debug('###body', request.body, '####body ', body);
-// 			request.body = body; // eslint-disable-line
-// 			// context.req.body = body;
-// 		}
-// 		arguments[1] = request;
-// 	} catch (e) {
-// 		console.debug('ERROR');
-// 		console.debug(e);
-// 	}
-// 	return handler(...arguments);
-// };
+		context.done = (error, result) => {
+			originalDone(error, result);
+
+			if (error) {
+				reject(error);
+			}
+
+			resolve(result);
+		};
+
+		handler(context, request);
+	});
+};
+
+module.exports = wrappedHandler;
