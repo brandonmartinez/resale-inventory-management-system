@@ -1,31 +1,67 @@
 // Imports
 //////////////////////////////////////////////////
-const GraphQLFileLoader =
-	require('@graphql-tools/graphql-file-loader').GraphQLFileLoader;
-const loadSchemaSync = require('@graphql-tools/load').loadSchemaSync;
-const addResolversToSchema =
-	require('@graphql-tools/schema').addResolversToSchema;
-const ApolloServer = require('apollo-server-azure-functions').ApolloServer;
 const join = require('path').join;
-const parseResolveInfo = require('graphql-parse-resolve-info').parseResolveInfo;
-// TODO: https://github.com/jaydenseric/graphql-upload
-const CosmosDbDataSources = require('../lib/data-sources/CosmosDbDataSources');
+
+const { GraphQLFileLoader } = require('@graphql-tools/graphql-file-loader');
+const { loadSchemaSync } = require('@graphql-tools/load');
+const { addResolversToSchema } = require('@graphql-tools/schema');
+const { applyMiddleware } = require('graphql-middleware');
+const { ApolloServer } = require('apollo-server-azure-functions');
+const { processRequest } = require('graphql-upload-minimal');
+
+const middleware = require('../lib/middleware');
 const resolvers = require('../lib/resolvers');
+const CosmosDbDataSources = require('../lib/data-sources/CosmosDbDataSources');
 
 // Load Apollo
 //////////////////////////////////////////////////
-const schema = loadSchemaSync(join(__dirname, '..', 'lib', 'schema.graphql'), {
-	loaders: [new GraphQLFileLoader()]
+const schema = addResolversToSchema({
+	schema: loadSchemaSync(join(__dirname, '..', 'lib', 'schema.graphql'), {
+		loaders: [new GraphQLFileLoader()]
+	}),
+	resolvers
 });
 
+// TODO: https://dev.to/seancwalsh/how-to-write-graphql-middleware-node-apollo-server-express-2h87
 const server = new ApolloServer({
-	schema: addResolversToSchema({ schema, resolvers }),
+	schema: applyMiddleware(schema, ...middleware),
 	dataSources: CosmosDbDataSources,
-	// https://www.apollographql.com/docs/apollo-server/data/resolvers/#the-context-argument
-
-	context: () => ({
-		parseResolveInfo: parseResolveInfo
-	})
+	context: async (req, res) => ({ req, res: res || {} })
 });
 
-module.exports = server.createHandler();
+const handler = server.createHandler({
+	cors: {
+		origin: '*'
+	}
+});
+
+module.exports = handler;
+
+// module.exports = async () => {
+// 	const request = arguments[1];
+// 	try {
+// 		const contentType =
+// 			request && request.headers && request.headers['content-type'];
+// 		if (
+// 			typeof contentType === 'string' &&
+// 			contentType.includes('multipart/form-data;')
+// 		) {
+// 			console.debug('In multipart context');
+// 			const body = await processRequest(
+// 				request,
+// 				{},
+// 				{
+// 					environment: 'azure'
+// 				}
+// 			).catch((e) => console.log(e));
+// 			console.debug('###body', request.body, '####body ', body);
+// 			request.body = body; // eslint-disable-line
+// 			// context.req.body = body;
+// 		}
+// 		arguments[1] = request;
+// 	} catch (e) {
+// 		console.debug('ERROR');
+// 		console.debug(e);
+// 	}
+// 	return handler(...arguments);
+// };

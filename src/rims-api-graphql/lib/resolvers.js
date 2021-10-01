@@ -2,17 +2,16 @@ const DateTime = require('luxon').DateTime;
 
 const temporaryUserId = 'a2a5f680-37db-40ff-9ed3-205d21c47f52';
 const getNow = () => DateTime.now().toUTC().toISO({ includeOffset: false });
+const { GraphQLUpload } = require('graphql-upload-minimal');
 
 const resolvers = {
+	Upload: GraphQLUpload,
 	Query: {
 		// Inventory Queries
 		//////////////////////////////////////////////////
-		async getAllInventoryItems(_, __, { dataSources, parseResolveInfo }, info) {
+		async getAllInventoryItems(_, __, { dataSources }, info) {
 			// Get info passed from GraphQL Query and set needed fields
-			const parsedResolveInfo = parseResolveInfo(info);
-			const fields = Object.keys(
-				parsedResolveInfo.fieldsByTypeName.InventoryItem
-			);
+			const fields = Object.keys(info.parsed.fieldsByTypeName.InventoryItem);
 
 			// Execute query
 			const queryResults = await dataSources.inventoryItems.getAllItems({
@@ -55,9 +54,9 @@ const resolvers = {
 			const result = await dataSources.inventoryItems.createOne(inventoryItem);
 			return result.resource;
 		},
-		async updateInventoryItem(_, { inventoryItem }, { dataSources }) {
+		async updateInventoryItem(_, { inventoryItem, images }, { dataSources }) {
 			// TODO: add validation on the id existing - add auth!
-			console.log(inventoryItem);
+			console.info(inventoryItem, await images);
 			const id = inventoryItem.id;
 			delete inventoryItem.id;
 

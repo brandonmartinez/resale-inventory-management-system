@@ -8,16 +8,20 @@ import InventoryItemForm from './form';
 
 const updateInventoryItemMutation = gql`
 	mutation UpdateInventoryItemMutation(
-		$updateInventoryItemInput: InventoryItemInput!
+		$inventoryItem: InventoryItemInput!
+		$images: [Upload!]
 	) {
-		updateInventoryItem(inventoryItem: $updateInventoryItemInput) {
+		updateInventoryItem(
+			inventoryItem: $inventoryItem
+			images: $images
+		) {
 			id
 		}
 	}
 `;
 
 const getInventoryItem = gql`
-	query ExampleQuery($inventoryId: ID!) {
+	query GetInventoryItemById($inventoryId: ID!) {
 		getInventoryItemById(id: $inventoryId) {
 			friendlyId
 			name
@@ -76,10 +80,11 @@ const UpdateInventoryItem = ({ id }) => {
 	//////////////////////////////////////////////////
 	return (
 		<InventoryItemForm
-			mutationEvent={(inventoryItem) =>
+			mutationEvent={(inventoryItem, images) =>
 				updateInventoryItem({
 					variables: {
-						updateInventoryItemInput: inventoryItem
+						inventoryItem,
+						images
 					}
 				})
 			}

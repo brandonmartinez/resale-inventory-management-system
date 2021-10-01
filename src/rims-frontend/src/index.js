@@ -6,6 +6,8 @@ import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { createUploadLink } from 'apollo-upload-client';
+
 import {
 	ApolloClient,
 	ApolloProvider,
@@ -18,8 +20,10 @@ import reportWebVitals from './reportWebVitals';
 // Service Setup
 //////////////////////////////////////////////////
 const client = new ApolloClient({
-	uri: 'http://localhost:7071/graphql',
-	cache: new InMemoryCache()
+	cache: new InMemoryCache(),
+	link: createUploadLink({
+		uri: 'http://localhost:7071/graphql'
+	})
 });
 
 // Render

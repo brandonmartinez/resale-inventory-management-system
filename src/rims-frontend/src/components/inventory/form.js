@@ -23,6 +23,7 @@ const InventoryItemForm = ({
 }) => {
 	// State Variables
 	//////////////////////////////////////////////////
+	const [images, setImages] = useState([]);
 	const [name, setName] = useState(inventoryItem.name || '');
 	const [suggestedName, setSuggestedName] = useState(
 		inventoryItem.suggestedName || ''
@@ -94,7 +95,7 @@ const InventoryItemForm = ({
 					itemToSend.id = inventoryItem.id;
 				}
 
-				mutationEvent(itemToSend);
+				mutationEvent(itemToSend, images);
 
 				if (clearAfterSubmit) {
 					clearFields();
@@ -108,7 +109,12 @@ const InventoryItemForm = ({
 			</Row>
 			<Row>
 				<Col>
-					<FileUpload id='images' label='Item Images' multiple />
+					<FileUpload
+						id='images'
+						label='Item Images'
+						multiple
+						onChange={(e) => setImages(e.target.files)}
+					/>
 				</Col>
 				<Col>
 					<TextBox

@@ -6,6 +6,7 @@ type File {
 	filename: String!
 	mimetype: String!
 	encoding: String!
+	url: String!
 }
 
 # Inventory Types
@@ -63,8 +64,8 @@ type Query {
 type Mutation {
 	# Inventory Mutations
 	##################################################
-	createInventoryItem(inventoryItem: InventoryItemInput): InventoryItem
-	updateInventoryItem(inventoryItem: InventoryItemInput): InventoryItem
+	createInventoryItem(inventoryItem: InventoryItemInput, images: [Upload!]): InventoryItem!
+	updateInventoryItem(inventoryItem: InventoryItemInput, images: [Upload!]): InventoryItem!
 }
 
 # Schema
