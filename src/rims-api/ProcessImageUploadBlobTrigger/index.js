@@ -29,7 +29,7 @@ module.exports = async function (context, inputBlob) {
 	);
 
 	// Setup a queue message to notify the queue trigger we're ready to cleanup the blob from uploads
-	const messageData = context.bindingData.name + '.jpg';
+	const messageData = context.bindingData.name + '.' + context.bindingData.extension;
 	context.bindings.cleanupQueue = messageData;
 
 	return imageData;

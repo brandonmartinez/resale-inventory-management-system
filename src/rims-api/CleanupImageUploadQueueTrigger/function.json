@@ -1,11 +1,11 @@
 {
   "bindings": [
     {
-      "name": "myQueueItem",
-      "type": "queueTrigger",
+      "connection": "AssetsStorageConnectionString",
       "direction": "in",
-      "queueName": "inventoryitemimageuploads",
-      "connection": "sarimsprodeusassets_STORAGE"
+      "name": "queueMessage",
+      "queueName": "inventoryitemimageuploads-cleanup",
+      "type": "queueTrigger"
     }
   ]
 }
