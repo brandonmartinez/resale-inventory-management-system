@@ -9,22 +9,30 @@ class AzureStorageContainerDataSource {
 
 	async uploadFile(file, options = {}) {
 		try {
-			const { createReadStream, filename, encoding, mimetype } = await file;
+			const {
+				createReadStream,
+				filename,
+				encoding: blobContentEncoding,
+				mimetype: blobContentType
+			} = await file;
 
 			// Build the proposed filename
 			const id = uuidv4();
 			const extension = getExtensionName(filename);
 			const basePath = options.basePath ? options.basePath + '/' : '';
 			const blobPath = `${basePath}${id}${extension}`;
-			console.log(`Attempting to upload ${filename} to ${blobPath}`);
 
 			const stream = createReadStream();
 			const buffer = await streamToBuffer(stream);
 
 			const blockBlobClient =
 				this.storageContainerClient.getBlockBlobClient(blobPath);
-			const uploadBlobResponse = await blockBlobClient.uploadData(buffer);
-			console.log(uploadBlobResponse);
+			await blockBlobClient.uploadData(buffer, {
+				blobHTTPHeaders: {
+					blobContentEncoding,
+					blobContentType
+				}
+			});
 
 			return blobPath;
 		} catch (error) {
@@ -36,7 +44,8 @@ class AzureStorageContainerDataSource {
 		const results = await Promise.allSettled(
 			files.map(async (image) => await this.uploadFile(image, options))
 		);
-		console.log(results);
+
+		return results.map((r) => r.value);
 	}
 }
 
