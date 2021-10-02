@@ -23,17 +23,18 @@ const updateInventoryItemMutation = gql`
 const getInventoryItem = gql`
 	query GetInventoryItemById($inventoryId: ID!) {
 		getInventoryItemById(id: $inventoryId) {
-			friendlyId
-			name
-			description
-			hashtags
-			category
 			brand
-			condition
+			category
 			color
-			style
-			price
+			condition
 			cost
+			description
+			friendlyId
+			hashtags
+			name
+			price
+			relativeImagePaths
+			style
 		}
 	}
 `;

@@ -23,24 +23,27 @@ const InventoryItemForm = ({
 }) => {
 	// State Variables
 	//////////////////////////////////////////////////
-	const [images, setImages] = useState([]);
-	const [name, setName] = useState(inventoryItem.name || '');
-	const [suggestedName, setSuggestedName] = useState(
-		inventoryItem.suggestedName || ''
-	);
+	const [brand, setBrand] = useState(inventoryItem.brand || '');
+	const [category, setCategory] = useState(inventoryItem.category || '');
+	const [color, setColor] = useState(inventoryItem.color || '');
+	const [condition, setCondition] = useState(inventoryItem.condition || '');
+	const [cost, setCost] = useState(inventoryItem.cost || '');
 	const [description, setDescription] = useState(
 		inventoryItem.description || ''
+	);
+	const [existingImages, setExistingImages] = useState(
+		inventoryItem.relativeImagePaths || []
+	);
+	const [images, setImages] = useState([]);
+	const [name, setName] = useState(inventoryItem.name || '');
+	const [price, setPrice] = useState(inventoryItem.price || '');
+	const [style, setStyle] = useState(inventoryItem.style || '');
+	const [suggestedName, setSuggestedName] = useState(
+		inventoryItem.suggestedName || ''
 	);
 	const [tag1, setTag1] = useState(inventoryItem.tag1 || '');
 	const [tag2, setTag2] = useState(inventoryItem.tag2 || '');
 	const [tag3, setTag3] = useState(inventoryItem.tag3 || '');
-	const [category, setCategory] = useState(inventoryItem.category || '');
-	const [brand, setBrand] = useState(inventoryItem.brand || '');
-	const [condition, setCondition] = useState(inventoryItem.condition || '');
-	const [color, setColor] = useState(inventoryItem.color || '');
-	const [style, setStyle] = useState(inventoryItem.style || '');
-	const [cost, setCost] = useState(inventoryItem.cost || '');
-	const [price, setPrice] = useState(inventoryItem.price || '');
 
 	// Effect Hooks
 	//////////////////////////////////////////////////
@@ -54,18 +57,19 @@ const InventoryItemForm = ({
 	// Helper Functions
 	//////////////////////////////////////////////////
 	const clearFields = () => {
-		setName('');
+		setBrand('');
+		setCategory('');
+		setColor('');
+		setCondition('');
+		setCost('');
 		setDescription('');
+		setExistingImages([]);
+		setName('');
+		setPrice('');
+		setStyle('');
 		setTag1('');
 		setTag2('');
 		setTag3('');
-		setCategory('');
-		setBrand('');
-		setCondition('');
-		setColor('');
-		setStyle('');
-		setCost('');
-		setPrice('');
 	};
 
 	// Render
@@ -115,6 +119,11 @@ const InventoryItemForm = ({
 						multiple
 						onChange={(e) => setImages(e.target.files)}
 					/>
+					<ul>
+						{existingImages.map((i) => (
+							<li key={'existing-image-' + i}>{i}</li>
+						))}
+					</ul>
 				</Col>
 				<Col>
 					<TextBox

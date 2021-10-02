@@ -57,7 +57,7 @@ const resolvers = {
 		async updateInventoryItem(_, { inventoryItem, images }, { dataSources }) {
 			const id = inventoryItem.id;
 
-			const imageIds =
+			const relativeImagePaths =
 				await dataSources.inventoryItemUploadsStorageContainer.uploadFiles(
 					images,
 					{
@@ -66,8 +66,8 @@ const resolvers = {
 				);
 
 			// TODO: add validation on the id existing - add auth!
-
 			delete inventoryItem.id;
+			inventoryItem.relativeImagePaths = relativeImagePaths;
 
 			inventoryItem.updatedAt = getNow();
 			const result = await dataSources.inventoryItems.updateOnePartial(

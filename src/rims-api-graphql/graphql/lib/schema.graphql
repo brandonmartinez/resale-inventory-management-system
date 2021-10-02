@@ -3,51 +3,53 @@
 scalar Upload
 
 type File {
+	encoding: String!
 	filename: String!
 	mimetype: String!
-	encoding: String!
 	url: String!
 }
 
 # Inventory Types
 ##################################################
 enum InventoryItemCondition {
-	New
-	LikeNew
-	Good
 	Fair
+	Good
+	LikeNew
+	New
 	Poor
 }
 
 type InventoryItem {
-	id: ID!
-	userId: String!
-	friendlyId: String!
-	name: String!
-	description: String
-	hashtags: String
-	category: String
 	brand: String
-	condition: InventoryItemCondition
+	category: String
 	color: String
-	style: String
-	price: Float
+	condition: InventoryItemCondition
 	cost: Float
 	createdAt: String
+	description: String
+	friendlyId: String!
+	hashtags: String
+	id: ID!
+	name: String!
+	price: Float
+	relativeImagePaths: [String]
+	style: String
+	updatedAt: String
+	userId: String!
 }
 
 input InventoryItemInput {
-	id: ID
-	name: String!
+	brand: String
+	category: String
+	color: String
+	condition: InventoryItemCondition
+	cost: Float
 	description: String
 	hashtags: String
-	category: String
-	brand: String
-	condition: InventoryItemCondition
-	color: String
-	style: String
+	id: ID
+	name: String!
 	price: Float
-	cost: Float
+	style: String
 }
 
 # GraphQL Types
@@ -71,6 +73,6 @@ type Mutation {
 # Schema
 ##################################################
 schema {
-	query: Query
 	mutation: Mutation
+	query: Query
 }
