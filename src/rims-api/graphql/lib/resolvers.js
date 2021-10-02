@@ -67,7 +67,7 @@ const resolvers = {
 
 			// TODO: add validation on the id existing - add auth!
 			delete inventoryItem.id;
-			inventoryItem.relativeImagePaths = relativeImagePaths;
+			inventoryItem.relativeImageUploadPaths = relativeImagePaths;
 
 			inventoryItem.updatedAt = getNow();
 			const result = await dataSources.inventoryItems.updateOnePartial(
