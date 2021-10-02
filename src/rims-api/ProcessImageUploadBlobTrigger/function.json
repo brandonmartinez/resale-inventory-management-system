@@ -5,7 +5,7 @@
       "dataType": "binary",
       "direction": "in",
       "name": "inputBlob",
-      "path": "inventoryitemimageuploads/{name}",
+      "path": "inventoryitemimageuploads/{name}.{extension}",
       "type": "blobTrigger"
     },
     {
@@ -13,8 +13,15 @@
       "dataType": "binary",
       "direction": "out",
       "name": "$return",
-      "path": "inventoryitemimages/{name}",
+      "path": "inventoryitemimages/{name}.jpg",
       "type": "blob"
+    },
+    {
+      "connection": "AssetsStorageConnectionString",
+      "direction": "out",
+      "name": "cleanupQueue",
+      "queueName": "inventoryitemimageuploads-cleanup",
+      "type": "queue"
     }
   ],
   "disabled": false

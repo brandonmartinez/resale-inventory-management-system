@@ -16,7 +16,7 @@ module.exports = async function (context, inputBlob) {
 			: height;
 
 	// Operate on the image
-	image.scaleToFit(maxLength, maxLength).quality(60);
+	image.scaleToFit(maxLength, maxLength).quality(70);
 	// Save Out
 	const imageData = await image.getBufferAsync(Jimp.MIME_JPEG);
 	context.log(
@@ -27,6 +27,10 @@ module.exports = async function (context, inputBlob) {
 			'x' +
 			image.bitmap.height
 	);
+
+	// Setup a queue message to notify the queue trigger we're ready to cleanup the blob from uploads
+	const messageData = context.bindingData.name + '.jpg';
+	context.bindings.cleanupQueue = messageData;
 
 	return imageData;
 };

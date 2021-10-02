@@ -51,6 +51,10 @@ resource storageAssetsInventoryItemImageUploadsContainer 'Microsoft.Storage/stor
   }
 }
 
+resource storageAssetsInventoryItemImageUploadsQueue 'Microsoft.Storage/storageAccounts/queueServices/queues@2021-04-01' = {
+  name: '${storageAssetsStorageAccount.name}/default/inventoryitemimageuploads-cleanup'
+}
+
 resource storageAssetsInventoryItemImagesContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-04-01' = {
   name: '${storageAssetsStorageAccount.name}/default/inventoryitemimages'
   properties: {
