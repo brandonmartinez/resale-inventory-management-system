@@ -11,21 +11,24 @@ const { processRequest } = require('graphql-upload-minimal');
 
 const middleware = require('./lib/middleware');
 const resolvers = require('./lib/resolvers');
-const CosmosDbDataSources = require('./lib/data-sources/CosmosDbDataSources');
+const dataSources = require('./lib/dataSources');
 
 // Load Apollo
 //////////////////////////////////////////////////
-const schema = addResolversToSchema({
-	schema: loadSchemaSync(join(__dirname, 'lib', 'schema.graphql'), {
-		loaders: [new GraphQLFileLoader()]
+const schema = applyMiddleware(
+	addResolversToSchema({
+		schema: loadSchemaSync(join(__dirname, 'lib', 'schema.graphql'), {
+			loaders: [new GraphQLFileLoader()]
+		}),
+		resolvers
 	}),
-	resolvers
-});
+	...middleware
+);
 
 const createHandler = async () => {
 	const server = new ApolloServer({
-		schema: applyMiddleware(schema, ...middleware),
-		dataSources: CosmosDbDataSources,
+		schema,
+		dataSources,
 		context: (req, res) => ({ req, res: res || {} })
 	});
 

@@ -12,12 +12,14 @@
     "@graphql-tools/graphql-file-loader": "^7.1.0",
     "@graphql-tools/load": "^7.3.0",
     "@graphql-tools/schema": "^8.2.0",
+    "@jorgeferrero/stream-to-buffer": "^2.0.6",
     "apollo-datasource-cosmosdb": "^0.0.17",
     "apollo-server-azure-functions": "^3.3.0",
     "graphql": "^15.5.3",
     "graphql-middleware": "^6.1.7",
     "graphql-parse-resolve-info": "^4.12.0",
     "graphql-upload-minimal": "^1.2.2",
-    "luxon": "^2.0.2"
+    "luxon": "^2.0.2",
+    "uuid": "^8.3.2"
   }
 }
