@@ -2,9 +2,22 @@
 //////////////////////////////////////////////////
 param storageFrontEndStorageAccountName string
 param storageAssetsStorageAccountName string
+param storageWebJobsAccountName string
 
 // Storage Accounts
 //////////////////////////////////////////////////
+resource storageWebJobsAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
+  kind: 'StorageV2'
+  location: resourceGroup().location
+  name: storageWebJobsAccountName
+  sku: {
+    name: 'Standard_LRS'
+  }
+  properties: {
+    allowBlobPublicAccess: false
+    accessTier: 'Hot'
+  }
+}
 resource storageFrontEndStorageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   kind: 'StorageV2'
   location: resourceGroup().location

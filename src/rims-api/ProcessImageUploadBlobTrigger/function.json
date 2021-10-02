@@ -1,11 +1,21 @@
 {
   "bindings": [
     {
-      "name": "myBlob",
-      "type": "blobTrigger",
+      "connection": "AssetsStorageConnectionString",
+      "dataType": "binary",
       "direction": "in",
-      "path": "inventoryitemimageuploads",
-      "connection": "AssetsStorageConnectionString"
+      "name": "inputBlob",
+      "path": "inventoryitemimageuploads/{name}",
+      "type": "blobTrigger"
+    },
+    {
+      "connection": "AssetsStorageConnectionString",
+      "dataType": "binary",
+      "direction": "out",
+      "name": "$return",
+      "path": "inventoryitemimages/{name}",
+      "type": "blob"
     }
-  ]
+  ],
+  "disabled": false
 }

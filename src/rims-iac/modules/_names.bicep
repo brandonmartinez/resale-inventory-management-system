@@ -36,8 +36,9 @@ output regionShortCode string = regionShortCode
 
 // Storage
 output storageResourceGroupName string = 'rg-${envreg}-storage'
-output storageFrontEndStorageAccountName string = replace('sa-${envreg}-frontend', '-', '')
 output storageAssetsStorageAccountName string = replace('sa-${envreg}-assets', '-', '')
+output storageFrontEndStorageAccountName string = replace('sa-${envreg}-frontend', '-', '')
+output storageWebJobsAccountName string = replace('sa-${envreg}-webjobs', '-', '')
 
 // Cosmos
 output cosmosDbResourceGroupName string = 'rg-${envreg}-cosmos'

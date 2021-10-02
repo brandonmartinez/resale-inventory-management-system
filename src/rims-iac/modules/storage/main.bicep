@@ -8,6 +8,7 @@ param location string
 param storageResourceGroupName string
 param storageFrontEndStorageAccountName string
 param storageAssetsStorageAccountName string
+param storageWebJobsAccountName string
 
 // Resource Group
 //////////////////////////////////////////////////
@@ -24,6 +25,7 @@ module resources 'resources.bicep' = {
   params: {
     storageFrontEndStorageAccountName: storageFrontEndStorageAccountName
     storageAssetsStorageAccountName: storageAssetsStorageAccountName
+    storageWebJobsAccountName: storageWebJobsAccountName
   }
 }
 

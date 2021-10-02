@@ -27,6 +27,7 @@ module storage 'modules/storage/main.bicep' = {
     storageResourceGroupName: names.outputs.storageResourceGroupName
     storageFrontEndStorageAccountName: names.outputs.storageFrontEndStorageAccountName
     storageAssetsStorageAccountName: names.outputs.storageAssetsStorageAccountName
+    storageWebJobsAccountName: names.outputs.storageWebJobsAccountName
   }
 }
 

@@ -1,9 +1,32 @@
-module.exports = async function (context, myBlob) {
+const Jimp = require('jimp');
+
+module.exports = async function (context, inputBlob) {
+	const image = await Jimp.read(inputBlob);
+
+	const width = image.getWidth();
+	const height = image.getHeight();
+	const idealMaxLength = 2000;
+	const maxLength =
+		// if any of the sides are larger than the ideal max, then use ideal max
+		width > idealMaxLength || height > idealMaxLength
+			? idealMaxLength
+			: // otherwise, if the width is larger than the height, use that, otherwise use height
+			width > height
+			? width
+			: height;
+
+	// Operate on the image
+	image.scaleToFit(maxLength, maxLength).quality(60);
+	// Save Out
+	const imageData = await image.getBufferAsync(Jimp.MIME_JPEG);
 	context.log(
-		'JavaScript blob trigger function processed blob \n Blob:',
-		context.bindingData.blobTrigger,
-		'\n Blob Size:',
-		myBlob.length,
-		'Bytes'
+		'Node.JS blob trigger function resized ' +
+			context.bindingData.name +
+			' to ' +
+			image.bitmap.width +
+			'x' +
+			image.bitmap.height
 	);
+
+	return imageData;
 };
