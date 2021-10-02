@@ -119,11 +119,16 @@ const InventoryItemForm = ({
 						multiple
 						onChange={(e) => setImages(e.target.files)}
 					/>
-					<ul>
-						{existingImages.map((i) => (
-							<li key={'existing-image-' + i}>{i}</li>
-						))}
-					</ul>
+					{/* TODO: remove hardcoded URL */}
+					{existingImages.map((i) => (
+						<img
+							key={'existing-image-' + i}
+							alt='product'
+							width="100"
+							height="auto"
+							src={`https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/${i}`}
+						/>
+					))}
 				</Col>
 				<Col>
 					<TextBox

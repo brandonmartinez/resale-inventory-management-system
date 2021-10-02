@@ -39,8 +39,9 @@ module.exports = async function (context, queueMessage) {
 		})
 		.fetchAll();
 	const item = results.resources[0];
+	const relativeImagePaths = item.relativeImagePaths || [];
 
-	item.relativeImagePaths = [...item.relativeImagePaths, newName];
+	item.relativeImagePaths = [...relativeImagePaths, newName];
 	await inventoryContainer.item(id).replace(item);
 
 	await assetsInventoryItemImageUploadsContainerClient.deleteBlob(queueMessage);
