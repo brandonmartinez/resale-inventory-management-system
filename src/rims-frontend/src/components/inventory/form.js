@@ -18,10 +18,7 @@ import {
 	TextBox
 } from '../shared/forms';
 
-const InventoryItemForm = ({
-	mutationEvent,
-	inventoryItem = {}
-}) => {
+const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 	// State Variables
 	//////////////////////////////////////////////////
 	const history = useHistory();
@@ -106,7 +103,7 @@ const InventoryItemForm = ({
 	// Render
 	//////////////////////////////////////////////////
 	const title = inventoryItem.id
-		? `Update Inventory Item #${inventoryItem.friendlyId}`
+		? `Update Inventory Item ${inventoryItem.name}`
 		: 'Add New Inventory Item';
 	const thumbs = imagesToUpload.map((image) => (
 		<div style={thumb} key={image.name}>
@@ -148,7 +145,8 @@ const InventoryItemForm = ({
 					<h1>{title}</h1>
 				</Col>
 			</Row>
-			<Row>
+			<Row className='mb-3'>
+				<Col sm={0} md={1} xl={2} />
 				<Col>
 					<div {...getRootProps({ className: 'dropzone' })}>
 						<input {...getInputProps()} />
@@ -166,6 +164,10 @@ const InventoryItemForm = ({
 						/>
 					))}
 				</Col>
+				<Col sm={0} md={1} xl={2} />
+			</Row>
+			<Row>
+				<Col sm={0} md={1} xl={2} />
 				<Col>
 					<TextBox
 						id='name'
@@ -279,6 +281,7 @@ const InventoryItemForm = ({
 					/>
 					<Submit />
 				</Col>
+				<Col sm={0} md={1} xl={2} />
 			</Row>
 		</Form>
 	);
