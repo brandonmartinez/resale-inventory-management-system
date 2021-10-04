@@ -7,10 +7,12 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import FormLabel from 'react-bootstrap/FormLabel';
 import Row from 'react-bootstrap/Row';
+// More info: https://react-dropzone.js.org
+import { useDropzone } from 'react-dropzone';
+import { useHistory } from 'react-router-dom';
 
 import {
 	DropDown,
-	FileUpload,
 	Submit,
 	TextArea,
 	TextBox
@@ -18,11 +20,12 @@ import {
 
 const InventoryItemForm = ({
 	mutationEvent,
-	inventoryItem = {},
-	clearAfterSubmit
+	inventoryItem = {}
 }) => {
 	// State Variables
 	//////////////////////////////////////////////////
+	const history = useHistory();
+
 	const [brand, setBrand] = useState(inventoryItem.brand || '');
 	const [category, setCategory] = useState(inventoryItem.category || '');
 	const [color, setColor] = useState(inventoryItem.color || '');
@@ -34,9 +37,22 @@ const InventoryItemForm = ({
 	const [existingImages, setExistingImages] = useState(
 		inventoryItem.relativeImagePaths || []
 	);
-	const [images, setImages] = useState([]);
+	const [imagesToUpload, setImagesToUpload] = useState([]);
+	const { getRootProps, getInputProps } = useDropzone({
+		accept: 'image/*',
+		onDrop: (acceptedFiles) => {
+			setImagesToUpload(
+				acceptedFiles.map((file) =>
+					Object.assign(file, {
+						preview: URL.createObjectURL(file)
+					})
+				)
+			);
+		}
+	});
 	const [name, setName] = useState(inventoryItem.name || '');
 	const [price, setPrice] = useState(inventoryItem.price || '');
+	const [size, setSize] = useState(inventoryItem.size || '');
 	const [style, setStyle] = useState(inventoryItem.style || '');
 	const [suggestedName, setSuggestedName] = useState(
 		inventoryItem.suggestedName || ''
@@ -54,22 +70,37 @@ const InventoryItemForm = ({
 		setSuggestedName(suggestName);
 	}, [suggestedName, condition, brand, color, style, category]);
 
-	// Helper Functions
+	// Styles
 	//////////////////////////////////////////////////
-	const clearFields = () => {
-		setBrand('');
-		setCategory('');
-		setColor('');
-		setCondition('');
-		setCost('');
-		setDescription('');
-		setExistingImages([]);
-		setName('');
-		setPrice('');
-		setStyle('');
-		setTag1('');
-		setTag2('');
-		setTag3('');
+	const thumbsContainer = {
+		display: 'flex',
+		flexDirection: 'row',
+		flexWrap: 'wrap',
+		marginTop: 16
+	};
+
+	const thumb = {
+		display: 'inline-flex',
+		borderRadius: 2,
+		border: '1px solid #eaeaea',
+		marginBottom: 8,
+		marginRight: 8,
+		width: 100,
+		height: 100,
+		padding: 4,
+		boxSizing: 'border-box'
+	};
+
+	const thumbInner = {
+		display: 'flex',
+		minWidth: 0,
+		overflow: 'hidden'
+	};
+
+	const img = {
+		display: 'block',
+		width: 'auto',
+		height: '100%'
 	};
 
 	// Render
@@ -77,6 +108,13 @@ const InventoryItemForm = ({
 	const title = inventoryItem.id
 		? `Update Inventory Item #${inventoryItem.friendlyId}`
 		: 'Add New Inventory Item';
+	const thumbs = imagesToUpload.map((image) => (
+		<div style={thumb} key={image.name}>
+			<div style={thumbInner}>
+				<img src={image.preview} style={img} alt='File to Upload' />
+			</div>
+		</div>
+	));
 	return (
 		<Form
 			onSubmit={(e) => {
@@ -84,14 +122,15 @@ const InventoryItemForm = ({
 
 				// Build the item we're going to post
 				const itemToSend = {
-					name: name,
-					description: description,
+					name,
+					description,
 					hashtags: [tag1, tag2, tag3].join(', '),
-					category: category,
-					brand: brand,
-					condition: condition,
-					color: color,
-					style: style,
+					category,
+					brand,
+					condition,
+					color,
+					size,
+					style,
 					cost: parseFloat(cost),
 					price: parseFloat(price)
 				};
@@ -99,11 +138,9 @@ const InventoryItemForm = ({
 					itemToSend.id = inventoryItem.id;
 				}
 
-				mutationEvent(itemToSend, images);
+				mutationEvent(itemToSend, imagesToUpload);
 
-				if (clearAfterSubmit) {
-					clearFields();
-				}
+				history.push('/inventory');
 			}}
 		>
 			<Row>
@@ -113,19 +150,18 @@ const InventoryItemForm = ({
 			</Row>
 			<Row>
 				<Col>
-					<FileUpload
-						id='images'
-						label='Item Images'
-						multiple
-						onChange={(e) => setImages(e.target.files)}
-					/>
+					<div {...getRootProps({ className: 'dropzone' })}>
+						<input {...getInputProps()} />
+						<p>Drag 'n' drop some files here, or click to select files</p>
+					</div>
+					<aside style={thumbsContainer}>{thumbs}</aside>
 					{/* TODO: remove hardcoded URL */}
 					{existingImages.map((i) => (
 						<img
 							key={'existing-image-' + i}
 							alt='product'
-							width="100"
-							height="auto"
+							width='100'
+							height='auto'
 							src={`https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/${i}`}
 						/>
 					))}
@@ -219,6 +255,13 @@ const InventoryItemForm = ({
 						placeholder='The Style of the Item'
 						value={style}
 						onChange={(e) => setStyle(e.target.value)}
+					/>
+					<TextBox
+						id='size'
+						label='Size'
+						placeholder='The Size of the Item'
+						value={size}
+						onChange={(e) => setSize(e.target.value)}
 					/>
 					<TextBox
 						id='cost'
