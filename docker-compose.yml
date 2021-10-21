@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  rims_frontend:
+    image: rims-frontend
+    container_name: rims-frontend
+    build:
+      context: ./src/rims-frontend/
+      dockerfile: ./Dockerfile
+    expose:
+      - 80
+    

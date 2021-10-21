@@ -17,7 +17,7 @@ then
     
     tmux split-window -h -t $SESSION:Servers
     tmux send-keys -t $SESSION:Servers.1 "cd src/rims-frontend/" C-m "nvm use" C-m "npm run start" C-m
-    tmux send-keys -t $SESSION:Servers.2 "cd src/rims-api/" C-m "func host start" C-m
+    tmux send-keys -t $SESSION:Servers.2 "cd src/rims-api/" C-m "nvm use" C-m "func host start" C-m
     
     # Create a Window for zsh
     tmux new-window -c "$(PWD)" -n "zsh"

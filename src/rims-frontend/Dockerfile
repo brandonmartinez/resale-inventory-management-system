@@ -1,7 +1,7 @@
 ##################################################################
 # Stage 0: Set the Base Primary Image of the App
 ##################################################################
-FROM node:15-alpine AS base
+FROM node:14-alpine AS base
 
 # Install prerequisites
 RUN npm install -g http-server
@@ -9,11 +9,7 @@ RUN npm install -g http-server
 # Create App directory
 WORKDIR /app
 
-# Setup base server requirements
-RUN npm install @azure/app-configuration
-COPY configuration.js ./
-COPY env.sh ./
-COPY server.sh ./
+COPY server.sh .
 
 EXPOSE 80
 EXPOSE 443
