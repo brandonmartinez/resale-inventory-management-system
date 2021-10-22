@@ -1,11 +1,7 @@
-import {
-	useEffect,
-	useState
-} from 'react';
+import { useState } from 'react';
 
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import FormLabel from 'react-bootstrap/FormLabel';
 import Row from 'react-bootstrap/Row';
 // More info: https://react-dropzone.js.org
 import { useDropzone } from 'react-dropzone';
@@ -51,21 +47,9 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 	const [price, setPrice] = useState(inventoryItem.price || '');
 	const [size, setSize] = useState(inventoryItem.size || '');
 	const [style, setStyle] = useState(inventoryItem.style || '');
-	const [suggestedName, setSuggestedName] = useState(
-		inventoryItem.suggestedName || ''
-	);
 	const [tag1, setTag1] = useState(inventoryItem.tag1 || '');
 	const [tag2, setTag2] = useState(inventoryItem.tag2 || '');
 	const [tag3, setTag3] = useState(inventoryItem.tag3 || '');
-
-	// Effect Hooks
-	//////////////////////////////////////////////////
-	useEffect(() => {
-		const suggestedNameParts = [condition, brand, color, style, category];
-		const suggestName = suggestedNameParts.filter((n) => n).join(' ');
-
-		setSuggestedName(suggestName);
-	}, [suggestedName, condition, brand, color, style, category]);
 
 	// Styles
 	//////////////////////////////////////////////////
@@ -146,11 +130,10 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 				</Col>
 			</Row>
 			<Row className='mb-3'>
-				<Col sm={0} md={1} xl={2} />
-				<Col>
+				<Col md={12} lg={4}>
 					<div {...getRootProps({ className: 'dropzone' })}>
 						<input {...getInputProps()} />
-						<p>Drag 'n' drop some files here, or click to select files</p>
+						<p>Upload Photos</p>
 					</div>
 					<aside style={thumbsContainer}>{thumbs}</aside>
 					{/* TODO: remove hardcoded URL */}
@@ -164,11 +147,7 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 						/>
 					))}
 				</Col>
-				<Col sm={0} md={1} xl={2} />
-			</Row>
-			<Row>
-				<Col sm={0} md={1} xl={2} />
-				<Col>
+				<Col md={12} lg={8}>
 					<TextBox
 						id='name'
 						label='Name'
@@ -176,13 +155,6 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 						value={name}
 						onChange={(e) => setName(e.target.value)}
 					/>
-					<FormLabel
-						size='sm'
-						onClick={(e) => setName(suggestedName)}
-						style={{ display: suggestedName ? 'block' : 'none' }}
-					>
-						Suggested Name: {suggestedName}
-					</FormLabel>
 					<TextArea
 						id='description'
 						label='Description'
@@ -281,7 +253,6 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 					/>
 					<Submit />
 				</Col>
-				<Col sm={0} md={1} xl={2} />
 			</Row>
 		</Form>
 	);

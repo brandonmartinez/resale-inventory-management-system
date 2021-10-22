@@ -18,6 +18,10 @@ const getAllInventoryItems = gql`
 			friendlyId
 			name
 			category
+			brand
+			condition
+			cost
+			price
 		}
 	}
 `;
@@ -50,34 +54,46 @@ const Inventory = () => {
 					<Table striped bordered hover>
 						<thead>
 							<tr>
-								<th>#</th>
 								<th>Name</th>
 								<th>Category</th>
-								<th>&nbsp;</th>
+								<th>Brand</th>
+								<th>Condition</th>
+								<th>Cost</th>
+								<th>Price</th>
 							</tr>
 						</thead>
 						<tbody>
 							{data.getAllInventoryItems.map((inventoryItem) => (
 								<tr>
-									<td>{inventoryItem.friendlyId}</td>
-									<td>{inventoryItem.name}</td>
-									<td>{inventoryItem.category}</td>
 									<td>
-										<ButtonToolbar>
-											<ButtonGroup className='me-2' aria-label='Actions'>
-												<Button variant='primary'>View</Button>
-												<Button
-													variant='primary'
-													to={`/inventory/edit/${inventoryItem.id}`}
-													as={Link}
-												>
-													Edit
-												</Button>
-											</ButtonGroup>
-											<ButtonGroup aria-label='Actions'>
-												<Button variant='danger'>Delete</Button>
-											</ButtonGroup>
-										</ButtonToolbar>
+										<Link to={`/inventory/edit/${inventoryItem.id}`}>
+											{inventoryItem.name}
+										</Link>
+									</td>
+									<td>
+										<Link to={`/inventory/edit/${inventoryItem.id}`}>
+											{inventoryItem.category}
+										</Link>
+									</td>
+									<td>
+										<Link to={`/inventory/edit/${inventoryItem.id}`}>
+											{inventoryItem.brand}
+										</Link>
+									</td>
+									<td>
+										<Link to={`/inventory/edit/${inventoryItem.id}`}>
+											{inventoryItem.condition}
+										</Link>
+									</td>
+									<td>
+										<Link to={`/inventory/edit/${inventoryItem.id}`}>
+											${(inventoryItem.cost || 0).toFixed(2)}
+										</Link>
+									</td>
+									<td>
+										<Link to={`/inventory/edit/${inventoryItem.id}`}>
+											${(inventoryItem.price || 0).toFixed(2)}
+										</Link>
 									</td>
 								</tr>
 							))}
