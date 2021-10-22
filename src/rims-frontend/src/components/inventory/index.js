@@ -30,7 +30,7 @@ const getAllInventoryItems = gql`
 `;
 
 const Inventory = () => {
-	const [orderBy, setOrderBy] = useState('name');
+	const [orderBy, setOrderBy] = useState('name ASC');
 	const { loading, error, data } = useQuery(getAllInventoryItems, {
 		variables: {
 			orderBy
@@ -43,6 +43,14 @@ const Inventory = () => {
 	if (error) {
 		return <p>Error :({error}</p>;
 	}
+
+	const setColumnOrdering = (previous, next) => {
+		const [previousField, previousDirection] = previous.split(' ');
+		const direction =
+			previousField === next && previousDirection === 'ASC' ? 'DESC' : 'ASC';
+
+		setOrderBy(`${next} ${direction}`);
+	};
 
 	return (
 		<>
@@ -63,12 +71,20 @@ const Inventory = () => {
 						<thead>
 							<tr>
 								<th>&nbsp;</th>
-								<th onClick={() => setOrderBy('name')}>Name</th>
-								<th onClick={() => setOrderBy('category')}>Category</th>
-								<th onClick={() => setOrderBy('brand')}>Brand</th>
-								<th onClick={() => setOrderBy('condition')}>Condition</th>
-								<th onClick={() => setOrderBy('cost')}>Cost</th>
-								<th onClick={() => setOrderBy('price')}>Price</th>
+								<th onClick={() => setColumnOrdering(orderBy, 'name')}>Name</th>
+								<th onClick={() => setColumnOrdering(orderBy, 'category')}>
+									Category
+								</th>
+								<th onClick={() => setColumnOrdering(orderBy, 'brand')}>
+									Brand
+								</th>
+								<th onClick={() => setColumnOrdering(orderBy, 'condition')}>
+									Condition
+								</th>
+								<th onClick={() => setColumnOrdering(orderBy, 'cost')}>Cost</th>
+								<th onClick={() => setColumnOrdering(orderBy, 'price')}>
+									Price
+								</th>
 							</tr>
 						</thead>
 						<tbody>
