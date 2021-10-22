@@ -10,7 +10,12 @@ const Header = () => {
 	return (
 		<Navbar bg='light' expand='lg'>
 			<Navbar.Brand href='#home'>
-				Resale Inventory Management System (RIMS)
+				<img
+					src={process.env.PUBLIC_URL + '/thrift-and-shift-logo.png'}
+					style={{ maxHeight: '4em', width: 'auto' }}
+					alt="Thrift &amp; Shift Logo"
+					title="Thrift &amp; Shift - Your Place to Manage Your Thrifting Finds"
+				/>
 			</Navbar.Brand>
 			<Navbar.Toggle aria-controls='basic-navbar-nav' />
 			<Navbar.Collapse id='basic-navbar-nav'>

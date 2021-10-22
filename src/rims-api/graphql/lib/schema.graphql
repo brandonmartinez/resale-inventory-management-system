@@ -1,0 +1,86 @@
+# File Upload Types
+##################################################
+scalar Upload
+
+type File {
+	encoding: String!
+	filename: String!
+	mimetype: String!
+	url: String!
+}
+
+# Inventory Types
+##################################################
+enum InventoryItemCondition {
+	Fair
+	Good
+	LikeNew
+	New
+	Poor
+}
+
+type InventoryItem {
+	brand: String
+	category: String
+	color: String
+	condition: InventoryItemCondition
+	cost: Float
+	createdAt: String
+	description: String
+	friendlyId: String!
+	hashtags: String
+	id: ID!
+	name: String!
+	price: Float
+	relativeImagePaths: [String]
+	size: String
+	style: String
+	updatedAt: String
+	userId: String!
+}
+
+input InventoryItemInput {
+	brand: String
+	category: String
+	color: String
+	condition: InventoryItemCondition
+	cost: Float
+	description: String
+	hashtags: String
+	id: ID
+	name: String!
+	price: Float
+	size: String
+	style: String
+}
+
+# GraphQL Types
+##################################################
+type Query {
+	# Inventory Queries
+	##################################################
+	getAllInventoryItems(orderBy: String): [InventoryItem]
+	getInventoryItemById(id: ID!): InventoryItem
+	getLatestInventoryItems(numberOfItems: Int): [InventoryItem]
+	getNextInventoryFriendlyId: String
+}
+
+type Mutation {
+	# Inventory Mutations
+	##################################################
+	createInventoryItem(
+		inventoryItem: InventoryItemInput
+		images: [Upload!]
+	): InventoryItem!
+	updateInventoryItem(
+		inventoryItem: InventoryItemInput
+		images: [Upload!]
+	): InventoryItem!
+}
+
+# Schema
+##################################################
+schema {
+	mutation: Mutation
+	query: Query
+}

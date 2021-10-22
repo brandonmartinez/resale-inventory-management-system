@@ -1,14 +1,39 @@
+// Imports
+//////////////////////////////////////////////////
+
 import './index.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { createUploadLink } from 'apollo-upload-client';
+
+import {
+	ApolloClient,
+	ApolloProvider,
+	InMemoryCache
+} from '@apollo/client';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Service Setup
+//////////////////////////////////////////////////
+const client = new ApolloClient({
+	cache: new InMemoryCache(),
+	link: createUploadLink({
+		uri: 'http://localhost:7071/graphql'
+	})
+});
+
+// Render
+//////////////////////////////////////////////////
+
 ReactDOM.render(
 	<React.StrictMode>
-		<App />
+		<ApolloProvider client={client}>
+			<App />
+		</ApolloProvider>
 	</React.StrictMode>,
 	document.getElementById('root')
 );

@@ -3,5 +3,7 @@
   "useTabs": true,
   "singleQuote": true,
   "jsxSingleQuote": true,
-  "proseWrap": "always"
+  "proseWrap": "always",
+  "arrowParens": "always",
+  "quoteProps": "consistent"
 }

@@ -1,0 +1,19 @@
+{
+    "githubIssues.issueBranchTitle": "${user}/issue/${issueNumber}-${sanitizedIssueTitle}",
+    "githubIssues.queries": [
+        {
+            "label": "My Issues",
+            "query": "default"
+        },
+        {
+            "label": "Created Issues",
+            "query": "author:${user} state:open repo:${owner}/${repository} sort:created-desc"
+        },
+        {
+            "label": "Open Issues",
+            "query": "state:open repo:${owner}/${repository} sort:created-desc"
+        }
+    ],
+    "githubIssues.issueCompletions.enabled": false,
+    "bashIde.explainshellEndpoint": "http://0.0.0.0:6000"
+}

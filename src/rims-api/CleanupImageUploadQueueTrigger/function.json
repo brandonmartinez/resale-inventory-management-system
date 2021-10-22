@@ -1,0 +1,11 @@
+{
+  "bindings": [
+    {
+      "connection": "AssetsStorageConnectionString",
+      "direction": "in",
+      "name": "queueMessage",
+      "queueName": "inventoryitemimageuploads-cleanup",
+      "type": "queueTrigger"
+    }
+  ]
+}

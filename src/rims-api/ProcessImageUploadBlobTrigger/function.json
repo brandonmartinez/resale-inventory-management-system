@@ -1,0 +1,28 @@
+{
+  "bindings": [
+    {
+      "connection": "AssetsStorageConnectionString",
+      "dataType": "binary",
+      "direction": "in",
+      "name": "inputBlob",
+      "path": "inventoryitemimageuploads/{name}.{extension}",
+      "type": "blobTrigger"
+    },
+    {
+      "connection": "AssetsStorageConnectionString",
+      "dataType": "binary",
+      "direction": "out",
+      "name": "$return",
+      "path": "inventoryitemimages/{name}.jpg",
+      "type": "blob"
+    },
+    {
+      "connection": "AssetsStorageConnectionString",
+      "direction": "out",
+      "name": "cleanupQueue",
+      "queueName": "inventoryitemimageuploads-cleanup",
+      "type": "queue"
+    }
+  ],
+  "disabled": false
+}
