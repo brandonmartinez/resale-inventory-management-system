@@ -9,13 +9,14 @@ const resolvers = {
 	Query: {
 		// Inventory Queries
 		//////////////////////////////////////////////////
-		async getAllInventoryItems(_, __, { dataSources }, info) {
+		async getAllInventoryItems(_, { orderBy }, { dataSources }, info) {
 			// Get info passed from GraphQL Query and set needed fields
 			const fields = Object.keys(info.parsed.fieldsByTypeName.InventoryItem);
 
 			// Execute query
 			const queryResults = await dataSources.inventoryItems.getAllItems({
-				fields
+				fields,
+				orderBy
 			});
 			const resources = queryResults.resources;
 

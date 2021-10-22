@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
@@ -12,8 +14,8 @@ import {
 } from '@apollo/client';
 
 const getAllInventoryItems = gql`
-	query Query {
-		getAllInventoryItems {
+	query Query($orderBy: String) {
+		getAllInventoryItems(orderBy: $orderBy) {
 			id
 			friendlyId
 			name
@@ -22,12 +24,18 @@ const getAllInventoryItems = gql`
 			condition
 			cost
 			price
+			relativeImagePaths
 		}
 	}
 `;
 
 const Inventory = () => {
-	const { loading, error, data } = useQuery(getAllInventoryItems);
+	const [orderBy, setOrderBy] = useState('name');
+	const { loading, error, data } = useQuery(getAllInventoryItems, {
+		variables: {
+			orderBy
+		}
+	});
 
 	if (loading) {
 		return <p>Loading...</p>;
@@ -54,17 +62,38 @@ const Inventory = () => {
 					<Table striped bordered hover>
 						<thead>
 							<tr>
-								<th>Name</th>
-								<th>Category</th>
-								<th>Brand</th>
-								<th>Condition</th>
-								<th>Cost</th>
-								<th>Price</th>
+								<th>&nbsp;</th>
+								<th onClick={() => setOrderBy('name')}>Name</th>
+								<th onClick={() => setOrderBy('category')}>Category</th>
+								<th onClick={() => setOrderBy('brand')}>Brand</th>
+								<th onClick={() => setOrderBy('condition')}>Condition</th>
+								<th onClick={() => setOrderBy('cost')}>Cost</th>
+								<th onClick={() => setOrderBy('price')}>Price</th>
 							</tr>
 						</thead>
 						<tbody>
-							{data.getAllInventoryItems.map((inventoryItem) => (
-								<tr>
+							{data.getAllInventoryItems.map((inventoryItem, i) => (
+								<tr key={`product-image-${i}`}>
+									<td>
+										{inventoryItem.relativeImagePaths &&
+										inventoryItem.relativeImagePaths.length > 0 ? (
+											<Link to={`/inventory/edit/${inventoryItem.id}`}>
+												<img
+													src={
+														'https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/' +
+														inventoryItem.relativeImagePaths[0]
+													}
+													style={{
+														maxHeight: '4em',
+														width: 'auto'
+													}}
+													alt='Product'
+												/>
+											</Link>
+										) : (
+											<></>
+										)}
+									</td>
 									<td>
 										<Link to={`/inventory/edit/${inventoryItem.id}`}>
 											{inventoryItem.name}

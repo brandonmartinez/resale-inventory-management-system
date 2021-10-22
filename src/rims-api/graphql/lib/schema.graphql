@@ -59,7 +59,7 @@ input InventoryItemInput {
 type Query {
 	# Inventory Queries
 	##################################################
-	getAllInventoryItems: [InventoryItem]
+	getAllInventoryItems(orderBy: String): [InventoryItem]
 	getInventoryItemById(id: ID!): InventoryItem
 	getLatestInventoryItems(numberOfItems: Int): [InventoryItem]
 	getNextInventoryFriendlyId: String
@@ -68,8 +68,14 @@ type Query {
 type Mutation {
 	# Inventory Mutations
 	##################################################
-	createInventoryItem(inventoryItem: InventoryItemInput, images: [Upload!]): InventoryItem!
-	updateInventoryItem(inventoryItem: InventoryItemInput, images: [Upload!]): InventoryItem!
+	createInventoryItem(
+		inventoryItem: InventoryItemInput
+		images: [Upload!]
+	): InventoryItem!
+	updateInventoryItem(
+		inventoryItem: InventoryItemInput
+		images: [Upload!]
+	): InventoryItem!
 }
 
 # Schema

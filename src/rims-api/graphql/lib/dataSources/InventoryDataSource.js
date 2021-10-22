@@ -3,11 +3,11 @@ const CosmosDataSource = require('apollo-datasource-cosmosdb').CosmosDataSource;
 class InventoryDataSource extends CosmosDataSource {
 	temporaryUserId = 'a2a5f680-37db-40ff-9ed3-205d21c47f52';
 
-	async getAllItems({ fields }) {
+	async getAllItems({ fields, orderBy = 'name' }) {
 		const fieldList = fields.map((f) => `c.${f}`).join(', ');
 
 		const inventoryItems = await this.findManyByQuery({
-			query: `SELECT ${fieldList} FROM c WHERE c.userId = @userId`,
+			query: `SELECT ${fieldList} FROM c WHERE c.userId = @userId ORDER BY c.${orderBy}`,
 			parameters: [{ name: '@userId', value: this.temporaryUserId }]
 		});
 
