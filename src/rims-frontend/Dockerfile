@@ -9,9 +9,6 @@ RUN npm install -g http-server
 # Create App directory
 WORKDIR /app
 
-COPY env.sh .
-COPY server.sh .
-
 EXPOSE 80
 EXPOSE 443
 
@@ -37,6 +34,10 @@ RUN npm run build
 # Stage 3: Copy Into a Clean Runtime Image
 ##################################################################
 FROM base AS final
+
+# Copy Server Scripts
+COPY env.sh .
+COPY server.sh .
 
 # Copy artifacts from the previous stage into this stage
 COPY --from=publish /app/build ./
