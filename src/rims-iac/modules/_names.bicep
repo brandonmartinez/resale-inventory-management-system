@@ -45,8 +45,11 @@ output cosmosDbResourceGroupName string = 'rg-${envreg}-cosmos'
 output cosmosDbAccountName string = 'cosmos-${envreg}-db'
 output cosmosDbDatabaseName string = 'rims'
 
-// Functions
-output functionsResourceGroupName string = 'rg-${envreg}-functions'
+// Kubernetes
+output kubernetesClusterResourceGroupName string = 'rg-${envreg}-aks'
+output kubernetesClusterName string = 'aks-${envreg}-cluster'
+output kubernetesClusterDNSName string = 'aks-${envreg}-cluster-dns'
+output kubernetesNodeResourceGroupName string = 'rg-${envreg}-aks-nodes'
 
 // Dashboard
 output dashboardsResourceGroupName string = 'rg-${envreg}-dashboards'

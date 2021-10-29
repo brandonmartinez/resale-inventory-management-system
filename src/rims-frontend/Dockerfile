@@ -19,6 +19,11 @@ EXPOSE 443
 ##################################################################
 FROM base as publish
 
+# Update NPM to latest and replace the global version
+RUN npm install npm@latest
+RUN rm -rf /usr/local/lib/node_modules/npm
+RUN mv node_modules/npm /usr/local/lib/node_modules/npm
+
 # Copy package files and npm install
 COPY ./package*.json ./
 RUN npm install

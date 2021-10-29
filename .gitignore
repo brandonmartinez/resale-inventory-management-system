@@ -164,3 +164,6 @@ venv.bak/
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Other ignore
+env-config.js
