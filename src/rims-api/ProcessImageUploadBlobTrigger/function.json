@@ -1,7 +1,7 @@
 {
   "bindings": [
     {
-      "connection": "AssetsStorageConnectionString",
+      "connection": "ASSETSSTORAGECONNECTIONSTRING",
       "dataType": "binary",
       "direction": "in",
       "name": "inputBlob",
@@ -9,7 +9,7 @@
       "type": "blobTrigger"
     },
     {
-      "connection": "AssetsStorageConnectionString",
+      "connection": "ASSETSSTORAGECONNECTIONSTRING",
       "dataType": "binary",
       "direction": "out",
       "name": "$return",
@@ -17,7 +17,7 @@
       "type": "blob"
     },
     {
-      "connection": "AssetsStorageConnectionString",
+      "connection": "ASSETSSTORAGECONNECTIONSTRING",
       "direction": "out",
       "name": "cleanupQueue",
       "queueName": "inventoryitemimageuploads-cleanup",

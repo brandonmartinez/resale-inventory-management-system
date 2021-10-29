@@ -4,14 +4,14 @@ const CosmosClient = require('@azure/cosmos').CosmosClient;
 
 const { BlobServiceClient } = require('@azure/storage-blob');
 const assetsBlobServiceClient = BlobServiceClient.fromConnectionString(
-	process.env.AssetsStorageConnectionString
+	process.env.ASSETSSTORAGECONNECTIONSTRING
 );
 const assetsInventoryItemImageUploadsContainerClient =
 	assetsBlobServiceClient.getContainerClient('inventoryitemimageuploads');
 
 // Cosmos Config
 //////////////////////////////////////////////////
-const cosmosDbConnectionString = process.env.CosmosDbConnectionString;
+const cosmosDbConnectionString = process.env.COSMOSDBCONNECTIONSTRING;
 const cosmosDbDatabaseName = 'rims';
 const cosmosDbInventoryContainerName = 'Inventory';
 

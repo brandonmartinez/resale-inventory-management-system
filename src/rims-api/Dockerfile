@@ -5,6 +5,13 @@ FROM mcr.microsoft.com/azure-functions/node:3.0
 ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
     AzureFunctionsJobHost__Logging__Console__IsEnabled=true
 
-COPY . /home/site/wwwroot
+WORKDIR /home/site/wwwroot
 
-RUN cd /home/site/wwwroot && npm install
+# Update NPM to latest and replace the global version
+RUN npm install npm@latest
+RUN rm -rf /usr/local/lib/node_modules/npm
+RUN mv node_modules/npm /usr/local/lib/node_modules/npm
+
+COPY . .
+
+RUN npm install

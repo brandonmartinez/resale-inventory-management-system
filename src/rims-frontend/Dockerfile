@@ -9,6 +9,7 @@ RUN npm install -g http-server
 # Create App directory
 WORKDIR /app
 
+COPY env.sh .
 COPY server.sh .
 
 EXPOSE 80

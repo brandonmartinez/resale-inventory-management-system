@@ -19,7 +19,7 @@ services:
     expose:
       - 80
     environment:
-      API_URI: http://localhost:8888
+      - API_URI 
   rims-api:
     image: rims-api
     container_name: rims-api
@@ -28,3 +28,8 @@ services:
       dockerfile: ./Dockerfile
     expose:
       - 80
+    environment:
+      - AZUREWEBJOBSSTORAGE
+      - COSMOSDBCONNECTIONSTRING
+      - ASSETSSTORAGECONNECTIONSTRING
+      
