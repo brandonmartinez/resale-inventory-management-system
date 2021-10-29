@@ -15,7 +15,7 @@
     "@jorgeferrero/stream-to-buffer": "^2.0.6",
     "apollo-datasource-cosmosdb": "^0.0.17",
     "apollo-server-azure-functions": "^3.4.0",
-    "graphql": "^16.0.0",
+    "graphql": "^15.3.0",
     "graphql-middleware": "^6.1.11",
     "graphql-parse-resolve-info": "^4.12.0",
     "graphql-upload-minimal": "^1.2.2",

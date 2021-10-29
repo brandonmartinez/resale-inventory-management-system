@@ -7,11 +7,6 @@ ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
 
 WORKDIR /home/site/wwwroot
 
-# Update NPM to latest and replace the global version
-RUN npm install npm@latest
-RUN rm -rf /usr/local/lib/node_modules/npm
-RUN mv node_modules/npm /usr/local/lib/node_modules/npm
-
 COPY . .
 
 RUN npm install

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 SCRIPT_FULL_PATH=$(dirname "$0")
 cd $SCRIPT_FULL_PATH
