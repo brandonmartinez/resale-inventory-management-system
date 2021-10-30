@@ -1,0 +1,146 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rims
+  labels:
+    name: rims
+---
+# Resources for RIMS Frontend
+##################################################
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rims-frontend-configmap
+  namespace: rims
+data:
+  API_URI: "http://${API_FQDN}"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rims-frontend
+spec:
+  selector:
+    matchLabels:
+      app: rims-frontend
+  template:
+    metadata:
+      labels:
+        app: rims-frontend
+    spec:
+      containers:
+        - name: rims-frontend
+          image: rims-frontend
+          imagePullPolicy: Never
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          envFrom:
+            - configMapRef:
+                name: rims-frontend-configmap
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rims-frontend-svc
+  namespace: rims
+spec:
+  selector:
+    app: rims-frontend
+  ports:
+    - name: 80-tcp
+      port: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rims-frontend-ingress
+  namespace: rims
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: ${FRONTEND_FQDN}
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: rims-frontend-svc
+                port:
+                  name: 80-tcp
+---
+# Resources for RIMS API
+##################################################
+apiVersion: v1
+kind: Secret
+metadata:
+  name: rims-api-secrets
+  namespace: rims
+data:
+  AZUREWEBJOBSSTORAGE: "${AZUREWEBJOBSSTORAGE}"
+  COSMOSDBCONNECTIONSTRING: "${COSMOSDBCONNECTIONSTRING}"
+  ASSETSSTORAGECONNECTIONSTRING: "${ASSETSSTORAGECONNECTIONSTRING}"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rims-api
+spec:
+  selector:
+    matchLabels:
+      app: rims-api
+  template:
+    metadata:
+      labels:
+        app: rims-api
+    spec:
+      containers:
+        - name: rims-api
+          image: rims-api
+          imagePullPolicy: Never
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          envFrom:
+            - secretRef:
+                name: rims-api-secrets
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rims-api-svc
+  namespace: rims
+spec:
+  selector:
+    app: rims-api
+  ports:
+    - name: 80-tcp
+      port: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rims-api-ingress
+  namespace: rims
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: ${API_FQDN}
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: rims-api-svc
+                port:
+                  name: 80-tcp
