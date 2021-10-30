@@ -59,8 +59,6 @@ kind: Ingress
 metadata:
   name: rims-frontend-ingress
   namespace: rims
-  annotations:
-    kubernetes.io/ingress.class: nginx
 spec:
   rules:
     - host: ${FRONTEND_FQDN}
@@ -73,6 +71,7 @@ spec:
                 name: rims-frontend-svc
                 port:
                   name: 80-tcp
+  ingressClassName: nginx
 ---
 # Resources for RIMS API
 ##################################################
@@ -130,8 +129,6 @@ kind: Ingress
 metadata:
   name: rims-api-ingress
   namespace: rims
-  annotations:
-    kubernetes.io/ingress.class: nginx
 spec:
   rules:
     - host: ${API_FQDN}
@@ -144,3 +141,4 @@ spec:
                 name: rims-api-svc
                 port:
                   name: 80-tcp
+  ingressClassName: nginx
