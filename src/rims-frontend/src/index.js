@@ -22,7 +22,7 @@ import reportWebVitals from './reportWebVitals';
 const client = new ApolloClient({
 	cache: new InMemoryCache(),
 	link: createUploadLink({
-		uri: 'http://localhost:7071/graphql'
+		uri: window._env_.API_URI + '/graphql'
 	})
 });
 

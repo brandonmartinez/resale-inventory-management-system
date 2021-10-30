@@ -1,8 +1,13 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Set Session Name
 SESSION="RIMS"
 SESSIONEXISTS=$(tmux list-sessions | grep $SESSION)
+
+SESSION_WINDOW_LOCAL_SERVERS="Dev"
+SESSION_WINDOW_DOCKER="Docker"
+SESSION_WINDOW_K8S="k8s"
+SESSION_WINDOW_SHELL="zsh"
 
 # Only create tmux session if it doesn't already exist
 if [ "$SESSIONEXISTS" = "" ]
@@ -12,15 +17,23 @@ then
     tmux new-session -d -s $SESSION
     
     # Create a Window for our Server Sessions, start the servers
-    tmux rename-window -t $SESSION Servers
-    tmux send-keys -t $SESSION:Servers "cd '$(PWD)'" C-m "clear" C-m
+    tmux rename-window -t $SESSION $SESSION_WINDOW_LOCAL_SERVERS
+    tmux send-keys -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS "cd '$(PWD)'" C-m "clear" C-m
     
-    tmux split-window -h -t $SESSION:Servers
-    tmux send-keys -t $SESSION:Servers.1 "cd src/rims-frontend/" C-m "nvm use" C-m "npm run start" C-m
-    tmux send-keys -t $SESSION:Servers.2 "cd src/rims-api/" C-m "nvm use" C-m "func host start" C-m
+    tmux split-window -h -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS
+    tmux send-keys -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS.1 "cd src/rims-frontend/" C-m "nvm use" C-m "npm run dev" C-m
+    tmux send-keys -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS.2 "cd src/rims-api/" C-m "nvm use" C-m "func host start --verbose" C-m
+    
+    # Create a Window for Docker
+    tmux new-window -t $SESSION -c "$(PWD)" -n $SESSION_WINDOW_DOCKER
+    tmux send-keys -t $SESSION:$SESSION_WINDOW_DOCKER "docker-compose build" C-m "docker-compose up" C-m
+    
+    # Create a Window for k8s
+    tmux new-window -t $SESSION -c "$(PWD)" -n $SESSION_WINDOW_K8S
+    tmux send-keys -t $SESSION:$SESSION_WINDOW_K8S "kubectl config use-context docker-desktop" C-m "./kubernetes.sh" C-m "kubectl config set-context --current --namespace=rims" C-m "clear" C-m "kubectl get all" C-m
     
     # Create a Window for zsh
-    tmux new-window -c "$(PWD)" -n "zsh"
+    tmux new-window -t $SESSION -c "$(PWD)" -n $SESSION_WINDOW_SHELL
 fi
 
 # Attach Session, on the Main window

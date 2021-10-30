@@ -15,5 +15,11 @@
         }
     ],
     "githubIssues.issueCompletions.enabled": false,
-    "bashIde.explainshellEndpoint": "http://0.0.0.0:6000"
+    "bashIde.explainshellEndpoint": "http://0.0.0.0:6000",
+    "markdownlint.config": {
+        "MD028": false,
+        "MD025": {
+            "front_matter_title": ""
+        }
+    }
 }
