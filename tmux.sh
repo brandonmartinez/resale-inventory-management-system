@@ -6,6 +6,7 @@ SESSIONEXISTS=$(tmux list-sessions | grep $SESSION)
 
 SESSION_WINDOW_LOCAL_SERVERS="Dev"
 SESSION_WINDOW_DOCKER="Docker"
+SESSION_WINDOW_K8S="k8s"
 SESSION_WINDOW_SHELL="zsh"
 
 # Only create tmux session if it doesn't already exist
@@ -26,6 +27,10 @@ then
     # Create a Window for Docker
     tmux new-window -t $SESSION -c "$(PWD)" -n $SESSION_WINDOW_DOCKER
     tmux send-keys -t $SESSION:$SESSION_WINDOW_DOCKER "docker-compose build" C-m "docker-compose up" C-m
+    
+    # Create a Window for k8s
+    tmux new-window -t $SESSION -c "$(PWD)" -n $SESSION_WINDOW_K8S
+    tmux send-keys -t $SESSION:$SESSION_WINDOW_K8S "kubectl config use-context docker-desktop" C-m "./kubernetes.sh" C-m "kubectl config set-context --current --namespace=rims" C-m "clear" C-m "kubectl get all" C-m
     
     # Create a Window for zsh
     tmux new-window -t $SESSION -c "$(PWD)" -n $SESSION_WINDOW_SHELL
