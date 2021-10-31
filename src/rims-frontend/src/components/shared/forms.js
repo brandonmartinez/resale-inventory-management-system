@@ -14,6 +14,15 @@ export const TextBox = ({ id, label, placeholder, ...rest }) => (
 	</FloatingLabel>
 );
 
+export const SearchBox = ({ id, label, placeholder, ...rest }) => (
+	<Form.Control
+		type='text'
+		placeholder={placeholder}
+		title={placeholder}
+		{...rest}
+	/>
+);
+
 export const TextArea = ({ id, label, placeholder, ...rest }) => (
 	<FloatingLabel controlId={id} label={label} className='mb-3'>
 		<Form.Control
