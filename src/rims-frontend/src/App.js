@@ -1,7 +1,3 @@
-// Styles
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-
 // Library Imports
 import React from 'react';
 
@@ -31,7 +27,7 @@ const ParamWrapper = ({ Component, ...rest }) => {
 const App = () => (
 	<Router>
 		<Header />
-		<Container fluid="md">
+		<Container>
 			<Switch>
 				<Route path='/inventory/add'>
 					<CreateInventoryItem />
