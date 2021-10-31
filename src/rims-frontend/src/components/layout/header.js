@@ -22,10 +22,10 @@ import {
 import Search from './search';
 
 const navigation = [
-	{ name: 'Dashboard', href: '#', current: true },
-	{ name: 'Inventory', href: '#', current: false },
-	{ name: 'Labels', href: '#', current: false },
-	{ name: 'Spaces', href: '#', current: false }
+	{ name: 'Dashboard', href: '/', current: true },
+	{ name: 'Inventory', href: '/inventory', current: false },
+	{ name: 'Labels', href: '/labels', current: false },
+	{ name: 'Spaces', href: '/spaces', current: false }
 ];
 
 function classNames(...classes) {
@@ -75,9 +75,9 @@ const Header = () => {
 									<div className='hidden sm:block sm:ml-6'>
 										<div className='flex space-x-4'>
 											{navigation.map((item) => (
-												<a
+												<Link
 													key={item.name}
-													href={item.href}
+													to={item.href}
 													className={classNames(
 														item.current
 															? 'bg-gray-900 text-white'
@@ -87,7 +87,7 @@ const Header = () => {
 													aria-current={item.current ? 'page' : undefined}
 												>
 													{item.name}
-												</a>
+												</Link>
 											))}
 										</div>
 									</div>
