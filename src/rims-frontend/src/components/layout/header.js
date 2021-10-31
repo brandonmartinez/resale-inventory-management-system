@@ -2,13 +2,13 @@ import React from 'react';
 
 // Library Imports
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from 'react-router-dom';
 
-import { SearchBox } from '../shared/forms';
+// Custom Components
+import Search from './search';
 
 const Header = () => {
 	return (
@@ -28,14 +28,14 @@ const Header = () => {
 						<Nav.Link to='/' as={Link}>
 							Dashboard
 						</Nav.Link>
-						<Nav.Link to='/spaces' as={Link}>
-							Spaces
-						</Nav.Link>
 						<Nav.Link to='/inventory' as={Link}>
 							Inventory
 						</Nav.Link>
 						<Nav.Link to='/labels' as={Link}>
 							Labels
+						</Nav.Link>
+						<Nav.Link to='/spaces' as={Link}>
+							Spaces
 						</Nav.Link>
 						<NavDropdown title='User Name' id='basic-nav-dropdown'>
 							<NavDropdown.Item to='/profile' as={Link}>
@@ -51,9 +51,7 @@ const Header = () => {
 						</NavDropdown>
 					</Nav>
 					<Nav>
-						<Form>
-							<SearchBox id='search' label='Search' placeholder='Search…' />
-						</Form>
+						<Search />
 					</Nav>
 				</Navbar.Collapse>
 			</Container>

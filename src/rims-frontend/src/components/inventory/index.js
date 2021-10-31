@@ -6,7 +6,10 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Table from 'react-bootstrap/Table';
-import { Link } from 'react-router-dom';
+import {
+	Link,
+	useHistory
+} from 'react-router-dom';
 
 import {
 	gql,
@@ -30,6 +33,8 @@ const getAllInventoryItems = gql`
 `;
 
 const Inventory = () => {
+	const history = useHistory();
+
 	const [orderBy, setOrderBy] = useState('name ASC');
 	const { loading, error, data } = useQuery(getAllInventoryItems, {
 		variables: {
@@ -67,7 +72,13 @@ const Inventory = () => {
 			</Row>
 			<Row>
 				<Col>
-					<Table striped bordered hover>
+					<Table
+						striped
+						bordered
+						hover
+						responsive='md'
+						className='align-middle'
+					>
 						<thead>
 							<tr>
 								<th>&nbsp;</th>
@@ -89,57 +100,36 @@ const Inventory = () => {
 						</thead>
 						<tbody>
 							{data.getAllInventoryItems.map((inventoryItem, i) => (
-								<tr key={`product-image-${i}`}>
-									<td>
+								<tr
+									key={`product-image-${i}`}
+									onClick={() =>
+										history.push(`/inventory/edit/${inventoryItem.id}`)
+									}
+								>
+									<td className='text-center'>
 										{inventoryItem.relativeImagePaths &&
 										inventoryItem.relativeImagePaths.length > 0 ? (
-											<Link to={`/inventory/edit/${inventoryItem.id}`}>
-												<img
-													src={
-														'https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/' +
-														inventoryItem.relativeImagePaths[0]
-													}
-													style={{
-														maxHeight: '4em',
-														width: 'auto'
-													}}
-													alt='Product'
-												/>
-											</Link>
+											<img
+												src={
+													'https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/' +
+													inventoryItem.relativeImagePaths[0]
+												}
+												style={{
+													maxHeight: '4em',
+													width: 'auto'
+												}}
+												alt='Product'
+											/>
 										) : (
 											<></>
 										)}
 									</td>
-									<td>
-										<Link to={`/inventory/edit/${inventoryItem.id}`}>
-											{inventoryItem.name}
-										</Link>
-									</td>
-									<td>
-										<Link to={`/inventory/edit/${inventoryItem.id}`}>
-											{inventoryItem.category}
-										</Link>
-									</td>
-									<td>
-										<Link to={`/inventory/edit/${inventoryItem.id}`}>
-											{inventoryItem.brand}
-										</Link>
-									</td>
-									<td>
-										<Link to={`/inventory/edit/${inventoryItem.id}`}>
-											{inventoryItem.condition}
-										</Link>
-									</td>
-									<td>
-										<Link to={`/inventory/edit/${inventoryItem.id}`}>
-											${(inventoryItem.cost || 0).toFixed(2)}
-										</Link>
-									</td>
-									<td>
-										<Link to={`/inventory/edit/${inventoryItem.id}`}>
-											${(inventoryItem.price || 0).toFixed(2)}
-										</Link>
-									</td>
+									<td>{inventoryItem.name}</td>
+									<td>{inventoryItem.category}</td>
+									<td>{inventoryItem.brand}</td>
+									<td>{inventoryItem.condition}</td>
+									<td>${(inventoryItem.cost || 0).toFixed(2)}</td>
+									<td>${(inventoryItem.price || 0).toFixed(2)}</td>
 								</tr>
 							))}
 						</tbody>

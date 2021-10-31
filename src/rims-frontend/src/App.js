@@ -31,7 +31,7 @@ const ParamWrapper = ({ Component, ...rest }) => {
 const App = () => (
 	<Router>
 		<Header />
-		<Container>
+		<Container fluid="md">
 			<Switch>
 				<Route path='/inventory/add'>
 					<CreateInventoryItem />
