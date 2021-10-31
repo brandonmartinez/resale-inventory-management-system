@@ -1,11 +1,5 @@
 import { useState } from 'react';
 
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Table from 'react-bootstrap/Table';
 import {
 	Link,
 	useHistory
@@ -57,85 +51,74 @@ const Inventory = () => {
 		setOrderBy(`${next} ${direction}`);
 	};
 
+	const HeaderColumn = ({ children, ...rest }) => <th scope="col"
+		className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" {...rest}>{children}</th>;
+	const DataColumn = ({ children, ...rest }) => <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900" {...rest}>{children}</td>
+
 	return (
 		<>
-			<Row>
-				<Col>
-					<ButtonToolbar aria-label='Toolbar with button groups'>
-						<ButtonGroup aria-label='Third group'>
-							<Button to='/inventory/add' as={Link}>
-								Add New Item
-							</Button>
-						</ButtonGroup>
-					</ButtonToolbar>
-				</Col>
-			</Row>
-			<Row>
-				<Col>
-					<Table
-						striped
-						bordered
-						hover
-						responsive='md'
-						className='align-middle'
-					>
-						<thead>
-							<tr>
-								<th>&nbsp;</th>
-								<th onClick={() => setColumnOrdering(orderBy, 'name')}>Name</th>
-								<th onClick={() => setColumnOrdering(orderBy, 'category')}>
-									Category
-								</th>
-								<th onClick={() => setColumnOrdering(orderBy, 'brand')}>
-									Brand
-								</th>
-								<th onClick={() => setColumnOrdering(orderBy, 'condition')}>
-									Condition
-								</th>
-								<th onClick={() => setColumnOrdering(orderBy, 'cost')}>Cost</th>
-								<th onClick={() => setColumnOrdering(orderBy, 'price')}>
-									Price
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							{data.getAllInventoryItems.map((inventoryItem, i) => (
-								<tr
-									key={`product-image-${i}`}
-									onClick={() =>
-										history.push(`/inventory/edit/${inventoryItem.id}`)
-									}
-								>
-									<td className='text-center'>
-										{inventoryItem.relativeImagePaths &&
-										inventoryItem.relativeImagePaths.length > 0 ? (
-											<img
-												src={
-													'https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/' +
-													inventoryItem.relativeImagePaths[0]
-												}
-												style={{
-													maxHeight: '4em',
-													width: 'auto'
-												}}
-												alt='Product'
-											/>
-										) : (
-											<></>
-										)}
-									</td>
-									<td>{inventoryItem.name}</td>
-									<td>{inventoryItem.category}</td>
-									<td>{inventoryItem.brand}</td>
-									<td>{inventoryItem.condition}</td>
-									<td>${(inventoryItem.cost || 0).toFixed(2)}</td>
-									<td>${(inventoryItem.price || 0).toFixed(2)}</td>
-								</tr>
-							))}
-						</tbody>
-					</Table>
-				</Col>
-			</Row>
+			<Link to='/inventory/add' as={Link}>
+				Add New Item
+			</Link>
+			<div className="flex flex-col">
+				<div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+					<div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+						<div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+							<table className="min-w-full divide-y divide-gray-200">
+								<thead className="bg-gray-50">
+									<tr>
+										<HeaderColumn>&nbsp;</HeaderColumn>
+										<HeaderColumn onClick={() => setColumnOrdering(orderBy, 'name')}>Name</HeaderColumn>
+										<HeaderColumn onClick={() => setColumnOrdering(orderBy, 'category')}>
+											Category
+										</HeaderColumn>
+										<HeaderColumn onClick={() => setColumnOrdering(orderBy, 'brand')}>
+											Brand
+										</HeaderColumn>
+										<HeaderColumn onClick={() => setColumnOrdering(orderBy, 'condition')}>
+											Condition
+										</HeaderColumn>
+										<HeaderColumn onClick={() => setColumnOrdering(orderBy, 'cost')}>Cost</HeaderColumn>
+										<HeaderColumn onClick={() => setColumnOrdering(orderBy, 'price')}>
+											Price
+										</HeaderColumn>
+									</tr>
+								</thead>
+								<tbody className="bg-white divide-y divide-gray-200">
+									{data.getAllInventoryItems.map((inventoryItem, i) => (
+										<tr key={`inventory-item-${i}`} onClick={() => history.push(`/inventory/edit/${inventoryItem.id}`)}>
+											<DataColumn className='text-center'>
+												{inventoryItem.relativeImagePaths &&
+													inventoryItem.relativeImagePaths.length > 0 ? (
+													<img
+														src={
+															'https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/' +
+															inventoryItem.relativeImagePaths[0]
+														}
+														style={{
+															maxHeight: '4em',
+															width: 'auto'
+														}}
+														alt='Product'
+													/>
+												) : (
+													<></>
+												)}
+											</DataColumn>
+											<DataColumn>{inventoryItem.name}</DataColumn>
+											<DataColumn>{inventoryItem.category}</DataColumn>
+											<DataColumn>{inventoryItem.brand}</DataColumn>
+											<DataColumn>{inventoryItem.condition}</DataColumn>
+											<DataColumn>${(inventoryItem.cost || 0).toFixed(2)}</DataColumn>
+											<DataColumn>${(inventoryItem.price || 0).toFixed(2)}</DataColumn>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
 		</>
 	);
 };
