@@ -17,15 +17,13 @@ import {
 	XIcon
 } from '@heroicons/react/outline';
 
+import { classNames } from '../shared/utilities';
+
 const navigation = [
 	{ name: 'Inventory', href: '/inventory' },
 	{ name: 'Labels', href: '/labels' },
 	{ name: 'Spaces', href: '/spaces' }
 ];
-
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ');
-}
 
 const Header = () => {
 	return (
