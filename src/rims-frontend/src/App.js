@@ -1,7 +1,6 @@
 // Library Imports
 import React from 'react';
 
-import Container from 'react-bootstrap/Container';
 import {
 	BrowserRouter as Router,
 	Route,
@@ -27,7 +26,7 @@ const ParamWrapper = ({ Component, ...rest }) => {
 const App = () => (
 	<Router>
 		<Header />
-		<Container>
+		<div className='container max-w-7xl mx-auto px-2 sm:px-6 lg:px-8'>
 			<Switch>
 				<Route path='/inventory/add'>
 					<CreateInventoryItem />
@@ -51,7 +50,7 @@ const App = () => (
 					<Dashboard />
 				</Route>
 			</Switch>
-		</Container>
+		</div>
 	</Router>
 );
 

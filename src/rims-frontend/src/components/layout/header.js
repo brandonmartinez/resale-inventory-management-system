@@ -47,15 +47,16 @@ const Header = () => {
 							</div>
 							<div className='flex-1 flex items-center justify-center sm:items-stretch sm:justify-start'>
 								<div className='flex-shrink-0 flex items-center'>
-									<Link to='/'>
-										<img
-											src={
-												process.env.PUBLIC_URL + '/thrift-and-shift-logo.png'
+									<Link to='/' className='block h-10 w-auto'>
+										<object
+											type='image/svg+xml'
+											data={
+												process.env.PUBLIC_URL + '/thrift-and-shift-logo.svg'
 											}
-											style={{ maxHeight: '2em', width: 'auto' }}
 											alt='Thrift &amp; Shift Logo'
 											title='Thrift &amp; Shift - Your Place to Manage Your Thrifting Finds'
-										/>
+											className='h-10 w-auto'
+										></object>
 									</Link>
 								</div>
 								<div className='hidden sm:block sm:ml-6'>

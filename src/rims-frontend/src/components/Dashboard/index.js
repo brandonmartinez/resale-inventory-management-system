@@ -1,6 +1,3 @@
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-
 import {
 	gql,
 	useQuery
@@ -26,18 +23,14 @@ const Dashboard = () => {
 	}
 
 	return (
-		<Row>
-			<Col>
-				Latest Items:
-				<ul>
-					{data.getLatestInventoryItems.map((item) => (
-						<li key={`item-${item.id}`}>{item.name}</li>
-					))}
-				</ul>
-			</Col>
-			<Col>Dashboard</Col>
-			<Col>Content</Col>
-		</Row>
+		<div>
+			Latest Items:
+			<ul>
+				{data.getLatestInventoryItems.map((item) => (
+					<li key={`item-${item.id}`}>{item.name}</li>
+				))}
+			</ul>
+		</div>
 	);
 };
 
