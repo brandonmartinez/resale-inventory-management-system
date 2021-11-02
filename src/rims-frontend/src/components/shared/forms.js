@@ -2,6 +2,8 @@
 import { useDropzone } from 'react-dropzone';
 import { Link } from 'react-router-dom';
 
+import { SearchIcon } from '@heroicons/react/solid';
+
 import { classNames } from './utilities';
 
 export const Form = ({ children, ...rest }) => (
@@ -11,7 +13,7 @@ export const Form = ({ children, ...rest }) => (
 );
 
 export const InputContainer = ({ children }) => (
-	<div className='mx-2 md:mx-0 mb-4'>{children}</div>
+	<div className='block mx-2 md:mx-0 my-4'>{children}</div>
 );
 
 export const Label = ({ id, label }) => (
@@ -38,7 +40,26 @@ export const TextBox = ({ id, label, placeholder, ...rest }) => (
 	</InputContainer>
 );
 
-export const SearchBox = TextBox;
+export const SearchBox = ({
+	id = 'search',
+	label = 'Search',
+	placeholder = 'Search…',
+	...rest
+}) => (
+	<div className='relative mx-auto text-gray-600 w-auto'>
+		<input
+			className='border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none focus:w-full'
+			type='search'
+			name={id}
+			id={id}
+			placeholder={placeholder}
+			{...rest}
+		/>
+		<button type='submit' className='absolute right-0 top-0 mt-3 mr-4'>
+			<SearchIcon className='float-right align-base h-4 w-4 mr-1 text-gray-700' />
+		</button>
+	</div>
+);
 
 export const TextArea = ({
 	id,
@@ -146,7 +167,7 @@ export const Submit = ({ label = 'Submit', ...rest }) => (
 	<InputContainer>
 		<button
 			type='submit'
-			className='inline-flex float-right justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+			className='inline-flex float-right justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-700 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
 			{...rest}
 		>
 			{label}
@@ -159,7 +180,7 @@ export const Button = ({ to, className, children, ...rest }) => (
 		<Link
 			to={to}
 			className={classNames(
-				'flex-inline justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
+				'inline-flex items-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-700 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
 				className
 			)}
 			{...rest}

@@ -112,131 +112,136 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 		>
 			<h1>{title}</h1>
 
-			<FileUpload
-				id='product-photos'
-				label='Upload Photos'
-				fileTypesMessage='JPG or PNG up to 10MB'
-				accept='image/*'
-				onDrop={(acceptedFiles) => {
-					setImagesToUpload(
-						acceptedFiles.map((file) =>
-							Object.assign(file, {
-								preview: URL.createObjectURL(file)
-							})
-						)
-					);
-				}}
-			/>
+			<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+				<div>
+					<FileUpload
+						id='product-photos'
+						label='Upload Photos'
+						fileTypesMessage='JPG or PNG up to 10MB'
+						accept='image/*'
+						onDrop={(acceptedFiles) => {
+							setImagesToUpload(
+								acceptedFiles.map((file) =>
+									Object.assign(file, {
+										preview: URL.createObjectURL(file)
+									})
+								)
+							);
+						}}
+					/>
 
-			<aside style={thumbsContainer}>{thumbs}</aside>
-			{/* TODO: remove hardcoded URL */}
-			{existingImages.map((i) => (
-				<img
-					key={'existing-image-' + i}
-					alt='product'
-					width='100'
-					height='auto'
-					src={`https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/${i}`}
-				/>
-			))}
+					<aside style={thumbsContainer}>{thumbs}</aside>
+					{/* TODO: remove hardcoded URL */}
+					{existingImages.map((i) => (
+						<img
+							key={'existing-image-' + i}
+							alt='product'
+							width='100'
+							height='auto'
+							src={`https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/${i}`}
+						/>
+					))}
+				</div>
+				<div className='md:col-span-2'>
+					<TextBox
+						id='name'
+						label='Name'
+						placeholder='Enter a descriptive item name.'
+						value={name}
+						onChange={(e) => setName(e.target.value)}
+					/>
+					<TextArea
+						id='description'
+						label='Description'
+						placeholder='Enter a detailed description of the item.'
+						value={description}
+						onChange={(e) => setDescription(e.target.value)}
+					/>
 
-			<TextBox
-				id='name'
-				label='Name'
-				placeholder='Enter a descriptive item name.'
-				value={name}
-				onChange={(e) => setName(e.target.value)}
-			/>
-			<TextArea
-				id='description'
-				label='Description'
-				placeholder='Enter a detailed description of the item.'
-				value={description}
-				onChange={(e) => setDescription(e.target.value)}
-			/>
-
-			<TextBox
-				id='tag1'
-				label='Tag 1'
-				placeholder='Item Tag'
-				onChange={(e) => setTag1(e.target.value)}
-			/>
-			<TextBox
-				id='tag2'
-				label='Tag 2'
-				placeholder='Item Tag'
-				onChange={(e) => setTag2(e.target.value)}
-			/>
-			<TextBox
-				id='tag3'
-				label='Tag 3'
-				placeholder='Item Tag'
-				onChange={(e) => setTag3(e.target.value)}
-			/>
-			<TextBox
-				id='category'
-				label='Category'
-				placeholder='Choose a category for this item.'
-				value={category}
-				onChange={(e) => setCategory(e.target.value)}
-			/>
-			<TextBox
-				id='brand'
-				label='Brand'
-				placeholder='The Brand of the Item'
-				value={brand}
-				onChange={(e) => setBrand(e.target.value)}
-			/>
-			<DropDown
-				id='condition'
-				label='Condition'
-				placeholder='Condition of the Item'
-				value={condition}
-				onChange={(e) => setCondition(e.target.value)}
-				items={[
-					{ text: 'New', value: 'New' },
-					{ text: 'Like New', value: 'LikeNew' },
-					{ text: 'Good', value: 'Good' },
-					{ text: 'Fair', value: 'Fair' },
-					{ text: 'Poor', value: 'Poor' }
-				]}
-			/>
-			<TextBox
-				id='color'
-				label='Color'
-				placeholder='The Color of the Item'
-				value={color}
-				onChange={(e) => setColor(e.target.value)}
-			/>
-			<TextBox
-				id='style'
-				label='Style'
-				placeholder='The Style of the Item'
-				value={style}
-				onChange={(e) => setStyle(e.target.value)}
-			/>
-			<TextBox
-				id='size'
-				label='Size'
-				placeholder='The Size of the Item'
-				value={size}
-				onChange={(e) => setSize(e.target.value)}
-			/>
-			<TextBox
-				id='cost'
-				label='Purchase Cost'
-				placeholder='The Original Purchase Cost of the Item'
-				value={cost}
-				onChange={(e) => setCost(e.target.value)}
-			/>
-			<TextBox
-				id='price'
-				label='Listing Price'
-				placeholder='The Listing Price of the Item'
-				value={price}
-				onChange={(e) => setPrice(e.target.value)}
-			/>
-			<Submit />
+					<TextBox
+						id='tag1'
+						label='Tag 1'
+						placeholder='Item Tag'
+						onChange={(e) => setTag1(e.target.value)}
+					/>
+					<TextBox
+						id='tag2'
+						label='Tag 2'
+						placeholder='Item Tag'
+						onChange={(e) => setTag2(e.target.value)}
+					/>
+					<TextBox
+						id='tag3'
+						label='Tag 3'
+						placeholder='Item Tag'
+						onChange={(e) => setTag3(e.target.value)}
+					/>
+					<TextBox
+						id='category'
+						label='Category'
+						placeholder='Choose a category for this item.'
+						value={category}
+						onChange={(e) => setCategory(e.target.value)}
+					/>
+					<TextBox
+						id='brand'
+						label='Brand'
+						placeholder='The Brand of the Item'
+						value={brand}
+						onChange={(e) => setBrand(e.target.value)}
+					/>
+					<DropDown
+						id='condition'
+						label='Condition'
+						placeholder='Condition of the Item'
+						value={condition}
+						onChange={(e) => setCondition(e.target.value)}
+						items={[
+							{ text: 'New', value: 'New' },
+							{ text: 'Like New', value: 'LikeNew' },
+							{ text: 'Good', value: 'Good' },
+							{ text: 'Fair', value: 'Fair' },
+							{ text: 'Poor', value: 'Poor' }
+						]}
+					/>
+					<TextBox
+						id='color'
+						label='Color'
+						placeholder='The Color of the Item'
+						value={color}
+						onChange={(e) => setColor(e.target.value)}
+					/>
+					<TextBox
+						id='style'
+						label='Style'
+						placeholder='The Style of the Item'
+						value={style}
+						onChange={(e) => setStyle(e.target.value)}
+					/>
+					<TextBox
+						id='size'
+						label='Size'
+						placeholder='The Size of the Item'
+						value={size}
+						onChange={(e) => setSize(e.target.value)}
+					/>
+					<TextBox
+						id='cost'
+						label='Purchase Cost'
+						placeholder='The Original Purchase Cost of the Item'
+						value={cost}
+						onChange={(e) => setCost(e.target.value)}
+					/>
+					<TextBox
+						id='price'
+						label='Listing Price'
+						placeholder='The Listing Price of the Item'
+						value={price}
+						onChange={(e) => setPrice(e.target.value)}
+					/>
+					<Submit />
+				</div>
+			</div>
 		</Form>
 	);
 };

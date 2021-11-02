@@ -65,7 +65,10 @@ const columns = [
 
 const Inventory = () => (
 	<>
-		<Button to='/inventory/add'><PlusIcon className="inline align-base h-4 w-4 text-white"/> Add New Item</Button>
+		<Button to='/inventory/add'>
+			<PlusIcon className='inline align-base h-4 w-4 mr-1 text-white' />
+			Add New Item
+		</Button>
 
 		<DataTable
 			gql={getAllInventoryItems}

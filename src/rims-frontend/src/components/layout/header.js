@@ -18,6 +18,7 @@ import {
 } from '@heroicons/react/outline';
 
 import { classNames } from '../shared/utilities';
+import Search from './search';
 
 const navigation = [
 	{ name: 'Inventory', href: '/inventory' },
@@ -75,6 +76,9 @@ const Header = () => {
 										))}
 									</div>
 								</div>
+								<div className='hidden sm:block sm:ml-6'>
+									<Search />
+								</div>
 							</div>
 							<div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
 								<button
@@ -92,7 +96,7 @@ const Header = () => {
 											<span className='sr-only'>Open user menu</span>
 											<img
 												className='h-8 w-8 rounded-full'
-												src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+												src='https://scontent-ort2-1.xx.fbcdn.net/v/t1.6435-9/132359199_10159156474064529_4155935005861415517_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=174925&_nc_ohc=JmpEai9A5iYAX9VNlnf&_nc_ht=scontent-ort2-1.xx&oh=c50d31d19d47473151f4a3e09c6b85c2&oe=61A53AAA'
 												alt=''
 											/>
 										</Menu.Button>

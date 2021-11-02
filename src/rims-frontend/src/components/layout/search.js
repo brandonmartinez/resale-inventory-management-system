@@ -1,8 +1,8 @@
 // Library Imports
-
-import Form from 'react-bootstrap/Form';
-
-import { SearchBox } from '../shared/forms';
+import {
+	Form,
+	SearchBox
+} from '../shared/forms';
 
 const Search = () => {
 	return (
