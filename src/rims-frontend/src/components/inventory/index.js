@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
-
 import { gql } from '@apollo/client';
+import { PlusIcon } from '@heroicons/react/solid';
 
+import { Button } from '../shared/forms';
 import { DataTable } from '../shared/tables';
 
 const getAllInventoryItems = gql`
@@ -25,6 +25,7 @@ const columns = [
 		key: 'relativeImagePaths',
 		label: '',
 		className: 'text-center',
+		noSort: true,
 		filter: (p) => {
 			if (p.length > 0) {
 				return (
@@ -64,9 +65,7 @@ const columns = [
 
 const Inventory = () => (
 	<>
-		<Link to='/inventory/add' as={Link}>
-			Add New Item
-		</Link>
+		<Button to='/inventory/add'><PlusIcon className="inline align-base h-4 w-4 text-white"/> Add New Item</Button>
 
 		<DataTable
 			gql={getAllInventoryItems}

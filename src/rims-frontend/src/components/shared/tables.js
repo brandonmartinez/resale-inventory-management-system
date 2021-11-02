@@ -80,7 +80,13 @@ export const DataTable = ({
 			<thead className='bg-gray-50'>
 				<tr>
 					{columns.map((column) => (
-						<TH onClick={() => setColumnOrdering(orderBy, column.key)}>
+						<TH
+							onClick={
+								column.noSort
+									? () => false
+									: () => setColumnOrdering(orderBy, column.key)
+							}
+						>
 							{column.label}
 						</TH>
 					))}

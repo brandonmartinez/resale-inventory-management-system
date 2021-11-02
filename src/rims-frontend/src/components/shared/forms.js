@@ -1,5 +1,8 @@
 // More info: https://react-dropzone.js.org
 import { useDropzone } from 'react-dropzone';
+import { Link } from 'react-router-dom';
+
+import { classNames } from './utilities';
 
 export const Form = ({ children, ...rest }) => (
 	<div className='mt-5 md:mt-0 md:col-span-2'>
@@ -148,5 +151,20 @@ export const Submit = ({ label = 'Submit', ...rest }) => (
 		>
 			{label}
 		</button>
+	</InputContainer>
+);
+
+export const Button = ({ to, className, children, ...rest }) => (
+	<InputContainer>
+		<Link
+			to={to}
+			className={classNames(
+				'flex-inline justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
+				className
+			)}
+			{...rest}
+		>
+			{children}
+		</Link>
 	</InputContainer>
 );
