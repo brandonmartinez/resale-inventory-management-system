@@ -21,7 +21,6 @@ import {
 	Form,
 	SearchBox
 } from '../shared/forms';
-import { classNames } from '../shared/utilities';
 
 const navigation = [
 	{ name: 'Inventory', href: '/inventory' },
@@ -45,19 +44,15 @@ const MenuButton = ({ open }) => (
 
 const MobileNavigation = () => (
 	<Disclosure.Panel className='sm:hidden'>
-		<div className='px-2 pt-2 pb-3 space-y-1'>
+		<div className='px-2 pt-2 pb-3 space-y-1 text-gray-300'>
 			{navigation.map((item) => (
 				<Disclosure.Button
 					key={item.name}
-					as='a'
-					href={item.href}
-					className={classNames(
-						item.current
-							? 'bg-gray-900 text-white'
-							: 'text-gray-300 hover:bg-gray-700 hover:text-white',
-						'block px-3 py-2 rounded-md text-base font-medium'
-					)}
-					aria-current={item.current ? 'page' : undefined}
+					as={NavLink}
+					to={item.href}
+					className='btn-nav'
+					activeClassName='btn-nav-active'
+					aria-current='page'
 				>
 					{item.name}
 				</Disclosure.Button>
@@ -68,16 +63,13 @@ const MobileNavigation = () => (
 
 const DesktopNavigation = () => (
 	<div className='hidden sm:block sm:ml-6'>
-		<div className='flex space-x-4'>
+		<div className='flex space-x-4 text-gray-300'>
 			{navigation.map((item) => (
 				<NavLink
 					key={item.name}
 					to={item.href}
-					className={classNames(
-						'text-gray-300 hover:bg-gray-700 hover:text-white',
-						'px-3 py-2 rounded-md text-sm font-medium'
-					)}
-					activeClassName={classNames('bg-gray-900 text-white')}
+					className='btn-nav'
+					activeClassName='btn-nav-active'
 					aria-current='page'
 				>
 					{item.name}
@@ -142,43 +134,34 @@ const UserProfileMenu = () => (
 		>
 			<Menu.Items className='origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'>
 				<Menu.Item>
-					{({ active }) => (
-						<Link
-							to='/profile'
-							className={classNames(
-								active ? 'bg-gray-100' : '',
-								'block px-4 py-2 text-sm text-gray-700'
-							)}
-						>
-							Your Profile
-						</Link>
-					)}
+					<NavLink
+						to='/profile'
+						exact
+						className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+						activeClassName='bg-gray-100'
+					>
+						Your Profile
+					</NavLink>
 				</Menu.Item>
 				<Menu.Item>
-					{({ active }) => (
-						<Link
-							to='/profile/preferences'
-							className={classNames(
-								active ? 'bg-gray-100' : '',
-								'block px-4 py-2 text-sm text-gray-700'
-							)}
-						>
-							Settings
-						</Link>
-					)}
+					<NavLink
+						to='/profile/preferences'
+						exact
+						className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+						activeClassName='bg-gray-100'
+					>
+						Settings
+					</NavLink>
 				</Menu.Item>
 				<Menu.Item>
-					{({ active }) => (
-						<Link
-							to='/logout'
-							className={classNames(
-								active ? 'bg-gray-100' : '',
-								'block px-4 py-2 text-sm text-gray-700'
-							)}
-						>
-							Logout
-						</Link>
-					)}
+					<NavLink
+						to='/logout'
+						exact
+						className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+						activeClassName='bg-gray-100'
+					>
+						Settings
+					</NavLink>
 				</Menu.Item>
 			</Menu.Items>
 		</Transition>
@@ -187,7 +170,7 @@ const UserProfileMenu = () => (
 
 const Header = () => {
 	return (
-		<Disclosure as='nav' className='bg-gray-800'>
+		<Disclosure as='nav' className='bg-header'>
 			{({ open }) => (
 				<>
 					<div className='max-w-7xl mx-auto px-2 sm:px-6 lg:px-8'>

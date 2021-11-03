@@ -7,6 +7,9 @@ module.exports = {
 		container: {
 			center: true
 		},
+		// colors: {
+		// 	// https://tailwindcss.com/docs/customizing-colors#color-object-syntax
+		// },
 		extend: {
 			fontFamily: {
 				sans: ['Rubik', ...defaultTheme.fontFamily.sans]
