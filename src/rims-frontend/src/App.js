@@ -16,6 +16,7 @@ import UpdateInventoryItem from './components/inventory/update';
 import Labels from './components/labels';
 import Header from './components/layout/header';
 import Profile from './components/profile';
+import Preferences from './components/profile/preferences';
 import Spaces from './components/spaces';
 
 const ParamWrapper = ({ Component, ...rest }) => {
@@ -39,6 +40,9 @@ const App = () => (
 				</Route>
 				<Route path='/profile'>
 					<Profile />
+				</Route>
+				<Route path='/profile/preferences'>
+					<Preferences />
 				</Route>
 				<Route path='/spaces'>
 					<Spaces />

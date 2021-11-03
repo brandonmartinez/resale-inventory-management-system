@@ -1,5 +1,5 @@
 const Labels = () => {
-	return <div>Coming soon…</div>;
+	return <div>Labels coming soon…</div>;
 };
 
 export default Labels;

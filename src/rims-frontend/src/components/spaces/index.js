@@ -1,5 +1,5 @@
 const Spaces = () => {
-	return <div>Coming soon…</div>;
+	return <div>Spaces coming soon…</div>;
 };
 
 export default Spaces;
