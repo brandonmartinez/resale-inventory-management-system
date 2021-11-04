@@ -177,14 +177,7 @@ export const Submit = ({ label = 'Submit', ...rest }) => (
 
 export const Button = ({ to, className, children, ...rest }) => (
 	<InputContainer>
-		<Link
-			to={to}
-			className={classNames(
-				'inline-flex items-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-700 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
-				className
-			)}
-			{...rest}
-		>
+		<Link to={to} className={classNames('btn-action', className)} {...rest}>
 			{children}
 		</Link>
 	</InputContainer>

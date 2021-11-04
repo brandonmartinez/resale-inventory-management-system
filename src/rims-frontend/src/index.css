@@ -32,21 +32,29 @@ html {
 @layer components {
 	/*  branding colors */
 	.bg-header {
-		@apply bg-gray-800;
+		@apply bg-plurple-700;
 	}
 
 	@variants hover, focus, active {
 		.bg-header-hover {
-			@apply bg-gray-700;
+			@apply bg-plurple-600;
 		}
 	}
 
 	/* Standard Components */
+	.btn-base {
+		@apply px-3 py-2 rounded-md text-base md:text-sm font-medium;
+	}
+
 	.btn-nav {
-		@apply block px-3 py-2 rounded-md text-base md:text-sm font-medium hover:bg-header-hover hover:text-white;
+		@apply block btn-base hover:bg-header-hover hover:text-white;
 	}
 
 	.btn-nav-active {
-		@apply bg-gray-900 text-white;
+		@apply bg-plurple-800 text-white;
+	}
+
+	.btn-action {
+		@apply btn-base shadow-sm text-sm text-white bg-coral-400 hover:bg-coral-600 hover:text-white;
 	}
 }
