@@ -26,17 +26,41 @@ export const InputDescription = ({ description }) => (
 	<p className='text-sm text-gray-500 mt-2 sm:my-3'>{description}</p>
 );
 
-export const TextBox = ({ id, label, placeholder, ...rest }) => (
+export const TextBox = ({
+	id,
+	label,
+	placeholder,
+	prefix,
+	suffix,
+	...rest
+}) => (
 	<InputContainer>
 		<Label id={id} label={label} />
-		<input
-			type='text'
-			name={id}
-			id={id}
-			placeholder={placeholder}
-			className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
-			{...rest}
-		/>
+		<div className='mt-1 flex rounded-md shadow-sm'>
+			{!!prefix && (
+				<span className='inline-flex items-center px-3 mt-1 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm'>
+					{prefix}
+				</span>
+			)}
+			<input
+				type='text'
+				name={id}
+				id={id}
+				placeholder={placeholder}
+				className={classNames(
+					'mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300',
+					!!prefix || !!suffix ? 'rounded-none' : 'rounded-md',
+					!!prefix && !suffix ? 'rounded-r-md' : '',
+					!!suffix && !prefix ? 'rounded-l-md' : ''
+				)}
+				{...rest}
+			/>
+			{!!suffix && (
+				<span className='inline-flex items-center px-3 mt-1 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm'>
+					{suffix}
+				</span>
+			)}
+		</div>
 	</InputContainer>
 );
 

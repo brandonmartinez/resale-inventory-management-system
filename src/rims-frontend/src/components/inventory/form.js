@@ -162,18 +162,21 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 						id='tag1'
 						label='Tag 1'
 						placeholder='Item Tag'
+						prefix='#'
 						onChange={(e) => setTag1(e.target.value)}
 					/>
 					<TextBox
 						id='tag2'
 						label='Tag 2'
 						placeholder='Item Tag'
+						prefix='#'
 						onChange={(e) => setTag2(e.target.value)}
 					/>
 					<TextBox
 						id='tag3'
 						label='Tag 3'
 						placeholder='Item Tag'
+						prefix='#'
 						onChange={(e) => setTag3(e.target.value)}
 					/>
 					<TextBox
@@ -229,6 +232,7 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 						id='cost'
 						label='Purchase Cost'
 						placeholder='The Original Purchase Cost of the Item'
+						prefix='$'
 						value={cost}
 						onChange={(e) => setCost(e.target.value)}
 					/>
@@ -236,6 +240,7 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 						id='price'
 						label='Listing Price'
 						placeholder='The Listing Price of the Item'
+						prefix='$'
 						value={price}
 						onChange={(e) => setPrice(e.target.value)}
 					/>
