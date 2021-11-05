@@ -73,7 +73,7 @@ module.exports = {
 				800: '#1f2937',
 				900: '#111827'
 			},
-			white: '#fffff',
+			white: '#ffffff',
 			black: '#000000'
 		},
 		extend: {

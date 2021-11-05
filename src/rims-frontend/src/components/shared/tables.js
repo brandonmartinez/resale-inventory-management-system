@@ -12,7 +12,7 @@ import {
 export const TH = ({ children, ...rest }) => (
 	<th
 		scope='col'
-		className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+		className='px-6 py-3 text-left text-xs font-medium text-almond-800 uppercase tracking-wider'
 		{...rest}
 	>
 		{children}
@@ -58,9 +58,6 @@ export const DataTable = ({
 		}
 	});
 
-	if (loading) {
-		return <Loading />;
-	}
 	if (error) {
 		return <p>Error :({error}</p>;
 	}
@@ -73,11 +70,9 @@ export const DataTable = ({
 		setOrderBy(`${next} ${direction}`);
 	};
 
-	const values = Object.values(data)[0];
-
 	return (
 		<Table>
-			<thead className='bg-gray-50'>
+			<thead className='bg-almond-200'>
 				<tr>
 					{columns.map((column) => (
 						<TH
@@ -93,20 +88,29 @@ export const DataTable = ({
 				</tr>
 			</thead>
 			<tbody className='bg-white divide-y divide-gray-200'>
-				{values.map((value, i) => (
-					<tr
-						key={`data-table-record-${i}`}
-						onClick={() => history.push(`${pathPrefix}/${value.id}`)}
-					>
-						{columns.map((column) => (
-							<TD className={column.className}>
-								{column.filter && value[column.key]
-									? column.filter(value[column.key])
-									: value[column.key]}
-							</TD>
-						))}
+				{loading && (
+					<tr>
+						<td colspan={columns.length}>
+							<Loading />
+						</td>
 					</tr>
-				))}
+				)}
+				{!loading &&
+					Object.values(data)[0].map((value, i) => (
+						<tr
+							key={`data-table-record-${i}`}
+							className='cursor-pointer hover:bg-almond-50'
+							onClick={() => history.push(`${pathPrefix}/${value.id}`)}
+						>
+							{columns.map((column) => (
+								<TD className={column.className}>
+									{column.filter && value[column.key]
+										? column.filter(value[column.key])
+										: value[column.key]}
+								</TD>
+							))}
+						</tr>
+					))}
 			</tbody>
 		</Table>
 	);

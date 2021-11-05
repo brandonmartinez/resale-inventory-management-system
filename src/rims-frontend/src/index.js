@@ -19,6 +19,8 @@ import reportWebVitals from './reportWebVitals';
 
 // Service Setup
 //////////////////////////////////////////////////
+
+// TODO: need some error handling: https://www.apollographql.com/docs/react/data/error-handling/
 const client = new ApolloClient({
 	cache: new InMemoryCache(),
 	link: createUploadLink({
