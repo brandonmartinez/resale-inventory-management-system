@@ -27,7 +27,7 @@ const ParamWrapper = ({ Component, ...rest }) => {
 const App = () => (
 	<Router>
 		<Header />
-		<div className='container max-w-7xl mx-auto py-2 px-6 md:py-8 md:px-6 prose-sm prose-seafoam'>
+		<div className='container max-w-7xl mx-auto py-2 px-6 md:py-8 md:px-6'>
 			<Switch>
 				<Route path='/inventory/add'>
 					<CreateInventoryItem />

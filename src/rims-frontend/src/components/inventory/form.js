@@ -10,6 +10,7 @@ import {
 	TextArea,
 	TextBox
 } from '../shared/forms';
+import { Prose } from '../shared/utilities';
 
 const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 	// State Variables
@@ -37,51 +38,12 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 	const [tag2, setTag2] = useState(inventoryItem.tag2 || '');
 	const [tag3, setTag3] = useState(inventoryItem.tag3 || '');
 
-	// Styles
-	//////////////////////////////////////////////////
-	const thumbsContainer = {
-		display: 'flex',
-		flexDirection: 'row',
-		flexWrap: 'wrap',
-		marginTop: 16
-	};
-
-	const thumb = {
-		display: 'inline-flex',
-		borderRadius: 2,
-		border: '1px solid #eaeaea',
-		marginBottom: 8,
-		marginRight: 8,
-		width: 100,
-		height: 100,
-		padding: 4,
-		boxSizing: 'border-box'
-	};
-
-	const thumbInner = {
-		display: 'flex',
-		minWidth: 0,
-		overflow: 'hidden'
-	};
-
-	const img = {
-		display: 'block',
-		width: 'auto',
-		height: '100%'
-	};
-
 	// Render
 	//////////////////////////////////////////////////
 	const title = inventoryItem.id
 		? `Update Inventory Item ${inventoryItem.name}`
 		: 'Add New Inventory Item';
-	const thumbs = imagesToUpload.map((image) => (
-		<div style={thumb} key={image.name}>
-			<div style={thumbInner}>
-				<img src={image.preview} style={img} alt='File to Upload' />
-			</div>
-		</div>
-	));
+
 	return (
 		<Form
 			onSubmit={(e) => {
@@ -110,7 +72,9 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 				history.push('/inventory');
 			}}
 		>
-			<h1>{title}</h1>
+			<Prose>
+				<h1>{title}</h1>
+			</Prose>
 
 			<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
 				<div>
@@ -130,17 +94,33 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 						}}
 					/>
 
-					<aside style={thumbsContainer}>{thumbs}</aside>
+					<h2>Images to Upload</h2>
+					<aside className='flex flex-wrap w-full h-auto justify-center justify-items-center gap-4 mb-4'>
+						{imagesToUpload.map((image) => (
+							<div
+								key={image.name}
+								className='flex-none rounded-md bg-cover-image w-20 h-20'
+								style={{ backgroundImage: 'url(' + image.preview + ')' }}
+							>
+								&nbsp;
+							</div>
+						))}
+					</aside>
+					<h2>Existing Images</h2>
+					<aside className='flex flex-wrap w-full h-auto justify-center justify-items-center gap-4 mb-4'>
+						{existingImages.map((image) => (
+							<div
+								key={image.name}
+								className='flex-none rounded-md bg-cover-image w-20 h-20'
+								style={{
+									backgroundImage: `url(https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/${image})`
+								}}
+							>
+								&nbsp;
+							</div>
+						))}
+					</aside>
 					{/* TODO: remove hardcoded URL */}
-					{existingImages.map((i) => (
-						<img
-							key={'existing-image-' + i}
-							alt='product'
-							width='100'
-							height='auto'
-							src={`https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/${i}`}
-						/>
-					))}
 				</div>
 				<div className='md:col-span-2'>
 					<TextBox

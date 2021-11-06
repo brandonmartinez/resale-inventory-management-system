@@ -65,8 +65,7 @@ const columns = [
 
 const Inventory = () => (
 	<>
-		<Button to='/inventory/add'>
-			<PlusIcon className='inline align-base h-4 w-4 mr-1 text-white' />
+		<Button to='/inventory/add' Icon={PlusIcon}>
 			Add New Item
 		</Button>
 

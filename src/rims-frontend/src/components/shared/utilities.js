@@ -1,5 +1,11 @@
 export const classNames = (...classes) => classes.filter(Boolean).join(' ');
 
+export const Prose = ({ className, children }) => (
+	<div className={classNames('prose-sm prose-seafoam', className)}>
+		{children}
+	</div>
+);
+
 export const Loading = () => (
 	<div className='flex justify-center justify-items-center w-full h-full bg-white'>
 		<div

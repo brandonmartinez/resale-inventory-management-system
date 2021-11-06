@@ -35,6 +35,10 @@ html {
 		@apply bg-plurple-700;
 	}
 
+	.bg-cover-image {
+		@apply bg-origin-border bg-center bg-no-repeat bg-cover bg-gray-300;
+	}
+
 	@variants hover, focus, active {
 		.bg-header-hover {
 			@apply bg-plurple-600;
