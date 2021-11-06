@@ -32,6 +32,7 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 
 	const [name, setName] = useState(inventoryItem.name || '');
 	const [price, setPrice] = useState(inventoryItem.price || '');
+	const [salePrice, setSalePrice] = useState(inventoryItem.salePrice || '');
 	const [size, setSize] = useState(inventoryItem.size || '');
 	const [style, setStyle] = useState(inventoryItem.style || '');
 	const [tag1, setTag1] = useState(inventoryItem.tag1 || '');
@@ -85,10 +86,12 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 						accept='image/*'
 						onDrop={(acceptedFiles) => {
 							setImagesToUpload(
-								acceptedFiles.map((file) =>
-									Object.assign(file, {
-										preview: URL.createObjectURL(file)
-									})
+								imagesToUpload.concat(
+									acceptedFiles.map((file) =>
+										Object.assign(file, {
+											preview: URL.createObjectURL(file)
+										})
+									)
 								)
 							);
 						}}
@@ -111,7 +114,7 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 						{existingImages.map((image) => (
 							<div
 								key={image.name}
-								className='flex-none rounded-md bg-cover-image w-20 h-20'
+								className='flex-none rounded-md bg-cover-image w-40 h-40'
 								style={{
 									backgroundImage: `url(https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/${image})`
 								}}
@@ -137,42 +140,50 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 						value={description}
 						onChange={(e) => setDescription(e.target.value)}
 					/>
-
-					<TextBox
-						id='tag1'
-						label='Tag 1'
-						placeholder='Item Tag'
-						prefix='#'
-						onChange={(e) => setTag1(e.target.value)}
-					/>
-					<TextBox
-						id='tag2'
-						label='Tag 2'
-						placeholder='Item Tag'
-						prefix='#'
-						onChange={(e) => setTag2(e.target.value)}
-					/>
-					<TextBox
-						id='tag3'
-						label='Tag 3'
-						placeholder='Item Tag'
-						prefix='#'
-						onChange={(e) => setTag3(e.target.value)}
-					/>
-					<TextBox
-						id='category'
-						label='Category'
-						placeholder='Choose a category for this item.'
-						value={category}
-						onChange={(e) => setCategory(e.target.value)}
-					/>
-					<TextBox
-						id='brand'
-						label='Brand'
-						placeholder='The Brand of the Item'
-						value={brand}
-						onChange={(e) => setBrand(e.target.value)}
-					/>
+					<div className='flex flex-wrap gap-0 md:gap-x-4 justify w-full -my-4'>
+						<TextBox
+							id='tag1'
+							containerClassName='flex-auto'
+							label='Tag 1'
+							placeholder='Item Tag'
+							prefix='#'
+							onChange={(e) => setTag1(e.target.value)}
+						/>
+						<TextBox
+							id='tag2'
+							containerClassName='flex-auto'
+							label='Tag 2'
+							placeholder='Item Tag'
+							prefix='#'
+							onChange={(e) => setTag2(e.target.value)}
+						/>
+						<TextBox
+							id='tag3'
+							containerClassName='flex-auto'
+							label='Tag 3'
+							placeholder='Item Tag'
+							prefix='#'
+							onChange={(e) => setTag3(e.target.value)}
+						/>
+					</div>
+					<div className='flex flex-wrap gap-0 md:gap-x-4 justify w-full -my-4'>
+						<TextBox
+							id='category'
+							containerClassName='flex-auto'
+							label='Category'
+							placeholder='Choose a category for this item.'
+							value={category}
+							onChange={(e) => setCategory(e.target.value)}
+						/>
+						<TextBox
+							id='brand'
+							containerClassName='flex-auto'
+							label='Brand'
+							placeholder='The Brand of the Item'
+							value={brand}
+							onChange={(e) => setBrand(e.target.value)}
+						/>
+					</div>
 					<DropDown
 						id='condition'
 						label='Condition'
@@ -187,43 +198,61 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 							{ text: 'Poor', value: 'Poor' }
 						]}
 					/>
-					<TextBox
-						id='color'
-						label='Color'
-						placeholder='The Color of the Item'
-						value={color}
-						onChange={(e) => setColor(e.target.value)}
-					/>
-					<TextBox
-						id='style'
-						label='Style'
-						placeholder='The Style of the Item'
-						value={style}
-						onChange={(e) => setStyle(e.target.value)}
-					/>
-					<TextBox
-						id='size'
-						label='Size'
-						placeholder='The Size of the Item'
-						value={size}
-						onChange={(e) => setSize(e.target.value)}
-					/>
-					<TextBox
-						id='cost'
-						label='Purchase Cost'
-						placeholder='The Original Purchase Cost of the Item'
-						prefix='$'
-						value={cost}
-						onChange={(e) => setCost(e.target.value)}
-					/>
-					<TextBox
-						id='price'
-						label='Listing Price'
-						placeholder='The Listing Price of the Item'
-						prefix='$'
-						value={price}
-						onChange={(e) => setPrice(e.target.value)}
-					/>
+					<div className='flex flex-wrap gap-0 md:gap-x-4 justify w-full -my-4'>
+						<TextBox
+							id='color'
+							containerClassName='flex-auto'
+							label='Color'
+							placeholder='The Color of the Item'
+							value={color}
+							onChange={(e) => setColor(e.target.value)}
+						/>
+						<TextBox
+							id='style'
+							containerClassName='flex-auto'
+							label='Style'
+							placeholder='The Style of the Item'
+							value={style}
+							onChange={(e) => setStyle(e.target.value)}
+						/>
+						<TextBox
+							id='size'
+							containerClassName='flex-auto'
+							label='Size'
+							placeholder='The Size of the Item'
+							value={size}
+							onChange={(e) => setSize(e.target.value)}
+						/>
+					</div>
+					<div className='flex flex-wrap gap-0 md:gap-x-4 justify w-full -my-4'>
+						<TextBox
+							id='cost'
+							containerClassName='flex-auto'
+							label='Purchase Cost'
+							placeholder='0.00'
+							prefix='$'
+							value={cost}
+							onChange={(e) => setCost(e.target.value)}
+						/>
+						<TextBox
+							id='price'
+							containerClassName='flex-auto'
+							label='Listing Price'
+							placeholder='0.00'
+							prefix='$'
+							value={price}
+							onChange={(e) => setPrice(e.target.value)}
+						/>
+						<TextBox
+							id='price'
+							containerClassName='flex-auto'
+							label='Sale Price'
+							placeholder='0.00'
+							prefix='$'
+							value={salePrice}
+							onChange={(e) => setSalePrice(e.target.value)}
+						/>
+					</div>
 					<Submit />
 				</div>
 			</div>

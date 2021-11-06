@@ -36,7 +36,7 @@ html {
 	}
 
 	.bg-cover-image {
-		@apply bg-origin-border bg-center bg-no-repeat bg-cover bg-gray-300;
+		@apply bg-origin-border bg-center bg-no-repeat bg-cover bg-almond-100;
 	}
 
 	@variants hover, focus, active {
@@ -51,14 +51,14 @@ html {
 	}
 
 	.btn-nav {
-		@apply block btn-base hover:bg-header-hover hover:text-white;
+		@apply block btn-base hover:bg-header-hover hover:text-almond-50;
 	}
 
 	.btn-nav-active {
-		@apply bg-plurple-800 text-white;
+		@apply bg-plurple-800 text-almond-50;
 	}
 
 	.btn-action {
-		@apply btn-base shadow-sm text-sm text-white bg-coral-400 hover:bg-coral-600 hover:text-white;
+		@apply btn-base shadow-sm text-sm text-almond-100 bg-coral-400 hover:bg-coral-600 hover:text-almond-100;
 	}
 }

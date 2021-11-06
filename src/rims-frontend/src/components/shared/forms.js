@@ -12,8 +12,8 @@ export const Form = ({ children, ...rest }) => (
 	</div>
 );
 
-export const InputContainer = ({ children }) => (
-	<div className='block mx-2 md:mx-0 my-4'>{children}</div>
+export const InputContainer = ({ className, children }) => (
+	<div className={classNames('mx-2 md:mx-0 my-4', className)}>{children}</div>
 );
 
 export const Label = ({ id, label }) => (
@@ -32,11 +32,12 @@ export const TextBox = ({
 	placeholder,
 	prefix,
 	suffix,
+	containerClassName,
 	...rest
 }) => (
-	<InputContainer>
+	<InputContainer className={containerClassName}>
 		<Label id={id} label={label} />
-		<div className='mt-1 flex rounded-md shadow-sm'>
+		<div className='flex rounded-md shadow-sm'>
 			{!!prefix && (
 				<span className='inline-flex items-center px-3 mt-1 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm'>
 					{prefix}

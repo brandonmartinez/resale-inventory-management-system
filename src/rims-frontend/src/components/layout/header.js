@@ -31,7 +31,7 @@ const navigation = [
 const MenuButton = ({ open }) => (
 	<div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
 		{/* Mobile menu button*/}
-		<Disclosure.Button className='inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'>
+		<Disclosure.Button className='inline-flex items-center justify-center p-2 rounded-md text-almond-600 hover:text-almond-100 hover:bg-plurple-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-almond-100'>
 			<span className='sr-only'>Open main menu</span>
 			{open ? (
 				<XIcon className='block h-6 w-6' aria-hidden='true' />
@@ -104,7 +104,7 @@ const Logo = () => (
 const NotificationButton = () => (
 	<button
 		type='button'
-		className='bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
+		className='bg-clear hover:bg-plurple-800 p-1 rounded-full text-almond-600 hover:text-almond-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
 	>
 		<span className='sr-only'>View notifications</span>
 		<BellIcon className='h-6 w-6' aria-hidden='true' />
@@ -114,7 +114,7 @@ const NotificationButton = () => (
 const UserProfileMenu = () => (
 	<Menu as='div' className='ml-3 relative'>
 		<div>
-			<Menu.Button className='bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'>
+			<Menu.Button className='bg-plurple-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-plurple-800 focus:ring-white'>
 				<span className='sr-only'>Open user menu</span>
 				<img
 					className='h-8 w-8 rounded-full'
