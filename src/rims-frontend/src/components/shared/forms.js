@@ -49,7 +49,7 @@ export const TextBox = ({
 				id={id}
 				placeholder={placeholder}
 				className={classNames(
-					'mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300',
+					'mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 placeholder-gray-200',
 					!!prefix || !!suffix ? 'rounded-none' : 'rounded-md',
 					!!prefix && !suffix ? 'rounded-r-md' : '',
 					!!suffix && !prefix ? 'rounded-l-md' : ''
