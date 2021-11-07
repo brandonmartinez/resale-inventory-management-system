@@ -33,6 +33,7 @@ type InventoryItem {
 	name: String!
 	price: Float
 	relativeImagePaths: [String]
+	salePrice: Float
 	size: String
 	style: String
 	updatedAt: String
@@ -50,6 +51,7 @@ input InventoryItemInput {
 	id: ID
 	name: String!
 	price: Float
+	salePrice: Float
 	size: String
 	style: String
 }

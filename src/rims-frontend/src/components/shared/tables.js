@@ -74,8 +74,9 @@ export const DataTable = ({
 		<Table>
 			<thead className='bg-almond-200'>
 				<tr>
-					{columns.map((column) => (
+					{columns.map((column, i) => (
 						<TH
+							key={`data-table-column-header-${i}`}
 							onClick={
 								column.noSort
 									? () => false
@@ -90,7 +91,7 @@ export const DataTable = ({
 			<tbody className='bg-white divide-y divide-gray-200'>
 				{loading && (
 					<tr>
-						<td colspan={columns.length}>
+						<td colSpan={columns.length}>
 							<Loading />
 						</td>
 					</tr>
@@ -102,8 +103,11 @@ export const DataTable = ({
 							className='cursor-pointer hover:bg-almond-50'
 							onClick={() => history.push(`${pathPrefix}/${value.id}`)}
 						>
-							{columns.map((column) => (
-								<TD className={column.className}>
+							{columns.map((column, c) => (
+								<TD
+									key={`data-table-record-column-${c}`}
+									className={column.className}
+								>
 									{column.filter && value[column.key]
 										? column.filter(value[column.key])
 										: value[column.key]}

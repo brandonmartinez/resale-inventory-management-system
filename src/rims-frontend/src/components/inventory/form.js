@@ -62,7 +62,8 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 					size,
 					style,
 					cost: parseFloat(cost),
-					price: parseFloat(price)
+					price: parseFloat(price),
+					salePrice: parseFloat(salePrice)
 				};
 				if (inventoryItem.id) {
 					itemToSend.id = inventoryItem.id;
