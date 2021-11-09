@@ -11,10 +11,7 @@ const updateInventoryItemMutation = gql`
 		$inventoryItem: InventoryItemInput!
 		$images: [Upload!]
 	) {
-		updateInventoryItem(
-			inventoryItem: $inventoryItem
-			images: $images
-		) {
+		updateInventoryItem(inventoryItem: $inventoryItem, images: $images) {
 			id
 		}
 	}
@@ -34,6 +31,8 @@ const getInventoryItem = gql`
 			name
 			price
 			relativeImagePaths
+			salePrice
+			size
 			style
 		}
 	}
