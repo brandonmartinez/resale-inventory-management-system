@@ -42,7 +42,7 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 	// Render
 	//////////////////////////////////////////////////
 	const title = inventoryItem.id
-		? `Update Inventory Item ${inventoryItem.name}`
+		? `Update Inventory Item`
 		: 'Add New Inventory Item';
 
 	return (
@@ -78,7 +78,7 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 				<h1>{title}</h1>
 			</Prose>
 
-			<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+			<div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
 				<div>
 					<FileUpload
 						id='product-photos'
