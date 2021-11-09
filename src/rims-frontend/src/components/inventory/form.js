@@ -100,7 +100,7 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 
 					{imagesToUpload.length > 0 && (
 						<>
-							<h2>Images to Upload</h2>
+							<h2 className='text-sm font-medium text-gray-700 mb-3'>Images to Upload</h2>
 							<aside className='flex flex-wrap w-full h-auto justify-center justify-items-center gap-4 mb-4'>
 								{imagesToUpload.map((image) => (
 									<div
@@ -116,7 +116,7 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 					)}
 					{existingImages.length > 0 && (
 						<>
-							<h2>Existing Images</h2>
+							<h2 className='text-sm font-medium text-gray-700 mb-3'>Existing Images</h2>
 							<aside className='flex flex-wrap w-full h-auto justify-center justify-items-center gap-4 mb-4'>
 								{existingImages.map((image) => (
 									<div
