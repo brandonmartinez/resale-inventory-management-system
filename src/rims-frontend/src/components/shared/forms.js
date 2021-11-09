@@ -125,15 +125,12 @@ export const DropDown = ({
 			id={id}
 			name={id}
 			className='mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+			value={value}
 			{...rest}
 		>
 			{includeEmpty ? <option value=''></option> : null}
 			{items.map((item, i) => (
-				<option
-					key={`${id}-${i}`}
-					value={item.value || item.text}
-					selected={value === item.value || value === item.text}
-				>
+				<option key={`${id}-${i}`} value={item.value || item.text}>
 					{item.text}
 				</option>
 			))}

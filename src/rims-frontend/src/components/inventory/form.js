@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
+import XIcon from '@heroicons/react/outline/XIcon';
+
 import {
 	DropDown,
 	FileUpload,
@@ -25,9 +27,7 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 	const [description, setDescription] = useState(
 		inventoryItem.description || ''
 	);
-	const [existingImages, setExistingImages] = useState(
-		inventoryItem.relativeImagePaths || []
-	);
+	const [existingImages] = useState(inventoryItem.relativeImagePaths || []);
 	const [imagesToUpload, setImagesToUpload] = useState([]);
 
 	const [name, setName] = useState(inventoryItem.name || '');
@@ -100,14 +100,25 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 
 					{imagesToUpload.length > 0 && (
 						<>
-							<h2 className='text-sm font-medium text-gray-700 mb-3'>Images to Upload</h2>
+							<h2 className='text-sm font-medium text-gray-700 mb-3'>
+								Images to Upload
+							</h2>
 							<aside className='flex flex-wrap w-full h-auto justify-center justify-items-center gap-4 mb-4'>
-								{imagesToUpload.map((image) => (
+								{imagesToUpload.map((image, i) => (
 									<div
-										key={image.name}
-										className='flex-none rounded-md bg-cover-image w-20 h-20'
+										key={`image-to-upload-${i}`}
+										className='flex-none rounded-md bg-cover-image w-20 h-20 group'
 										style={{ backgroundImage: 'url(' + image.preview + ')' }}
 									>
+										<XIcon
+											className='block h-5 w-5 float-right opacity-0 group-hover:opacity-50 cursor-pointer'
+											aria-hidden='true'
+											onClick={() => {
+												setImagesToUpload(
+													imagesToUpload.filter((img) => img !== image)
+												);
+											}}
+										/>
 										&nbsp;
 									</div>
 								))}
@@ -116,11 +127,13 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 					)}
 					{existingImages.length > 0 && (
 						<>
-							<h2 className='text-sm font-medium text-gray-700 mb-3'>Existing Images</h2>
+							<h2 className='text-sm font-medium text-gray-700 mb-3'>
+								Existing Images
+							</h2>
 							<aside className='flex flex-wrap w-full h-auto justify-center justify-items-center gap-4 mb-4'>
-								{existingImages.map((image) => (
+								{existingImages.map((image, i) => (
 									<div
-										key={image.name}
+										key={`existing-image-${i}`}
 										className='flex-none rounded-md bg-cover-image w-40 h-40'
 										style={{
 											backgroundImage: `url(https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/${image})`
