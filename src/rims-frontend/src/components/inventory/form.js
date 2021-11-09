@@ -57,7 +57,7 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 					hashtags: [tag1, tag2, tag3].join(', '),
 					category,
 					brand,
-					condition,
+					condition: condition || null,
 					color,
 					size,
 					style,
@@ -148,6 +148,8 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 							label='Tag 1'
 							placeholder='Item Tag'
 							prefix='#'
+							autoComplete='off'
+							spellCheck='false'
 							onChange={(e) => setTag1(e.target.value)}
 						/>
 						<TextBox
@@ -156,6 +158,8 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 							label='Tag 2'
 							placeholder='Item Tag'
 							prefix='#'
+							autoComplete='off'
+							spellCheck='false'
 							onChange={(e) => setTag2(e.target.value)}
 						/>
 						<TextBox
@@ -164,6 +168,8 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 							label='Tag 3'
 							placeholder='Item Tag'
 							prefix='#'
+							autoComplete='off'
+							spellCheck='false'
 							onChange={(e) => setTag3(e.target.value)}
 						/>
 					</div>

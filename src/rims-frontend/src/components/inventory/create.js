@@ -34,10 +34,11 @@ const CreateInventoryItem = () => {
 	//////////////////////////////////////////////////
 	return (
 		<InventoryItemForm
-			mutationEvent={(inventoryItem) =>
+			mutationEvent={(inventoryItem, images) =>
 				createInventoryItem({
 					variables: {
-						createInventoryItemInput: inventoryItem
+						createInventoryItemInput: inventoryItem,
+						images
 					}
 				})
 			}
