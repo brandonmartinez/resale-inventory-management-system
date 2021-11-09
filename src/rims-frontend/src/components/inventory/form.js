@@ -23,7 +23,9 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 	const [category, setCategory] = useState(inventoryItem.category || '');
 	const [color, setColor] = useState(inventoryItem.color || '');
 	const [condition, setCondition] = useState(inventoryItem.condition || '');
-	const [cost, setCost] = useState(inventoryItem.cost || '');
+	const [cost, setCost] = useState(
+		inventoryItem.cost ? inventoryItem.cost.toFixed(2) : ''
+	);
 	const [description, setDescription] = useState(
 		inventoryItem.description || ''
 	);
@@ -31,8 +33,12 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 	const [imagesToUpload, setImagesToUpload] = useState([]);
 
 	const [name, setName] = useState(inventoryItem.name || '');
-	const [price, setPrice] = useState(inventoryItem.price || '');
-	const [salePrice, setSalePrice] = useState(inventoryItem.salePrice || '');
+	const [price, setPrice] = useState(
+		inventoryItem.price ? inventoryItem.price.toFixed(2) : ''
+	);
+	const [salePrice, setSalePrice] = useState(
+		inventoryItem.salePrice ? inventoryItem.salePrice.toFixed(2) : ''
+	);
 	const [size, setSize] = useState(inventoryItem.size || '');
 	const [style, setStyle] = useState(inventoryItem.style || '');
 
