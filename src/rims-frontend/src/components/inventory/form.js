@@ -98,32 +98,40 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 						}}
 					/>
 
-					<h2>Images to Upload</h2>
-					<aside className='flex flex-wrap w-full h-auto justify-center justify-items-center gap-4 mb-4'>
-						{imagesToUpload.map((image) => (
-							<div
-								key={image.name}
-								className='flex-none rounded-md bg-cover-image w-20 h-20'
-								style={{ backgroundImage: 'url(' + image.preview + ')' }}
-							>
-								&nbsp;
-							</div>
-						))}
-					</aside>
-					<h2>Existing Images</h2>
-					<aside className='flex flex-wrap w-full h-auto justify-center justify-items-center gap-4 mb-4'>
-						{existingImages.map((image) => (
-							<div
-								key={image.name}
-								className='flex-none rounded-md bg-cover-image w-40 h-40'
-								style={{
-									backgroundImage: `url(https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/${image})`
-								}}
-							>
-								&nbsp;
-							</div>
-						))}
-					</aside>
+					{imagesToUpload.length > 0 && (
+						<>
+							<h2>Images to Upload</h2>
+							<aside className='flex flex-wrap w-full h-auto justify-center justify-items-center gap-4 mb-4'>
+								{imagesToUpload.map((image) => (
+									<div
+										key={image.name}
+										className='flex-none rounded-md bg-cover-image w-20 h-20'
+										style={{ backgroundImage: 'url(' + image.preview + ')' }}
+									>
+										&nbsp;
+									</div>
+								))}
+							</aside>
+						</>
+					)}
+					{existingImages.length > 0 && (
+						<>
+							<h2>Existing Images</h2>
+							<aside className='flex flex-wrap w-full h-auto justify-center justify-items-center gap-4 mb-4'>
+								{existingImages.map((image) => (
+									<div
+										key={image.name}
+										className='flex-none rounded-md bg-cover-image w-40 h-40'
+										style={{
+											backgroundImage: `url(https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/${image})`
+										}}
+									>
+										&nbsp;
+									</div>
+								))}
+							</aside>
+						</>
+					)}
 					{/* TODO: remove hardcoded URL */}
 				</div>
 				<div className='md:col-span-2'>
