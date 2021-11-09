@@ -35,9 +35,11 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 	const [salePrice, setSalePrice] = useState(inventoryItem.salePrice || '');
 	const [size, setSize] = useState(inventoryItem.size || '');
 	const [style, setStyle] = useState(inventoryItem.style || '');
-	const [tag1, setTag1] = useState(inventoryItem.tag1 || '');
-	const [tag2, setTag2] = useState(inventoryItem.tag2 || '');
-	const [tag3, setTag3] = useState(inventoryItem.tag3 || '');
+
+	const [splitTag1, splitTag2, splitTag3] = inventoryItem.hashtags.split(',');
+	const [tag1, setTag1] = useState((splitTag1 || '').trim());
+	const [tag2, setTag2] = useState((splitTag2 || '').trim());
+	const [tag3, setTag3] = useState((splitTag3 || '').trim());
 
 	// Render
 	//////////////////////////////////////////////////
@@ -54,7 +56,7 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 				const itemToSend = {
 					name,
 					description,
-					hashtags: [tag1, tag2, tag3].join(', '),
+					hashtags: [tag1, tag2, tag3].join(','),
 					category,
 					brand,
 					condition: condition || null,
@@ -168,6 +170,7 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 							containerClassName='flex-auto'
 							label='Tag 1'
 							placeholder='Item Tag'
+							value={tag1}
 							prefix='#'
 							autoComplete='off'
 							spellCheck='false'
@@ -178,6 +181,7 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 							containerClassName='flex-auto'
 							label='Tag 2'
 							placeholder='Item Tag'
+							value={tag2}
 							prefix='#'
 							autoComplete='off'
 							spellCheck='false'
@@ -188,6 +192,7 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 							containerClassName='flex-auto'
 							label='Tag 3'
 							placeholder='Item Tag'
+							value={tag3}
 							prefix='#'
 							autoComplete='off'
 							spellCheck='false'
