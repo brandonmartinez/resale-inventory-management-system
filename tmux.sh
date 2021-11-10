@@ -22,7 +22,7 @@ then
     
     tmux split-window -h -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS
     tmux send-keys -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS.1 "cd src/rims-frontend/" C-m "nvm use" C-m "npm run dev" C-m
-    tmux send-keys -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS.2 "cd src/rims-api/" C-m "nvm use" C-m "func start --verbose" C-m
+    tmux send-keys -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS.2 "docker-compose build rims-api" C-m "docker-compose up rims-api rims-ingress" C-m
     
     # # Create a Window for Docker
     # tmux new-window -t $SESSION -c "$(PWD)" -n $SESSION_WINDOW_DOCKER

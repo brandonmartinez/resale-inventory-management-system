@@ -32,4 +32,6 @@ services:
       - AZUREWEBJOBSSTORAGE
       - COSMOSDBCONNECTIONSTRING
       - ASSETSSTORAGECONNECTIONSTRING
+    volumes:
+      - ./src/rims-api:/home/site/wwwroot
       
