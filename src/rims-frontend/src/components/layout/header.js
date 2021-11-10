@@ -5,6 +5,7 @@ import {
 	NavLink
 } from 'react-router-dom';
 
+import { useMsal } from '@azure/msal-react';
 // Library Imports
 import {
 	Disclosure,
@@ -28,6 +29,25 @@ const navigation = [
 	{ name: 'Spaces', href: '/spaces' }
 ];
 
+const notLoggedInNavigation = [
+	{
+		name: 'Login',
+		onClickGenerator: (msal) => () => {
+			// console.log("Trying to login via popup")
+			try {
+				const loginResponse = msal.loginRedirect().then((response) => {
+					console.log('Login Response: ' + response.json());
+				});
+
+				console.log(loginResponse);
+			} catch (err) {
+				console.log(err);
+			}
+		}
+	},
+	{ name: 'Sign Up', href: '/signup' }
+];
+
 const MenuButton = ({ open }) => (
 	<div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
 		{/* Mobile menu button*/}
@@ -42,13 +62,13 @@ const MenuButton = ({ open }) => (
 	</div>
 );
 
-const MobileNavigation = () => (
+const MobileNavigation = ({ isAuthenticated, msal }) => (
 	<Disclosure.Panel className='sm:hidden'>
 		<div className='px-2 pt-2 pb-3 space-y-1 text-gray-300'>
-			{navigation.map((item) => (
+			{(isAuthenticated ? navigation : notLoggedInNavigation).map((item) => (
 				<Disclosure.Button
 					key={item.name}
-					as={NavLink}
+					as={item.onClickGenerator ? 'a' : NavLink}
 					to={item.href}
 					className='btn-nav'
 					activeClassName='btn-nav-active'
@@ -61,11 +81,11 @@ const MobileNavigation = () => (
 	</Disclosure.Panel>
 );
 
-const DesktopNavigation = () => (
+const DesktopNavigation = ({ isAuthenticated, msal }) => (
 	<div className='hidden sm:block sm:ml-6'>
 		<div className='flex space-x-4 text-gray-300'>
-			{navigation.map((item) => (
-				<NavLink
+			{(isAuthenticated ? navigation : notLoggedInNavigation).map((item) => (
+				item.onClickGenerator? <button key={item.name} className='btn-nav' onClick={item.onClickGenerator(msal)}>{item.name}</button> : <NavLink
 					key={item.name}
 					to={item.href}
 					className='btn-nav'
@@ -168,7 +188,9 @@ const UserProfileMenu = () => (
 	</Menu>
 );
 
-const Header = () => {
+const Header = ({ isAuthenticated }) => {
+	const { instance: msal } = useMsal();
+
 	return (
 		<Disclosure as='nav' className='bg-header'>
 			{({ open }) => (
@@ -178,16 +200,21 @@ const Header = () => {
 							<MenuButton open={open} />
 							<div className='flex-1 flex items-center justify-center sm:items-stretch sm:justify-start'>
 								<Logo />
-								<DesktopNavigation />
-								<SearchBar />
+								<DesktopNavigation
+									isAuthenticated={isAuthenticated}
+									msal={msal}
+								/>
+								{isAuthenticated && <SearchBar />}
 							</div>
-							<div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
-								<NotificationButton />
-								<UserProfileMenu />
-							</div>
+							{isAuthenticated && (
+								<div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
+									<NotificationButton />
+									<UserProfileMenu />
+								</div>
+							)}
 						</div>
 					</div>
-					<MobileNavigation />
+					<MobileNavigation isAuthenticated={isAuthenticated} msal={msal} />
 				</>
 			)}
 		</Disclosure>

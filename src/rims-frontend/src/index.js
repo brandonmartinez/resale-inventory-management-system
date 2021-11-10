@@ -16,12 +16,17 @@ import {
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { RetryLink } from '@apollo/client/link/retry';
+import { PublicClientApplication } from '@azure/msal-browser';
+import { MsalProvider } from '@azure/msal-react';
 
 import App from './App';
+import { msalConfig } from './authConfig';
 import reportWebVitals from './reportWebVitals';
 
 // Service Setup
 //////////////////////////////////////////////////
+const msalInstance = new PublicClientApplication(msalConfig);
+
 const httpLink = createUploadLink({
 	uri: window._env_.API_URI + '/graphql'
 });
@@ -62,9 +67,11 @@ const client = new ApolloClient({
 
 ReactDOM.render(
 	<React.StrictMode>
-		<ApolloProvider client={client}>
-			<App />
-		</ApolloProvider>
+		<MsalProvider instance={msalInstance}>
+			<ApolloProvider client={client}>
+				<App />
+			</ApolloProvider>
+		</MsalProvider>
 	</React.StrictMode>,
 	document.getElementById('root')
 );

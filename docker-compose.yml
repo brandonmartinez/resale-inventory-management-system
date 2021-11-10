@@ -19,7 +19,13 @@ services:
     expose:
       - 80
     environment:
-      - API_URI 
+      - ADB2C_AUTHORITY
+      - ADB2C_CLIENT_ID
+      - ADB2C_KNOWN_AUTHORITIES
+      - ADB2C_POST_LOGOUT_REDIRECT_URI
+      - ADB2C_REDIRECT_URI
+      - ADB2C_SIGNUP_SIGNIN_POLICY
+      - API_URI
   rims-api:
     image: rims-api
     container_name: rims-api
@@ -34,4 +40,3 @@ services:
       - ASSETSSTORAGECONNECTIONSTRING
     volumes:
       - ./src/rims-api:/home/site/wwwroot
-      
