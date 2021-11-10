@@ -1,11 +1,6 @@
-// Styles
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-
 // Library Imports
 import React from 'react';
 
-import Container from 'react-bootstrap/Container';
 import {
 	BrowserRouter as Router,
 	Route,
@@ -21,6 +16,7 @@ import UpdateInventoryItem from './components/inventory/update';
 import Labels from './components/labels';
 import Header from './components/layout/header';
 import Profile from './components/profile';
+import Preferences from './components/profile/preferences';
 import Spaces from './components/spaces';
 
 const ParamWrapper = ({ Component, ...rest }) => {
@@ -31,7 +27,7 @@ const ParamWrapper = ({ Component, ...rest }) => {
 const App = () => (
 	<Router>
 		<Header />
-		<Container>
+		<div className='container max-w-7xl mx-auto py-0 px-6 md:py-5 md:px-6'>
 			<Switch>
 				<Route path='/inventory/add'>
 					<CreateInventoryItem />
@@ -45,6 +41,9 @@ const App = () => (
 				<Route path='/profile'>
 					<Profile />
 				</Route>
+				<Route path='/profile/preferences'>
+					<Preferences />
+				</Route>
 				<Route path='/spaces'>
 					<Spaces />
 				</Route>
@@ -55,7 +54,7 @@ const App = () => (
 					<Dashboard />
 				</Route>
 			</Switch>
-		</Container>
+		</div>
 	</Router>
 );
 

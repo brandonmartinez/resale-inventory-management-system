@@ -22,15 +22,15 @@ then
     
     tmux split-window -h -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS
     tmux send-keys -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS.1 "cd src/rims-frontend/" C-m "nvm use" C-m "npm run dev" C-m
-    tmux send-keys -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS.2 "cd src/rims-api/" C-m "nvm use" C-m "func host start --verbose" C-m
+    tmux send-keys -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS.2 "docker-compose build rims-api" C-m "docker-compose up rims-api rims-ingress" C-m
     
-    # Create a Window for Docker
-    tmux new-window -t $SESSION -c "$(PWD)" -n $SESSION_WINDOW_DOCKER
-    tmux send-keys -t $SESSION:$SESSION_WINDOW_DOCKER "docker-compose build" C-m "docker-compose up" C-m
+    # # Create a Window for Docker
+    # tmux new-window -t $SESSION -c "$(PWD)" -n $SESSION_WINDOW_DOCKER
+    # tmux send-keys -t $SESSION:$SESSION_WINDOW_DOCKER "docker-compose build" C-m "docker-compose up" C-m
     
-    # Create a Window for k8s
-    tmux new-window -t $SESSION -c "$(PWD)" -n $SESSION_WINDOW_K8S
-    tmux send-keys -t $SESSION:$SESSION_WINDOW_K8S "kubectl config use-context docker-desktop" C-m "./kubernetes.sh" C-m "kubectl config set-context --current --namespace=rims" C-m "clear" C-m "kubectl get all" C-m
+    # # Create a Window for k8s
+    # tmux new-window -t $SESSION -c "$(PWD)" -n $SESSION_WINDOW_K8S
+    # tmux send-keys -t $SESSION:$SESSION_WINDOW_K8S "kubectl config use-context docker-desktop" C-m "./kubernetes.sh" C-m "kubectl config set-context --current --namespace=rims" C-m "clear" C-m "kubectl get all" C-m
     
     # Create a Window for zsh
     tmux new-window -t $SESSION -c "$(PWD)" -n $SESSION_WINDOW_SHELL

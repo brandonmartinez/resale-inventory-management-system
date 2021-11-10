@@ -1,13 +1,64 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+
+html {
+	box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@layer utilities {
+	/* https://tailwindcss.com/docs/adding-new-utilities */
+}
+
+@layer base {
+	/* https://tailwindcss.com/docs/adding-base-styles */
+	@font-face {
+		font-family: 'Rubik';
+		src: url('./fonts/Rubik.ttf');
+	}
+	@font-face {
+		font-family: 'Rubik';
+		src: url('./fonts/Rubik-Italic.ttf');
+		font-style: italic;
+	}
+}
+
+@layer components {
+	/*  branding colors */
+	.bg-header {
+		@apply bg-plurple-700;
+	}
+
+	.bg-cover-image {
+		@apply bg-origin-border bg-center bg-no-repeat bg-cover bg-almond-100;
+	}
+
+	@variants hover, focus, active {
+		.bg-header-hover {
+			@apply bg-plurple-600;
+		}
+	}
+
+	/* Standard Components */
+	.btn-base {
+		@apply px-3 py-2 rounded-md text-base md:text-sm font-medium;
+	}
+
+	.btn-nav {
+		@apply block btn-base hover:bg-header-hover hover:text-almond-50;
+	}
+
+	.btn-nav-active {
+		@apply bg-plurple-800 text-almond-50;
+	}
+
+	.btn-action {
+		@apply btn-base shadow-sm text-sm text-almond-100 bg-coral-400 hover:bg-coral-600 hover:text-almond-100;
+	}
 }

@@ -1,14 +1,5 @@
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-
 const Spaces = () => {
-	return (
-		<Row>
-			<Col>Insert</Col>
-			<Col>Spaces</Col>
-			<Col>Content</Col>
-		</Row>
-	);
+	return <div>Spaces coming soon…</div>;
 };
 
 export default Spaces;

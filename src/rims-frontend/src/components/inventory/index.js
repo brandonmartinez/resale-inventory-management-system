@@ -1,17 +1,8 @@
-import { useState } from 'react';
+import { gql } from '@apollo/client';
+import { PlusIcon } from '@heroicons/react/solid';
 
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Table from 'react-bootstrap/Table';
-import { Link } from 'react-router-dom';
-
-import {
-	gql,
-	useQuery
-} from '@apollo/client';
+import { Button } from '../shared/forms';
+import { DataTable } from '../shared/tables';
 
 const getAllInventoryItems = gql`
 	query Query($orderBy: String) {
@@ -29,125 +20,62 @@ const getAllInventoryItems = gql`
 	}
 `;
 
-const Inventory = () => {
-	const [orderBy, setOrderBy] = useState('name ASC');
-	const { loading, error, data } = useQuery(getAllInventoryItems, {
-		variables: {
-			orderBy
+const columns = [
+	{
+		key: 'relativeImagePaths',
+		label: '',
+		className: 'text-center',
+		noSort: true,
+		filter: (p) => {
+			if (p.length > 0) {
+				return (
+					<img
+						src={
+							'https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/' +
+							p[0]
+						}
+						style={{
+							maxHeight: '4em',
+							width: 'auto'
+						}}
+						alt='Product'
+					/>
+				);
+			}
+			return <></>;
 		}
-	});
-
-	if (loading) {
-		return <p>Loading...</p>;
+	},
+	{ key: 'name', label: 'Name' },
+	{ key: 'category', label: 'category' },
+	{ key: 'brand', label: 'brand' },
+	{ key: 'condition', label: 'condition' },
+	{
+		key: 'cost',
+		label: 'cost',
+		className: 'text-right',
+		filter: (p) => '$' + (p || 0).toFixed(2)
+	},
+	{
+		key: 'price',
+		label: 'price',
+		className: 'text-right',
+		filter: (p) => '$' + (p || 0).toFixed(2)
 	}
-	if (error) {
-		return <p>Error :({error}</p>;
-	}
+];
 
-	const setColumnOrdering = (previous, next) => {
-		const [previousField, previousDirection] = previous.split(' ');
-		const direction =
-			previousField === next && previousDirection === 'ASC' ? 'DESC' : 'ASC';
+const Inventory = () => (
+	<>
+		<Button to='/inventory/add' Icon={PlusIcon}>
+			Add New Item
+		</Button>
 
-		setOrderBy(`${next} ${direction}`);
-	};
-
-	return (
-		<>
-			<Row>
-				<Col>
-					<ButtonToolbar aria-label='Toolbar with button groups'>
-						<ButtonGroup aria-label='Third group'>
-							<Button to='/inventory/add' as={Link}>
-								Add New Item
-							</Button>
-						</ButtonGroup>
-					</ButtonToolbar>
-				</Col>
-			</Row>
-			<Row>
-				<Col>
-					<Table striped bordered hover>
-						<thead>
-							<tr>
-								<th>&nbsp;</th>
-								<th onClick={() => setColumnOrdering(orderBy, 'name')}>Name</th>
-								<th onClick={() => setColumnOrdering(orderBy, 'category')}>
-									Category
-								</th>
-								<th onClick={() => setColumnOrdering(orderBy, 'brand')}>
-									Brand
-								</th>
-								<th onClick={() => setColumnOrdering(orderBy, 'condition')}>
-									Condition
-								</th>
-								<th onClick={() => setColumnOrdering(orderBy, 'cost')}>Cost</th>
-								<th onClick={() => setColumnOrdering(orderBy, 'price')}>
-									Price
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							{data.getAllInventoryItems.map((inventoryItem, i) => (
-								<tr key={`product-image-${i}`}>
-									<td>
-										{inventoryItem.relativeImagePaths &&
-										inventoryItem.relativeImagePaths.length > 0 ? (
-											<Link to={`/inventory/edit/${inventoryItem.id}`}>
-												<img
-													src={
-														'https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/' +
-														inventoryItem.relativeImagePaths[0]
-													}
-													style={{
-														maxHeight: '4em',
-														width: 'auto'
-													}}
-													alt='Product'
-												/>
-											</Link>
-										) : (
-											<></>
-										)}
-									</td>
-									<td>
-										<Link to={`/inventory/edit/${inventoryItem.id}`}>
-											{inventoryItem.name}
-										</Link>
-									</td>
-									<td>
-										<Link to={`/inventory/edit/${inventoryItem.id}`}>
-											{inventoryItem.category}
-										</Link>
-									</td>
-									<td>
-										<Link to={`/inventory/edit/${inventoryItem.id}`}>
-											{inventoryItem.brand}
-										</Link>
-									</td>
-									<td>
-										<Link to={`/inventory/edit/${inventoryItem.id}`}>
-											{inventoryItem.condition}
-										</Link>
-									</td>
-									<td>
-										<Link to={`/inventory/edit/${inventoryItem.id}`}>
-											${(inventoryItem.cost || 0).toFixed(2)}
-										</Link>
-									</td>
-									<td>
-										<Link to={`/inventory/edit/${inventoryItem.id}`}>
-											${(inventoryItem.price || 0).toFixed(2)}
-										</Link>
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</Table>
-				</Col>
-			</Row>
-		</>
-	);
-};
+		<DataTable
+			gql={getAllInventoryItems}
+			columns={columns}
+			pathPrefix='/inventory/edit'
+			orderByDefaultField='name'
+		/>
+	</>
+);
 
 export default Inventory;
