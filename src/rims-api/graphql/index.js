@@ -25,11 +25,29 @@ const schema = applyMiddleware(
 	...middleware
 );
 
+const getUser = (token) => {
+	return { token };
+};
+
 const createHandler = async () => {
 	const server = new ApolloServer({
 		schema,
 		dataSources,
-		context: (req, res) => ({ req, res: res || {} })
+		context: ({ request, response }) => {
+			// Get the user token from the headers.
+			console.log('REQUEST', request);
+			const token = request.headers.authorization || '';
+
+			// Try to retrieve a user with the token
+			const user = getUser(token);
+
+			if (!user) {
+				throw new Error(request);
+				// throw new AuthenticationError('you must be logged in');
+			}
+
+			return { req: request, res: response || {}, user };
+		}
 	});
 
 	return server.createHandler();
