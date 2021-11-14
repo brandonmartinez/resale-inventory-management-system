@@ -167,3 +167,4 @@ __pycache__/
 
 # Other ignore
 env-config.js
+lib/ssl/

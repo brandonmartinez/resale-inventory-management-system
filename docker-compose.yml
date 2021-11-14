@@ -1,15 +1,17 @@
 version: '3.8'
 
 services:
+  # Dev Specific Images
   rims-ingress:
     image: nginx:latest
     container_name: rims-ingress
     volumes:
       - ./src/rims-ingress/nginx.conf:/etc/nginx/nginx.conf
       - ./src/rims-ingress/logs/:/etc/nginx/logs/
+      - ./lib/ssl/:/etc/nginx/ssl/
     ports:
-      - 8080:8080
-      - 8888:8888
+      - 80:80
+      - 443:443
   rims-frontend:
     image: rims-frontend
     container_name: rims-frontend
@@ -17,7 +19,7 @@ services:
       context: ./src/rims-frontend/
       dockerfile: ./Dockerfile
     expose:
-      - 80
+      - 3000
     environment:
       - ADB2C_AUTHORITY
       - ADB2C_CLIENT_ID
@@ -26,6 +28,8 @@ services:
       - ADB2C_REDIRECT_URI
       - ADB2C_SIGNUP_SIGNIN_POLICY
       - API_URI
+    volumes:
+      - ./src/rims-frontend/:/app
   rims-api:
     image: rims-api
     container_name: rims-api
@@ -40,3 +44,20 @@ services:
       - ASSETSSTORAGECONNECTIONSTRING
     volumes:
       - ./src/rims-api:/home/site/wwwroot
+  # Production Specific Images
+  rims-frontend-prod:
+    image: rims-frontend
+    container_name: rims-frontend
+    build:
+      context: ./src/rims-frontend/
+      dockerfile: ./Dockerfile.prod
+    expose:
+      - 80
+    environment:
+      - ADB2C_AUTHORITY
+      - ADB2C_CLIENT_ID
+      - ADB2C_KNOWN_AUTHORITIES
+      - ADB2C_POST_LOGOUT_REDIRECT_URI
+      - ADB2C_REDIRECT_URI
+      - ADB2C_SIGNUP_SIGNIN_POLICY
+      - API_URI

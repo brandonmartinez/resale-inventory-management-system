@@ -1,46 +1,20 @@
-##################################################################
-# Stage 0: Set the Base Primary Image of the App
-##################################################################
-FROM node:14-alpine AS base
+# pull official base image
+FROM node:14-alpine
 
-# Install prerequisites
-RUN npm install -g http-server
-
-# Create App directory
+# set working directory
 WORKDIR /app
 
-EXPOSE 80
-EXPOSE 443
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
 
-##################################################################
-# Stage 1: Build the Node App
-##################################################################
-FROM base as publish
-
-# Update NPM to latest and replace the global version
-RUN npm install npm@latest
-RUN rm -rf /usr/local/lib/node_modules/npm
-RUN mv node_modules/npm /usr/local/lib/node_modules/npm
-
-# Copy package files and npm install
-COPY ./package*.json ./
+# install app dependencies
+COPY package.json ./
+COPY package-lock.json ./
 RUN npm install
+RUN npm install react-scripts -g
 
-# Copy Remaining Files and Run the build command
-COPY ./ ./
-RUN npm run build
+# add app
+COPY . ./
 
-##################################################################
-# Stage 3: Copy Into a Clean Runtime Image
-##################################################################
-FROM base AS final
-
-# Copy Server Scripts
-COPY env.sh .
-COPY server.sh .
-
-# Copy artifacts from the previous stage into this stage
-COPY --from=publish /app/build ./
-
-# Setting the executable that will run in the lifetime of this container
-ENTRYPOINT ["/app/server.sh"]
+# start app
+CMD ["npm", "run", "dev"]
