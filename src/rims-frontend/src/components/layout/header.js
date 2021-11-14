@@ -65,18 +65,28 @@ const MenuButton = ({ open }) => (
 const MobileNavigation = ({ isAuthenticated, msal }) => (
 	<Disclosure.Panel className='sm:hidden'>
 		<div className='px-2 pt-2 pb-3 space-y-1 text-gray-300'>
-			{(isAuthenticated ? navigation : notLoggedInNavigation).map((item) => (
-				<Disclosure.Button
-					key={item.name}
-					as={item.onClickGenerator ? 'a' : NavLink}
-					to={item.href}
-					className='btn-nav'
-					activeClassName='btn-nav-active'
-					aria-current='page'
-				>
-					{item.name}
-				</Disclosure.Button>
-			))}
+			{(isAuthenticated ? navigation : notLoggedInNavigation).map((item) =>
+				item.onClickGenerator ? (
+					<button
+						key={item.name}
+						className='btn-nav'
+						onClick={item.onClickGenerator(msal)}
+					>
+						{item.name}
+					</button>
+				) : (
+					<Disclosure.Button
+						key={item.name}
+						as={NavLink}
+						to={item.href}
+						className='btn-nav'
+						activeClassName='btn-nav-active'
+						aria-current='page'
+					>
+						{item.name}
+					</Disclosure.Button>
+				)
+			)}
 		</div>
 	</Disclosure.Panel>
 );
@@ -84,17 +94,27 @@ const MobileNavigation = ({ isAuthenticated, msal }) => (
 const DesktopNavigation = ({ isAuthenticated, msal }) => (
 	<div className='hidden sm:block sm:ml-6'>
 		<div className='flex space-x-4 text-gray-300'>
-			{(isAuthenticated ? navigation : notLoggedInNavigation).map((item) => (
-				item.onClickGenerator? <button key={item.name} className='btn-nav' onClick={item.onClickGenerator(msal)}>{item.name}</button> : <NavLink
-					key={item.name}
-					to={item.href}
-					className='btn-nav'
-					activeClassName='btn-nav-active'
-					aria-current='page'
-				>
-					{item.name}
-				</NavLink>
-			))}
+			{(isAuthenticated ? navigation : notLoggedInNavigation).map((item) =>
+				item.onClickGenerator ? (
+					<button
+						key={item.name}
+						className='btn-nav'
+						onClick={item.onClickGenerator(msal)}
+					>
+						{item.name}
+					</button>
+				) : (
+					<NavLink
+						key={item.name}
+						to={item.href}
+						className='btn-nav'
+						activeClassName='btn-nav-active'
+						aria-current='page'
+					>
+						{item.name}
+					</NavLink>
+				)
+			)}
 		</div>
 	</div>
 );
