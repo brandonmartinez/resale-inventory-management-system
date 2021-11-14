@@ -22,9 +22,9 @@ then
     tmux split-window -h -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS
     tmux select-layout -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS even-horizontal
     
-    tmux send-keys -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS.1 "docker-compose build rims-frontend" C-m "docker-compose up rims-frontend" C-m
-    tmux send-keys -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS.2 "docker-compose build rims-api" C-m "docker-compose up rims-api" C-m
-    tmux send-keys -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS.3 "docker-compose up rims-ingress" C-m
+    tmux send-keys -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS.1 "docker-compose build rims-frontend" C-m "docker-compose up --no-log-prefix rims-frontend" C-m
+    tmux send-keys -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS.2 "docker-compose build rims-api" C-m "docker-compose up --no-log-prefix rims-api" C-m
+    tmux send-keys -t $SESSION:$SESSION_WINDOW_LOCAL_SERVERS.3 "docker-compose up --no-log-prefix rims-ingress" C-m
     
     # Create a Window for zsh
     tmux new-window -t $SESSION -c "$(PWD)" -n $SESSION_WINDOW_SHELL
