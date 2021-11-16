@@ -9,7 +9,9 @@ export const msalConfig = {
 		postLogoutRedirectUri: window._env_.ADB2C_POST_LOGOUT_REDIRECT_URI
 	},
 	cache: {
-		cacheLocation: 'sessionStorage',
+		// More information here: https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/caching.md
+		// Using localStorage to allow for cross-tab use
+		cacheLocation: 'localStorage',
 		storeAuthStateInCookie: false
 	},
 	system: {

@@ -38,10 +38,19 @@ services:
       dockerfile: ./Dockerfile
     expose:
       - 80
+      - 9229
+    ports:
+      - 5858:9229
     environment:
+      - ADB2C_AUTHORITY
+      - ADB2C_CLIENT_ID
+      - ADB2C_KNOWN_AUTHORITIES
+      - ADB2C_POST_LOGOUT_REDIRECT_URI
+      - ADB2C_REDIRECT_URI
+      - ADB2C_SIGNUP_SIGNIN_POLICY
+      - ASSETSSTORAGECONNECTIONSTRING
       - AZUREWEBJOBSSTORAGE
       - COSMOSDBCONNECTIONSTRING
-      - ASSETSSTORAGECONNECTIONSTRING
     volumes:
       - ./src/rims-api:/home/site/wwwroot
   # Production Specific Images

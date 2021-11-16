@@ -1,12 +1,16 @@
 {
-    "version": "0.2.0",
     "configurations": [
         {
-            "name": "Attach to Node Functions",
-            "type": "node",
+            "address": "0.0.0.0",
+            "localRoot": "${workspaceFolder}/src/rims-api",
+            "name": "Attach to rims-api",
+            "port": 5858,
+            "remoteRoot": "/home/site/wwwroot",
             "request": "attach",
-            "port": 9229,
-            "processId": "${command:PickProcess}"
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
         }
     ]
 }

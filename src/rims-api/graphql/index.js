@@ -1,6 +1,7 @@
 // Imports
 //////////////////////////////////////////////////
 const join = require('path').join;
+const { promisify } = require('util');
 
 const { GraphQLFileLoader } = require('@graphql-tools/graphql-file-loader');
 const { loadSchemaSync } = require('@graphql-tools/load');
@@ -8,6 +9,9 @@ const { addResolversToSchema } = require('@graphql-tools/schema');
 const { applyMiddleware } = require('graphql-middleware');
 const { ApolloServer } = require('apollo-server-azure-functions');
 const { processRequest } = require('graphql-upload-minimal');
+
+const jwt = require('jsonwebtoken');
+const verifyAadToken = promisify(jwt.verify);
 
 const middleware = require('./lib/middleware');
 const resolvers = require('./lib/resolvers');
@@ -25,21 +29,34 @@ const schema = applyMiddleware(
 	...middleware
 );
 
-const getUser = (token) => {
-	return { token };
+const getUser = async (token) => {
+	// download keys from here: https://thriftandshift.b2clogin.com/thriftandshift.onmicrosoft.com/B2C_1_Thrift_And_Shift_Local_SignUp_SignIn/discovery/v2.0/keys
+	// const key = 
+	// const result = await verifyAadToken(token, { audience: 'https://graph.windows.net'})
+	// 	.then((data) => {
+	// 		console.log('JWT is valid', token, data);
+
+	// 		return data;
+	// 	})
+	// 	.catch((err) => console.log('JWT is invalid', token, err));
+
+	// console.log('getUser Result', result);
+	const result = {};
+
+	return result;
 };
 
 const createHandler = async () => {
 	const server = new ApolloServer({
 		schema,
 		dataSources,
-		context: ({ request, response }) => {
+		context: async ({ request, response }) => {
 			// Get the user token from the headers.
 			console.log('REQUEST', request);
-			const token = request.headers.authorization || '';
+			const token = (request.headers.authorization || '').replace('Bearer ', '');
 
 			// Try to retrieve a user with the token
-			const user = getUser(token);
+			const user = await getUser(token);
 
 			if (!user) {
 				throw new Error(request);

@@ -68,7 +68,7 @@ const ApolloClientWithAuth = ({ children }) => {
 				})
 				.then((response) => {
 					console.log('token acquired', response);
-					setToken(response.accessToken);
+					setToken(response.idToken);
 				})
 				.catch((error) => {
 					console.log('No account or token found.', error);
@@ -89,6 +89,8 @@ const ApolloClientWithAuth = ({ children }) => {
 		cache: new InMemoryCache(),
 		link: from([errorLink, retryLink, withToken, httpLink])
 	});
+
+	console.log('Token Information', account, token);
 
 	return (
 		<MsalProvider instance={msalInstance}>
