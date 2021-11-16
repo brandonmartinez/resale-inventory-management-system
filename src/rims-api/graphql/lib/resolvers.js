@@ -1,6 +1,5 @@
 const DateTime = require('luxon').DateTime;
 
-const temporaryUserId = 'a2a5f680-37db-40ff-9ed3-205d21c47f52';
 const getNow = () => DateTime.now().toUTC().toISO({ includeOffset: false });
 const { GraphQLUpload } = require('graphql-upload-minimal');
 
@@ -9,33 +8,42 @@ const resolvers = {
 	Query: {
 		// Inventory Queries
 		//////////////////////////////////////////////////
-		async getAllInventoryItems(_, { orderBy }, { dataSources }, info) {
+		async getAllInventoryItems(_, { orderBy }, { dataSources, user }, info) {
 			// Get info passed from GraphQL Query and set needed fields
 			const fields = Object.keys(info.parsed.fieldsByTypeName.InventoryItem);
 
 			// Execute query
 			const queryResults = await dataSources.inventoryItems.getAllItems({
 				fields,
+				userId: user.id,
 				orderBy
 			});
 			const resources = queryResults.resources;
 
 			return resources;
 		},
-		async getInventoryItemById(_, { id }, { dataSources }) {
+		async getInventoryItemById(_, { id }, { dataSources, user }) {
 			const queryResults = await dataSources.inventoryItems.findOneById(id);
+
+			// TODO: write a query instead, no need to make a full data call
+			if (queryResults.userId !== user.id) {
+				return null;
+			}
 
 			return queryResults;
 		},
-		async getNextInventoryFriendlyId(_, __, { dataSources }) {
+		async getNextInventoryFriendlyId(_, __, { dataSources, user }) {
 			const result = await dataSources.inventoryItems.getNextFriendlyId(
-				temporaryUserId
+				user.id
 			);
 			return result;
 		},
-		async getLatestInventoryItems(_, { numberOfItems }, { dataSources }) {
+		async getLatestInventoryItems(_, { numberOfItems }, { dataSources, user }) {
 			const queryResults =
-				await dataSources.inventoryItems.getLatestInventoryItems(numberOfItems);
+				await dataSources.inventoryItems.getLatestInventoryItems(
+					numberOfItems,
+					user.id
+				);
 			const resources = queryResults.resources;
 			return resources;
 		}
@@ -43,9 +51,9 @@ const resolvers = {
 	Mutation: {
 		// Inventory Mutations
 		//////////////////////////////////////////////////
-		async createInventoryItem(_, { inventoryItem }, { dataSources }) {
+		async createInventoryItem(_, { inventoryItem }, { dataSources, user }) {
 			// TODO: this would be pulled from the signed in user - add auth!
-			inventoryItem.userId = temporaryUserId;
+			inventoryItem.userId = user.id;
 			inventoryItem.friendlyId =
 				await dataSources.inventoryItems.getNextFriendlyId(
 					inventoryItem.userId

@@ -29,19 +29,32 @@ const schema = applyMiddleware(
 	...middleware
 );
 
-const getUser = async (token) => {
+const parseAuthToken = async (token) => {
+	if (!token || token === 'null') {
+		return null;
+	}
+
 	// download keys from here: https://thriftandshift.b2clogin.com/thriftandshift.onmicrosoft.com/B2C_1_Thrift_And_Shift_Local_SignUp_SignIn/discovery/v2.0/keys
-	// const key = 
-	// const result = await verifyAadToken(token, { audience: 'https://graph.windows.net'})
-	// 	.then((data) => {
-	// 		console.log('JWT is valid', token, data);
-
-	// 		return data;
-	// 	})
-	// 	.catch((err) => console.log('JWT is invalid', token, err));
-
-	// console.log('getUser Result', result);
-	const result = {};
+	var jwksClient = require('jwks-rsa');
+	var client = jwksClient({
+		jwksUri:
+			'https://thriftandshift.b2clogin.com/thriftandshift.onmicrosoft.com/B2C_1_Thrift_And_Shift_Local_SignUp_SignIn/discovery/v2.0/keys'
+	});
+	function getKey(header, callback) {
+		client.getSigningKey(header.kid, function (err, key) {
+			var signingKey = key.publicKey || key.rsaPublicKey;
+			callback(null, signingKey);
+		});
+	}
+	const result = await verifyAadToken(token, getKey, {
+		audience: '2705e341-7317-4dd8-a16a-840eae67e265'
+	})
+		.then((data) => {
+			return data;
+		})
+		.catch((err) => {
+			console.log('JWT is invalid', token, err);
+		});
 
 	return result;
 };
@@ -52,16 +65,20 @@ const createHandler = async () => {
 		dataSources,
 		context: async ({ request, response }) => {
 			// Get the user token from the headers.
-			console.log('REQUEST', request);
-			const token = (request.headers.authorization || '').replace('Bearer ', '');
+			const token = (request.headers.authorization || '').replace(
+				'Bearer ',
+				''
+			);
 
 			// Try to retrieve a user with the token
-			const user = await getUser(token);
+			const user = await parseAuthToken(token);
 
 			if (!user) {
 				throw new Error(request);
 				// throw new AuthenticationError('you must be logged in');
 			}
+
+			user.id = user.sub;
 
 			return { req: request, res: response || {}, user };
 		}

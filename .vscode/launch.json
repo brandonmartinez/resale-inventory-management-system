@@ -10,7 +10,9 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "type": "node",
+            "type": "pwa-node",
+            "continueOnAttach": true,
+            "restart": true
         }
     ]
 }
