@@ -1,6 +1,5 @@
 import React, {
-	useEffect,
-	useMemo,
+	useLayoutEffect,
 	useState
 } from 'react';
 
@@ -53,18 +52,17 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 	}
 });
 
+const msalInstance = new PublicClientApplication(msalConfig);
+
 const ApolloClientWithAuth = ({ children }) => {
 	const [token, setToken] = useState(null);
-	const msalInstance = useMemo(() => {
-		return new PublicClientApplication(msalConfig);
-	}, [token]);
 	const accounts = msalInstance.getAllAccounts();
 	const account = accounts[0];
 	logger.debug(accounts, account);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if (account) {
-            logger.debug('acquiring token')
+			logger.debug('acquiring token');
 			msalInstance
 				.acquireTokenSilent({
 					account: account
@@ -77,7 +75,7 @@ const ApolloClientWithAuth = ({ children }) => {
 					logger.debug('No account or token found.', error);
 				});
 		}
-	}, [account, msalInstance]);
+	}, [account]);
 
 	const withToken = setContext((_, { headers }) => {
 		return {
