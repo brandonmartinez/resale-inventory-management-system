@@ -4,17 +4,16 @@ import React, {
 	useReducer
 } from 'react';
 
-import log from 'loglevel';
-
 import ContextStateReducer, {
 	DispatchActions
 } from '../actions/ContextStateReducer';
+import getLogger from '../utils/getLogger';
 import InitialStateProvider from './InitialStateProvider';
 
 export const ContextState = createContext();
 
 export const useContextState = () => {
-	const logger = log.getLogger('useContextState');
+	const logger = getLogger('useContextState');
 	const [state, dispatch] = useContext(ContextState);
 
 	// Create an object with all the dispatch actions that can be exported
@@ -30,7 +29,7 @@ export const useContextState = () => {
 			});
 	});
 
-	logger.trace(
+	logger.debug(
 		'Returning Current State and Available Actions',
 		state,
 		DispatchActions

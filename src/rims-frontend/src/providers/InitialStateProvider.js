@@ -1,7 +1,7 @@
-import log from 'loglevel';
+import getLogger from '../utils/getLogger';
 
 const InitialStateProvider = () => {
-	const logger = log.getLogger('InitialStateProvider');
+	const logger = getLogger('InitialStateProvider');
 	// check if values are in local storage
 	const localStorageGlobalState = localStorage.getItem('globalState');
 	let localStorageValues = localStorageGlobalState
@@ -11,7 +11,8 @@ const InitialStateProvider = () => {
 	const token = localStorageValues.token;
 	if (!token) {
 		// get the token
-		logger.trace('No token found, acquiring a new one.');
+		logger.debug('No token found, attempting to acquire a new one.');
+
 	}
 
 	// Initialize any default state needed to run the app, merging in
@@ -20,7 +21,7 @@ const InitialStateProvider = () => {
 		...localStorageValues
 	};
 
-	logger.trace('Returning initial values.', initialValues);
+	logger.debug('Returning initial values.', initialValues);
 	return initialValues;
 };
 

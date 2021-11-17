@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 
-import log from 'loglevel';
 import {
 	Link,
 	NavLink
@@ -19,12 +18,13 @@ import {
 	XIcon
 } from '@heroicons/react/outline';
 
+import getLogger from '../../utils/getLogger';
 import {
 	Form,
 	SearchBox
 } from '../shared/forms';
 
-const logger = log.getLogger('header');
+const logger = getLogger('header');
 
 const navigation = [
 	{ name: 'Inventory', href: '/inventory' },
@@ -48,7 +48,7 @@ const notLoggedInNavigation = [
 
 				logger.debug(loginResponse);
 			} catch (err) {
-				logger.debug(err);
+				logger.error(err);
 			}
 		}
 	},

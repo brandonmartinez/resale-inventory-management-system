@@ -1,10 +1,10 @@
-import log from 'loglevel';
+import getLogger from '../utils/getLogger';
 
-const logger = log.getLogger('ContextDispatchHandlers');
+const logger = getLogger('ContextDispatchHandlers');
 
 const ContextDispatchHandlers = {
 	updateToken: (state, action) => {
-		logger.trace('updateToken', state, action);
+		logger.debug('updateToken', state, action);
 
 		return {
 			...state,
@@ -12,7 +12,7 @@ const ContextDispatchHandlers = {
 		};
 	},
 	removeToken: (state, action) => {
-		logger.trace('removeToken', state, action);
+		logger.debug('removeToken', state, action);
 		return {
 			...state,
 			token: null

@@ -1,8 +1,4 @@
-import log from 'loglevel';
-
 import { LogLevel } from '@azure/msal-browser';
-
-const logger = log.getLogger('msal');
 
 export const msalConfig = {
 	auth: {
@@ -26,22 +22,22 @@ export const msalConfig = {
 				}
 				switch (level) {
 					case LogLevel.Error:
-						logger.error(message);
+						console.error(message);
 						return;
 					case LogLevel.Info:
-						logger.info(message);
+						console.info(message);
 						return;
 					case LogLevel.Verbose:
-						logger.trace(message);
+						console.debug(message);
 						return;
 					case LogLevel.Trace:
-						logger.trace(message);
+						console.trace(message);
 						return;
 					case LogLevel.Warning:
-						logger.warn(message);
+						console.warn(message);
 						return;
 					default:
-						logger.log(message);
+						console.log(message);
 						return;
 				}
 			}

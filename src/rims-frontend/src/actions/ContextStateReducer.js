@@ -1,5 +1,4 @@
-import log from 'loglevel';
-
+import getLogger from '../utils/getLogger';
 import ContextDispatchHandlers from './ContextDispatchHandlers';
 
 // Update this with any properties wanting to be serialized
@@ -10,7 +9,7 @@ const globalPropertiesToSerializeToLocalStorage = [
 ];
 
 const updateLocalStorageCache = (newState) => {
-	const logger = log.getLogger('updateLocalStorageCache');
+	const logger = getLogger('updateLocalStorageCache');
 	logger.debug('updateLocalStorageCache', newState);
 
 	// Copy wanted global properties to store to localstorage into a new object
@@ -33,20 +32,20 @@ const updateLocalStorageCache = (newState) => {
 		});
 	}
 
-	logger.trace('Updated Local Storage', localStorageCache);
+	logger.debug('Updated Local Storage', localStorageCache);
 };
 
 export const DispatchActions = Object.keys(ContextDispatchHandlers);
 
 const ContextStateReducer = (state, action) => {
-	const logger = log.getLogger('ContextStateReducer');
+	const logger = getLogger('ContextStateReducer');
 	logger.debug(state, action);
 
 	state.lastModified = new Date().toUTCString();
 
 	// call the method on this class defined by the type
 	var handler = ContextDispatchHandlers[action.type];
-	logger.trace('Handler for Action', action, handler);
+	logger.debug('Handler for Action', action, handler);
 	if (handler) {
 		state = handler(state, action);
 	}

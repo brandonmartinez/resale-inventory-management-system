@@ -5,7 +5,6 @@ import React, {
 } from 'react';
 
 import { createUploadLink } from 'apollo-upload-client';
-import log from 'loglevel';
 
 import {
 	ApolloClient,
@@ -19,9 +18,10 @@ import { RetryLink } from '@apollo/client/link/retry';
 import { PublicClientApplication } from '@azure/msal-browser';
 import { MsalProvider } from '@azure/msal-react';
 
+import getLogger from '../../utils/getLogger';
 import { msalConfig } from './authConfig';
 
-const logger = log.getLogger('ApolloClientWithAuth');
+const logger = getLogger('ApolloClientWithAuth');
 
 const httpLink = createUploadLink({
 	uri: window._env_.API_URI + '/graphql'
@@ -42,14 +42,14 @@ const retryLink = new RetryLink({
 const errorLink = onError(({ graphQLErrors, networkError }) => {
 	if (graphQLErrors) {
 		graphQLErrors.forEach(({ message, locations, path }) =>
-			logger.debug(
+			logger.trace(
 				`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
 			)
 		);
 	}
 
 	if (networkError) {
-		logger.debug(`[Network error]: ${networkError}`);
+		logger.trace(`[Network error]: ${networkError}`);
 	}
 });
 
