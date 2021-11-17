@@ -7,7 +7,7 @@ const { GraphQLFileLoader } = require('@graphql-tools/graphql-file-loader');
 const { loadSchemaSync } = require('@graphql-tools/load');
 const { addResolversToSchema } = require('@graphql-tools/schema');
 const { applyMiddleware } = require('graphql-middleware');
-const { ApolloServer } = require('apollo-server-azure-functions');
+const { ApolloServer, AuthenticationError } = require('apollo-server-azure-functions');
 const { processRequest } = require('graphql-upload-minimal');
 
 const jwt = require('jsonwebtoken');
@@ -74,8 +74,7 @@ const createHandler = async () => {
 			const user = await parseAuthToken(token);
 
 			if (!user) {
-				throw new Error(request);
-				// throw new AuthenticationError('you must be logged in');
+				throw new AuthenticationError('All requests must be authorized.');
 			}
 
 			user.id = user.sub;

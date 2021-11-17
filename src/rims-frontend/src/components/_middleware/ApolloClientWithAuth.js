@@ -55,13 +55,15 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 const msalInstance = new PublicClientApplication(msalConfig);
 
 const ApolloClientWithAuth = ({ children }) => {
+	// TODO: when returning from a login, how to populate the token? works on refresh!
 	const [token, setToken] = useState(null);
 	const accounts = msalInstance.getAllAccounts();
 	const account = accounts[0];
-	logger.debug(accounts, account);
+
+	logger.debug('msal state', accounts, account);
 
 	useLayoutEffect(() => {
-		if (account) {
+		if (!token && account) {
 			logger.debug('acquiring token');
 			msalInstance
 				.acquireTokenSilent({
@@ -75,7 +77,7 @@ const ApolloClientWithAuth = ({ children }) => {
 					logger.debug('No account or token found.', error);
 				});
 		}
-	}, [account]);
+	}, [token, account]);
 
 	const withToken = setContext((_, { headers }) => {
 		return {
@@ -86,9 +88,13 @@ const ApolloClientWithAuth = ({ children }) => {
 		};
 	});
 
+	const links = token
+		? [errorLink, retryLink, withToken, httpLink]
+		: [];
+
 	const client = new ApolloClient({
 		cache: new InMemoryCache(),
-		link: from([errorLink, retryLink, withToken, httpLink])
+		link: from(links)
 	});
 
 	logger.debug('Token Information', account, token);
