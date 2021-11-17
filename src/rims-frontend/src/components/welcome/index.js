@@ -14,7 +14,7 @@ const Welcome = () => {
 					</p>
 					<div className='mb-4 space-x-0 md:space-x-2 md:mb-8'>
 						<a
-							href='#_'
+							href='/'
 							className='inline-flex items-center justify-center w-full px-6 py-3 mb-2 text-lg text-white bg-green-400 rounded-2xl sm:w-auto sm:mb-0'
 						>
 							Get Started
@@ -32,7 +32,7 @@ const Welcome = () => {
 							</svg>
 						</a>
 						<a
-							href='#_'
+							href='/'
 							className='inline-flex items-center justify-center w-full px-6 py-3 mb-2 text-lg bg-gray-100 rounded-2xl sm:w-auto sm:mb-0'
 						>
 							Learn More
@@ -157,17 +157,17 @@ const Welcome = () => {
 							</p>
 							<ul className='text-center'>
 								<li>
-									<a href='#' className='font-semibold'>
+									<a href='/' className='font-semibold'>
 										It is a long established
 									</a>
 								</li>
 								<li>
-									<a href='#' className='font-semibold'>
+									<a href='/' className='font-semibold'>
 										It is a long established
 									</a>
 								</li>
 								<li>
-									<a href='#' className='font-semibold'>
+									<a href='/' className='font-semibold'>
 										It is a long established
 									</a>
 								</li>
@@ -205,17 +205,17 @@ const Welcome = () => {
 								</p>
 								<ul className='text-center'>
 									<li>
-										<a href='#' className='font-semibold'>
+										<a href='/' className='font-semibold'>
 											It is a long established
 										</a>
 									</li>
 									<li>
-										<a href='#' className='font-semibold'>
+										<a href='/' className='font-semibold'>
 											It is a long established
 										</a>
 									</li>
 									<li>
-										<a href='#' className='font-semibold'>
+										<a href='/' className='font-semibold'>
 											It is a long established
 										</a>
 									</li>
@@ -254,17 +254,17 @@ const Welcome = () => {
 								</p>
 								<ul className='text-center'>
 									<li>
-										<a href='#' className='font-semibold'>
+										<a href='/' className='font-semibold'>
 											It is a long established
 										</a>
 									</li>
 									<li>
-										<a href='#' className='font-semibold'>
+										<a href='/' className='font-semibold'>
 											It is a long established
 										</a>
 									</li>
 									<li>
-										<a href='#' className='font-semibold'>
+										<a href='/' className='font-semibold'>
 											It is a long established
 										</a>
 									</li>

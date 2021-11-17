@@ -34,11 +34,11 @@ const parseAuthToken = async (token) => {
 		return null;
 	}
 
-	// download keys from here: https://thriftandshift.b2clogin.com/thriftandshift.onmicrosoft.com/B2C_1_Thrift_And_Shift_Local_SignUp_SignIn/discovery/v2.0/keys
+	// download keys from here: https://thriftandshift.b2clogin.com/thriftandshift.onmicrosoft.com/B2C_1_Thrift_And_Shift_SignUp_SignIn/discovery/v2.0/keys
 	var jwksClient = require('jwks-rsa');
 	var client = jwksClient({
 		jwksUri:
-			'https://thriftandshift.b2clogin.com/thriftandshift.onmicrosoft.com/B2C_1_Thrift_And_Shift_Local_SignUp_SignIn/discovery/v2.0/keys'
+			'https://thriftandshift.b2clogin.com/thriftandshift.onmicrosoft.com/B2C_1_Thrift_And_Shift_SignUp_SignIn/discovery/v2.0/keys'
 	});
 	function getKey(header, callback) {
 		client.getSigningKey(header.kid, function (err, key) {

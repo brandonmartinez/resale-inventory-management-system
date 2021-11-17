@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 
+import log from 'loglevel';
 import {
 	Link,
 	NavLink
@@ -23,6 +24,8 @@ import {
 	SearchBox
 } from '../shared/forms';
 
+const logger = log.getLogger('header');
+
 const navigation = [
 	{ name: 'Inventory', href: '/inventory' },
 	{ name: 'Labels', href: '/labels' },
@@ -33,19 +36,19 @@ const notLoggedInNavigation = [
 	{
 		name: 'Login',
 		onClickGenerator: (msal) => () => {
-			// console.log("Trying to login via popup")
+			// logger.debug("Trying to login via popup")
 			try {
 				const loginResponse = msal
 					.loginRedirect({
 						scopes: ['openid', 'offline_access']
 					})
 					.then((response) => {
-						console.log('Login Response: ' + response.json());
+						logger.debug('Login Response: ' + response.json());
 					});
 
-				console.log(loginResponse);
+				logger.debug(loginResponse);
 			} catch (err) {
-				console.log(err);
+				logger.debug(err);
 			}
 		}
 	},

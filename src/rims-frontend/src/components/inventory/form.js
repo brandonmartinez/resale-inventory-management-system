@@ -42,7 +42,7 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 	const [size, setSize] = useState(inventoryItem.size || '');
 	const [style, setStyle] = useState(inventoryItem.style || '');
 
-	const [splitTag1, splitTag2, splitTag3] = inventoryItem.hashtags.split(',');
+	const [splitTag1, splitTag2, splitTag3] = (inventoryItem.hashtags || '').split(',');
 	const [tag1, setTag1] = useState((splitTag1 || '').trim());
 	const [tag2, setTag2] = useState((splitTag2 || '').trim());
 	const [tag3, setTag3] = useState((splitTag3 || '').trim());

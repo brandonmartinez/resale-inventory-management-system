@@ -5,6 +5,7 @@ import React, {
 } from 'react';
 
 import { createUploadLink } from 'apollo-upload-client';
+import log from 'loglevel';
 
 import {
 	ApolloClient,
@@ -19,6 +20,8 @@ import { PublicClientApplication } from '@azure/msal-browser';
 import { MsalProvider } from '@azure/msal-react';
 
 import { msalConfig } from './authConfig';
+
+const logger = log.getLogger('ApolloClientWithAuth');
 
 const httpLink = createUploadLink({
 	uri: window._env_.API_URI + '/graphql'
@@ -39,14 +42,14 @@ const retryLink = new RetryLink({
 const errorLink = onError(({ graphQLErrors, networkError }) => {
 	if (graphQLErrors) {
 		graphQLErrors.forEach(({ message, locations, path }) =>
-			console.log(
+			logger.debug(
 				`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
 			)
 		);
 	}
 
 	if (networkError) {
-		console.log(`[Network error]: ${networkError}`);
+		logger.debug(`[Network error]: ${networkError}`);
 	}
 });
 
@@ -57,21 +60,21 @@ const ApolloClientWithAuth = ({ children }) => {
 	}, [token]);
 	const accounts = msalInstance.getAllAccounts();
 	const account = accounts[0];
-	console.log(accounts, account);
+	logger.debug(accounts, account);
 
 	useEffect(() => {
 		if (account) {
-            console.log('acquiring token')
+            logger.debug('acquiring token')
 			msalInstance
 				.acquireTokenSilent({
 					account: account
 				})
 				.then((response) => {
-					console.log('token acquired', response);
+					logger.debug('token acquired', response);
 					setToken(response.idToken);
 				})
 				.catch((error) => {
-					console.log('No account or token found.', error);
+					logger.debug('No account or token found.', error);
 				});
 		}
 	}, [account, msalInstance]);
@@ -90,7 +93,7 @@ const ApolloClientWithAuth = ({ children }) => {
 		link: from([errorLink, retryLink, withToken, httpLink])
 	});
 
-	console.log('Token Information', account, token);
+	logger.debug('Token Information', account, token);
 
 	return (
 		<MsalProvider instance={msalInstance}>
