@@ -4,7 +4,7 @@ import prefix from 'loglevel-plugin-prefix';
 const getLogger = (name) => {
 	const isRoot = !name;
 	const options = {
-		template: '[%l] %n @ %t\n',
+		template: '%l | module: %n | %t\n',
 		timestampFormatter: (date) => date.toString()
 	};
 
@@ -14,9 +14,7 @@ const getLogger = (name) => {
 	logger.setDefaultLevel('trace');
 
 	// Configure prefix
-	if (isRoot) {
-		prefix.reg(logger);
-	}
+	prefix.reg(log);
 	prefix.apply(logger, options);
 
 	return logger;

@@ -14,11 +14,9 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 import { RetryLink } from '@apollo/client/link/retry';
-import { PublicClientApplication } from '@azure/msal-browser';
-import { MsalProvider } from '@azure/msal-react';
+import { useMsal } from '@azure/msal-react';
 
 import getLogger from '../../utils/getLogger';
-import { msalConfig } from './authConfig';
 
 const logger = getLogger('ApolloClientWithAuth');
 
@@ -52,12 +50,9 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 	}
 });
 
-const msalInstance = new PublicClientApplication(msalConfig);
-
 const ApolloClientWithAuth = ({ children }) => {
-	// TODO: when returning from a login, how to populate the token? works on refresh!
+	const { instance: msal, accounts } = useMsal();
 	const [token, setToken] = useState(null);
-	const accounts = msalInstance.getAllAccounts();
 	const account = accounts[0];
 
 	logger.debug('msal state', accounts, account);
@@ -65,7 +60,7 @@ const ApolloClientWithAuth = ({ children }) => {
 	useLayoutEffect(() => {
 		if (!token && account) {
 			logger.debug('acquiring token');
-			msalInstance
+			msal
 				.acquireTokenSilent({
 					account: account
 				})
@@ -77,7 +72,7 @@ const ApolloClientWithAuth = ({ children }) => {
 					logger.debug('No account or token found.', error);
 				});
 		}
-	}, [token, account]);
+	}, [token, account, msal]);
 
 	const withToken = setContext((_, { headers }) => {
 		return {
@@ -88,9 +83,7 @@ const ApolloClientWithAuth = ({ children }) => {
 		};
 	});
 
-	const links = token
-		? [errorLink, retryLink, withToken, httpLink]
-		: [];
+	const links = token ? [errorLink, retryLink, withToken, httpLink] : [];
 
 	const client = new ApolloClient({
 		cache: new InMemoryCache(),
@@ -99,11 +92,7 @@ const ApolloClientWithAuth = ({ children }) => {
 
 	logger.debug('Token Information', account, token);
 
-	return (
-		<MsalProvider instance={msalInstance}>
-			<ApolloProvider client={client}>{children}</ApolloProvider>
-		</MsalProvider>
-	);
+	return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
 
 export default ApolloClientWithAuth;

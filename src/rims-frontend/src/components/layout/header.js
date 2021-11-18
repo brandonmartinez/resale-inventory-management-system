@@ -38,15 +38,15 @@ const notLoggedInNavigation = [
 		onClickGenerator: (msal) => () => {
 			// logger.debug("Trying to login via popup")
 			try {
-				const loginResponse = msal
+				logger.debug('Attempting to login.');
+
+				msal
 					.loginRedirect({
 						scopes: ['openid', 'offline_access']
 					})
 					.then((response) => {
 						logger.debug('Login Response: ' + response.json());
 					});
-
-				logger.debug(loginResponse);
 			} catch (err) {
 				logger.error(err);
 			}
