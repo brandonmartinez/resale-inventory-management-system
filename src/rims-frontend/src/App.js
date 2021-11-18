@@ -18,7 +18,6 @@ import UpdateInventoryItem from './components/inventory/update';
 import Labels from './components/labels';
 import Header from './components/layout/header';
 import Profile from './components/profile';
-import Preferences from './components/profile/preferences';
 import Spaces from './components/spaces';
 import Welcome from './components/welcome';
 
@@ -45,10 +44,6 @@ const App = () => {
 		{
 			path: '/profile',
 			Component: Profile
-		},
-		{
-			path: '/profile/preferences',
-			Component: Preferences
 		},
 		{
 			path: '/spaces',

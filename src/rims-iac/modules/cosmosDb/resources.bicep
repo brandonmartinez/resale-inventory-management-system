@@ -7,10 +7,10 @@ param cosmosDbDatabaseName string
 //////////////////////////////////////////////////
 var cosmosDbDatabaseContainerNames = [
   'Inventory'
+  'Users'
   // 'Spaces'
   // 'Assets'
   // 'Labels'
-  // 'Users'
 ]
 
 // Cosmos DB

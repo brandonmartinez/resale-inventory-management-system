@@ -2,6 +2,7 @@
 //////////////////////////////////////////////////
 const CosmosClient = require('@azure/cosmos').CosmosClient;
 const InventoryDataSource = require('./InventoryDataSource');
+const UsersDataSource = require('./UsersDataSource');
 
 const AzureStorageContainerDataSource = require('./AzureStorageContainerDataSource');
 const { BlobServiceClient } = require('@azure/storage-blob');
@@ -18,6 +19,7 @@ const assetsInventoryItemImagesContainerClient =
 const cosmosDbConnectionString = process.env.COSMOSDBCONNECTIONSTRING;
 const cosmosDbDatabaseName = 'rims';
 const cosmosDbInventoryContainerName = 'Inventory';
+const cosmosDbUsersContainerName = 'Users';
 
 // Setup Cosmos
 //////////////////////////////////////////////////
@@ -27,9 +29,13 @@ const client = new CosmosClient(cosmosDbConnectionString);
 const inventoryContainer = client
 	.database(cosmosDbDatabaseName)
 	.container(cosmosDbInventoryContainerName);
+const usersContainer = client
+	.database(cosmosDbDatabaseName)
+	.container(cosmosDbUsersContainerName);
 
 const dataSources = () => ({
 	inventoryItems: new InventoryDataSource(inventoryContainer),
+	users: new UsersDataSource(usersContainer),
 	inventoryItemUploadsStorageContainer: new AzureStorageContainerDataSource(
 		assetsInventoryItemImageUploadsContainerClient
 	),

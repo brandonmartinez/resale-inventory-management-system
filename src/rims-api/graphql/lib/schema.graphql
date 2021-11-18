@@ -9,6 +9,27 @@ type File {
 	url: String!
 }
 
+# User Types
+##################################################
+type User {
+	id: ID!
+	email: String!
+	name: String!
+	avatar: String
+	createdAt: String!
+	updatedAt: String
+}
+
+input CreateUserInput {
+	email: String!
+	name: String!
+}
+
+input UpdateUserInput {
+	email: String
+	name: String
+}
+
 # Inventory Types
 ##################################################
 enum InventoryItemCondition {
@@ -34,10 +55,13 @@ type InventoryItem {
 	price: Float
 	relativeImagePaths: [String]
 	salePrice: Float
+	sellerCost: Float
+	shippingCost: Float
 	size: String
 	style: String
 	updatedAt: String
 	userId: String!
+	weight: Float
 }
 
 input InventoryItemInput {
@@ -52,13 +76,20 @@ input InventoryItemInput {
 	name: String!
 	price: Float
 	salePrice: Float
+	sellerCost: Float
+	shippingCost: Float
 	size: String
 	style: String
+	weight: Float
 }
 
 # GraphQL Types
 ##################################################
 type Query {
+	# User Queries
+	##################################################
+	getUser: User
+
 	# Inventory Queries
 	##################################################
 	getAllInventoryItems(orderBy: String): [InventoryItem]
@@ -68,14 +99,25 @@ type Query {
 }
 
 type Mutation {
+	# User Mutations
+	##################################################
+	createUser(
+		user: CreateUserInput!
+		avatar: Upload
+	): User!
+	updateUser(
+		user: UpdateUserInput!
+		avatar: Upload
+	): User!
+
 	# Inventory Mutations
 	##################################################
 	createInventoryItem(
-		inventoryItem: InventoryItemInput
+		inventoryItem: InventoryItemInput!
 		images: [Upload!]
 	): InventoryItem!
 	updateInventoryItem(
-		inventoryItem: InventoryItemInput
+		inventoryItem: InventoryItemInput!
 		images: [Upload!]
 	): InventoryItem!
 }

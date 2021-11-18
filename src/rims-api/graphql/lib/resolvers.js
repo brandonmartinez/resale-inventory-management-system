@@ -6,6 +6,14 @@ const { GraphQLUpload } = require('graphql-upload-minimal');
 const resolvers = {
 	Upload: GraphQLUpload,
 	Query: {
+		// User Queries
+		//////////////////////////////////////////////////
+		async getUser(_, __, { dataSources, user }) {
+			const queryResults = await dataSources.users.findOneById(user.id);
+
+			return queryResults;
+		},
+
 		// Inventory Queries
 		//////////////////////////////////////////////////
 		async getAllInventoryItems(_, { orderBy }, { dataSources, user }, info) {
