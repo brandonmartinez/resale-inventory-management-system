@@ -110,7 +110,7 @@ const Profile = () => {
 			<div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
 				<div>
 					<FileUpload
-						id='product-photos'
+						id='avatar'
 						label='Upload Avatar'
 						fileTypesMessage='JPG or PNG up to 10MB'
 						accept='image/*'
@@ -131,7 +131,7 @@ const Profile = () => {
 				<div className='md:col-span-2'>
 					<TextBox
 						id='name'
-						label='Name'
+						label='Display Name'
 						placeholder='Your Display Name'
 						value={name}
 						onChange={(e) => setName(e.target.value)}
