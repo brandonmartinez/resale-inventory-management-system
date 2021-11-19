@@ -32,8 +32,11 @@ const getInventoryItem = gql`
 			price
 			relativeImagePaths
 			salePrice
+			sellerCost
+			shippingCost
 			size
 			style
+			weight
 		}
 	}
 `;

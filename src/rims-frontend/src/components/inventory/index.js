@@ -29,17 +29,17 @@ const columns = [
 		filter: (p) => {
 			if (p.length > 0) {
 				return (
-					<img
-						src={
-							'https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/' +
-							p[0]
-						}
+					<div
+						className='flex-none mx-auto rounded-md bg-cover-image w-10 h-10 group'
 						style={{
-							maxHeight: '4em',
-							width: 'auto'
+							backgroundImage:
+								'url(https://sarimsprodeusassets.blob.core.windows.net/inventoryitemimages/' +
+								p[0] +
+								')'
 						}}
-						alt='Product'
-					/>
+					>
+						&nbsp;
+					</div>
 				);
 			}
 			return <></>;

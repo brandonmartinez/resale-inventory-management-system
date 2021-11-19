@@ -39,10 +39,21 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 	const [salePrice, setSalePrice] = useState(
 		inventoryItem.salePrice ? inventoryItem.salePrice.toFixed(2) : ''
 	);
+	const [shippingCost, setShippingCost] = useState(
+		inventoryItem.shippingCost ? inventoryItem.shippingCost.toFixed(2) : ''
+	);
+	const [sellerCost, setSellerCost] = useState(
+		inventoryItem.sellerCost ? inventoryItem.sellerCost.toFixed(2) : ''
+	);
+	const [weight, setWeight] = useState(
+		inventoryItem.weight ? inventoryItem.weight.toFixed(2) : ''
+	);
 	const [size, setSize] = useState(inventoryItem.size || '');
 	const [style, setStyle] = useState(inventoryItem.style || '');
 
-	const [splitTag1, splitTag2, splitTag3] = (inventoryItem.hashtags || '').split(',');
+	const [splitTag1, splitTag2, splitTag3] = (
+		inventoryItem.hashtags || ''
+	).split(',');
 	const [tag1, setTag1] = useState((splitTag1 || '').trim());
 	const [tag2, setTag2] = useState((splitTag2 || '').trim());
 	const [tag3, setTag3] = useState((splitTag3 || '').trim());
@@ -60,18 +71,21 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 
 				// Build the item we're going to post
 				const itemToSend = {
-					name,
+					brand,
+					category,
+					color,
+					condition: condition || null,
+					cost: parseFloat(cost),
 					description,
 					hashtags: [tag1, tag2, tag3].join(','),
-					category,
-					brand,
-					condition: condition || null,
-					color,
+					name,
+					price: parseFloat(price),
+					salePrice: parseFloat(salePrice),
+					sellerCost: parseFloat(sellerCost),
+					shippingCost: parseFloat(shippingCost),
 					size,
 					style,
-					cost: parseFloat(cost),
-					price: parseFloat(price),
-					salePrice: parseFloat(salePrice)
+					weight: parseFloat(weight)
 				};
 				if (inventoryItem.id) {
 					itemToSend.id = inventoryItem.id;
@@ -290,6 +304,35 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 							prefix='$'
 							value={salePrice}
 							onChange={(e) => setSalePrice(e.target.value)}
+						/>
+					</div>
+					<div className='flex flex-wrap gap-0 md:gap-x-4 justify w-full -my-4'>
+						<TextBox
+							id='weight'
+							containerClassName='flex-auto'
+							label='Item Weight'
+							placeholder='0.0'
+							suffix='Kg'
+							value={weight}
+							onChange={(e) => setWeight(e.target.value)}
+						/>
+						<TextBox
+							id='shippingCost'
+							containerClassName='flex-auto'
+							label='Shipping Cost'
+							placeholder='0.00'
+							prefix='$'
+							value={shippingCost}
+							onChange={(e) => setShippingCost(e.target.value)}
+						/>
+						<TextBox
+							id='sellerCost'
+							containerClassName='flex-auto'
+							label='Seller Fees'
+							placeholder='0.00'
+							prefix='$'
+							value={sellerCost}
+							onChange={(e) => setSellerCost(e.target.value)}
 						/>
 					</div>
 					<Submit />
