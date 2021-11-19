@@ -27,6 +27,7 @@ import {
 const logger = getLogger('header');
 
 const navigation = [
+	{ name: 'Dashboard', href: '/', exact: true },
 	{ name: 'Inventory', href: '/inventory' },
 	{ name: 'Labels', href: '/labels' },
 	{ name: 'Spaces', href: '/spaces' }
@@ -86,6 +87,7 @@ const MobileNavigation = ({ isAuthenticated, msal }) => (
 						key={item.name}
 						as={NavLink}
 						to={item.href}
+						exact={item.exact}
 						className='btn-nav'
 						activeClassName='btn-nav-active'
 						aria-current='page'
@@ -114,6 +116,7 @@ const DesktopNavigation = ({ isAuthenticated, msal }) => (
 					<NavLink
 						key={item.name}
 						to={item.href}
+						exact={item.exact}
 						className='btn-nav'
 						activeClassName='btn-nav-active'
 						aria-current='page'
