@@ -158,7 +158,7 @@ const NotificationButton = () => (
 	</button>
 );
 
-const UserProfileMenu = () => (
+const UserProfileMenu = ({ msal }) => (
 	<Menu as='div' className='ml-3 relative'>
 		<div>
 			<Menu.Button className='bg-plurple-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-plurple-800 focus:ring-white'>
@@ -191,24 +191,12 @@ const UserProfileMenu = () => (
 					</NavLink>
 				</Menu.Item>
 				<Menu.Item>
-					<NavLink
-						to='/profile/preferences'
-						exact
-						className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
-						activeClassName='bg-gray-100'
+					<button
+						className='block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left'
+						onClick={() => msal.logoutRedirect()}
 					>
-						Settings
-					</NavLink>
-				</Menu.Item>
-				<Menu.Item>
-					<NavLink
-						to='/logout'
-						exact
-						className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
-						activeClassName='bg-gray-100'
-					>
-						Settings
-					</NavLink>
+						Sign Out
+					</button>
 				</Menu.Item>
 			</Menu.Items>
 		</Transition>
@@ -236,7 +224,7 @@ const Header = ({ isAuthenticated }) => {
 							{isAuthenticated && (
 								<div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
 									{/* <NotificationButton /> */}
-									<UserProfileMenu />
+									<UserProfileMenu msal={msal} />
 								</div>
 							)}
 						</div>
