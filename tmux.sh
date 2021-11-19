@@ -10,7 +10,7 @@ SESSION_WINDOW_SHELL="zsh"
 # Only create tmux session if it doesn't already exist
 if [ "$SESSIONEXISTS" = "" ]
 then
-    echo "Creating new tmux session $SESSIOn"
+    echo "Creating new tmux session $SESSION"
     # Start New Session with our name
     tmux new-session -d -s $SESSION
     

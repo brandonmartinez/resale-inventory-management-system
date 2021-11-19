@@ -11,8 +11,8 @@ import { MsalProvider } from '@azure/msal-react';
 
 import App from './App';
 import { msalConfig } from './authConfig';
-import ApolloClientWithAuth
-	from './components/_middleware/ApolloClientWithAuth';
+import AuthorizingApolloClientProvider
+	from './providers/AuthorizingApolloClientProvider';
 import ContextStateProvider from './providers/ContextStateProvider';
 import reportWebVitals from './reportWebVitals';
 import getLogger from './utils/getLogger.js';
@@ -31,9 +31,9 @@ ReactDOM.render(
 	<React.StrictMode>
 		<MsalProvider instance={msalInstance}>
 			<ContextStateProvider>
-				<ApolloClientWithAuth>
+				<AuthorizingApolloClientProvider>
 					<App />
-				</ApolloClientWithAuth>
+				</AuthorizingApolloClientProvider>
 			</ContextStateProvider>
 		</MsalProvider>
 	</React.StrictMode>,

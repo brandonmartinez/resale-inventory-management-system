@@ -16,7 +16,7 @@ import { onError } from '@apollo/client/link/error';
 import { RetryLink } from '@apollo/client/link/retry';
 import { useMsal } from '@azure/msal-react';
 
-import getLogger from '../../utils/getLogger';
+import getLogger from '../utils/getLogger';
 
 const logger = getLogger('ApolloClientWithAuth');
 
@@ -50,7 +50,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 	}
 });
 
-const ApolloClientWithAuth = ({ children }) => {
+const AuthorizingApolloClientProvider = ({ children }) => {
 	const { instance: msal, accounts } = useMsal();
 	const [token, setToken] = useState(null);
 	const account = accounts[0];
@@ -95,4 +95,4 @@ const ApolloClientWithAuth = ({ children }) => {
 	return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
 
-export default ApolloClientWithAuth;
+export default AuthorizingApolloClientProvider;
