@@ -137,13 +137,16 @@ const SearchBar = () => (
 const Logo = () => (
 	<div className='flex-shrink-0 flex items-center'>
 		<Link to='/' className='block h-10 w-auto'>
-			<object
-				type='image/svg+xml'
-				data={process.env.PUBLIC_URL + '/thrift-and-shift-logo.svg'}
-				alt='Thrift &amp; Shift Logo'
-				title='Thrift &amp; Shift - Your Place to Manage Your Thrifting Finds'
-				className='h-10 w-auto'
-			></object>
+			<div>
+				<object
+					type='image/svg+xml'
+					data={process.env.PUBLIC_URL + '/thrift-and-shift-logo.svg'}
+					alt='Thrift &amp; Shift Logo'
+					title='Thrift &amp; Shift - Your Place to Manage Your Thrifting Finds'
+					className='h-10 w-auto'
+					style={{ pointerEvents: 'none' }}
+				></object>
+			</div>
 		</Link>
 	</div>
 );
