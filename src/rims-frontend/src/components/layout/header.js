@@ -1,33 +1,36 @@
 import React, { Fragment } from 'react';
 
 import {
-	Link,
-	NavLink
+  Link,
+  NavLink,
 } from 'react-router-dom';
 
-import { useMsal } from '@azure/msal-react';
+import {
+  useIsAuthenticated,
+  useMsal,
+} from '@azure/msal-react';
 // Library Imports
 import {
-	Disclosure,
-	Menu,
-	Transition
+  Disclosure,
+  Menu,
+  Transition,
 } from '@headlessui/react';
 import {
-	BellIcon,
-	MenuIcon,
-	XIcon
-} from '@heroicons/react/outline';
+  Bars3Icon,
+  BellIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline';
 
 import getLogger from '../../utils/getLogger';
 import {
-	Form,
-	SearchBox
+  Form,
+  SearchBox,
 } from '../shared/forms';
 
 const logger = getLogger('header');
 
 const navigation = [
-	{ name: 'Dashboard', href: '/', exact: true },
+	{ name: 'Dashboard', href: '/dashboard' },
 	{ name: 'Inventory', href: '/inventory' },
 	{ name: 'Labels', href: '/labels' },
 	{ name: 'Spaces', href: '/spaces' }
@@ -62,9 +65,9 @@ const MenuButton = ({ open }) => (
 		<Disclosure.Button className='inline-flex items-center justify-center p-2 rounded-md text-almond-600 hover:text-almond-100 hover:bg-plurple-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-almond-100'>
 			<span className='sr-only'>Open main menu</span>
 			{open ? (
-				<XIcon className='block h-6 w-6' aria-hidden='true' />
+				<XMarkIcon className='block h-6 w-6' aria-hidden='true' />
 			) : (
-				<MenuIcon className='block h-6 w-6' aria-hidden='true' />
+				<Bars3Icon className='block h-6 w-6' aria-hidden='true' />
 			)}
 		</Disclosure.Button>
 	</div>
@@ -88,8 +91,9 @@ const MobileNavigation = ({ isAuthenticated, msal }) => (
 						as={NavLink}
 						to={item.href}
 						exact={item.exact}
-						className='btn-nav'
-						activeClassName='btn-nav-active'
+						className={({ isActive }) =>
+							isActive ? 'btn-nav-active' : 'btn-nav'
+						}
 						aria-current='page'
 					>
 						{item.name}
@@ -117,8 +121,9 @@ const DesktopNavigation = ({ isAuthenticated, msal }) => (
 						key={item.name}
 						to={item.href}
 						exact={item.exact}
-						className='btn-nav'
-						activeClassName='btn-nav-active'
+						className={({ isActive }) =>
+							isActive ? 'btn-nav-active' : 'btn-nav'
+						}
 						aria-current='page'
 					>
 						{item.name}
@@ -209,7 +214,8 @@ const UserProfileMenu = ({ msal }) => (
 	</Menu>
 );
 
-const Header = ({ isAuthenticated }) => {
+const Header = () => {
+	const isAuthenticated = useIsAuthenticated();
 	const { instance: msal } = useMsal();
 
 	return (

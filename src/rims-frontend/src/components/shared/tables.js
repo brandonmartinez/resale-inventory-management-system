@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useQuery } from '@apollo/client';
 
 import {
-	classNames,
-	Loading
+  classNames,
+  Loading,
 } from './utilities';
 
 export const TH = ({ children, ...rest }) => (
@@ -50,7 +50,7 @@ export const DataTable = ({
 	pathPrefix,
 	orderByDefaultField
 }) => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const [orderBy, setOrderBy] = useState(`${orderByDefaultField} ASC`);
 	const { loading, error, data } = useQuery(gql, {
 		variables: {
@@ -101,7 +101,7 @@ export const DataTable = ({
 						<tr
 							key={`data-table-record-${i}`}
 							className='cursor-pointer hover:bg-almond-50'
-							onClick={() => history.push(`${pathPrefix}/${value.id}`)}
+							onClick={() => navigate(`${pathPrefix}/${value.id}`)}
 						>
 							{columns.map((column, c) => (
 								<TD

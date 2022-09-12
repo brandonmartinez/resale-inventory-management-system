@@ -13,6 +13,26 @@
             "type": "pwa-node",
             "continueOnAttach": true,
             "restart": true
+        },
+        {
+            "name": "Chrome",
+            "type": "chrome",
+            "request": "launch",
+            "url": "https://dev-www.thriftandshift.com",
+            "webRoot": "${workspaceRoot}/rims-frontend/src",
+            "sourceMapPathOverrides": {
+                "webpack:///src/*": "${webRoot}/*"
+            }
+        },
+        {
+            "name": "Edge",
+            "type": "edge",
+            "request": "launch",
+            "url": "https://dev-www.thriftandshift.com",
+            "webRoot": "${workspaceRoot}/rims-frontend/src",
+            "sourceMapPathOverrides": {
+                "webpack:///src/*": "${webRoot}/*"
+            }
         }
     ]
 }

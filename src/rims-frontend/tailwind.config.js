@@ -1,8 +1,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-	purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-	darkMode: false, // or 'media' or 'class'
+	content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
 	theme: {
 		container: {
 			center: true
@@ -81,9 +80,6 @@ module.exports = {
 				sans: ['Rubik', ...defaultTheme.fontFamily.sans]
 			}
 		}
-	},
-	variants: {
-		extend: {}
 	},
 	plugins: [
 		require('@tailwindcss/typography'),

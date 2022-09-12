@@ -2,7 +2,7 @@
 import { useDropzone } from 'react-dropzone';
 import { Link } from 'react-router-dom';
 
-import { SearchIcon } from '@heroicons/react/solid';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 import { classNames } from './utilities';
 
@@ -81,7 +81,7 @@ export const SearchBox = ({
 			{...rest}
 		/>
 		<button type='submit' className='absolute right-0 top-0 mt-3 mr-4'>
-			<SearchIcon className='float-right align-base h-4 w-4 mr-1 text-gray-700' />
+			<MagnifyingGlassIcon className='float-right align-base h-4 w-4 mr-1 text-gray-700' />
 		</button>
 	</div>
 );

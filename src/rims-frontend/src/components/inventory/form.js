@@ -1,23 +1,23 @@
 import { useState } from 'react';
 
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import XIcon from '@heroicons/react/outline/XIcon';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 
 import {
-	DropDown,
-	FileUpload,
-	Form,
-	Submit,
-	TextArea,
-	TextBox
+  DropDown,
+  FileUpload,
+  Form,
+  Submit,
+  TextArea,
+  TextBox,
 } from '../shared/forms';
 import { Prose } from '../shared/utilities';
 
 const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 	// State Variables
 	//////////////////////////////////////////////////
-	const history = useHistory();
+	const history = useNavigate();
 
 	const [brand, setBrand] = useState(inventoryItem.brand || '');
 	const [category, setCategory] = useState(inventoryItem.category || '');
@@ -132,7 +132,7 @@ const InventoryItemForm = ({ mutationEvent, inventoryItem = {} }) => {
 										className='flex-none rounded-md bg-cover-image w-20 h-20 group'
 										style={{ backgroundImage: 'url(' + image.preview + ')' }}
 									>
-										<XIcon
+										<XMarkIcon
 											className='block h-5 w-5 float-right opacity-0 group-hover:opacity-50 cursor-pointer'
 											aria-hidden='true'
 											onClick={() => {

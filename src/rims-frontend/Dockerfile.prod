@@ -1,7 +1,7 @@
 ##################################################################
 # Stage 0: Set the Base Primary Image of the App
 ##################################################################
-FROM node:14-alpine AS base
+FROM node:16-alpine AS base
 
 # Install prerequisites
 RUN npm install -g http-server
@@ -24,6 +24,7 @@ RUN mv node_modules/npm /usr/local/lib/node_modules/npm
 
 # Copy package files and npm install
 COPY ./package*.json ./
+COPY postinstall.js ./
 RUN npm install
 
 # Copy Remaining Files and Run the build command

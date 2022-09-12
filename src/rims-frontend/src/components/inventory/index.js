@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { PlusIcon } from '@heroicons/react/solid';
+import { PlusIcon } from '@heroicons/react/24/outline';
 
 import { Button } from '../shared/forms';
 import { DataTable } from '../shared/tables';
