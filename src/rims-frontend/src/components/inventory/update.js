@@ -1,7 +1,9 @@
+import { useParams } from 'react-router-dom';
+
 import {
-	gql,
-	useMutation,
-	useQuery
+  gql,
+  useMutation,
+  useQuery,
 } from '@apollo/client';
 
 import InventoryItemForm from './form';
@@ -41,7 +43,9 @@ const getInventoryItem = gql`
 	}
 `;
 
-const UpdateInventoryItem = ({ id }) => {
+const UpdateInventoryItem = () => {
+	const { id } = useParams();
+
 	// GraphQL Hooks
 	//////////////////////////////////////////////////
 	const {

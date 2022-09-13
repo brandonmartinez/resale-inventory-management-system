@@ -59,30 +59,32 @@ createRoot(document.getElementById('root')).render(
 										</ProtectedRoute>
 									}
 								/>
-								<Route
-									path='/inventory/add'
-									element={
-										<ProtectedRoute>
-											<CreateInventoryItem />
-										</ProtectedRoute>
-									}
-								/>
-								<Route
-									path='/inventory/edit/:id'
-									element={
-										<ProtectedRoute>
-											<UpdateInventoryItem />
-										</ProtectedRoute>
-									}
-								/>
-								<Route
-									path='/inventory'
-									element={
-										<ProtectedRoute>
-											<Inventory />
-										</ProtectedRoute>
-									}
-								/>
+								<Route path='/inventory'>
+									<Route
+										index
+										element={
+											<ProtectedRoute>
+												<Inventory />
+											</ProtectedRoute>
+										}
+									/>
+									<Route
+										path='add'
+										element={
+											<ProtectedRoute>
+												<CreateInventoryItem />
+											</ProtectedRoute>
+										}
+									/>
+									<Route
+										path='edit/:id'
+										element={
+											<ProtectedRoute>
+												<UpdateInventoryItem />
+											</ProtectedRoute>
+										}
+									/>
+								</Route>
 								<Route
 									path='/profile'
 									element={
