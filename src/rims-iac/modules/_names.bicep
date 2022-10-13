@@ -40,6 +40,10 @@ output storageAssetsStorageAccountName string = replace('sa-${envreg}-assets', '
 output storageFrontEndStorageAccountName string = replace('sa-${envreg}-frontend', '-', '')
 output storageWebJobsAccountName string = replace('sa-${envreg}-webjobs', '-', '')
 
+// Container Registry
+output containerRegistryResourceGroupName string = 'rg-${envreg}-containerregistry'
+output containerRegistryName string = replace('acr-${envreg}-001', '-', '')
+
 // Cosmos
 output cosmosDbResourceGroupName string = 'rg-${envreg}-cosmos'
 output cosmosDbAccountName string = 'cosmos-${envreg}-db'

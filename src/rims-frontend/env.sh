@@ -26,6 +26,6 @@ do
     echo "  $varname: \"$value\"," >> ./env-config.js
 done < .env
 
-echo "  completed: true" >> ./env-config.js
+echo "  completed: '$(date '+%Y-%m-%d %H:%M:%S')'" >> ./env-config.js
 
 echo "}" >> ./env-config.js

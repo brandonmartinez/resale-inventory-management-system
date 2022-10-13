@@ -31,6 +31,15 @@ module storage 'modules/storage/main.bicep' = {
   }
 }
 
+module containerRegistry 'modules/containerRegistry/main.bicep' = {
+  name: 'containerRegistry'
+  params: {
+    location: region
+    containerRegistryResourceGroupName: names.outputs.containerRegistryResourceGroupName
+    containerRegistryName: names.outputs.containerRegistryName
+  }
+}
+
 module cosmosDb 'modules/cosmosDb/main.bicep' = {
   name: 'cosmosDb'
   params: {

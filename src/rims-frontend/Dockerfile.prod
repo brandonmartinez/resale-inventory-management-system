@@ -3,6 +3,10 @@
 ##################################################################
 FROM node:16-alpine AS base
 
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+RUN echo "I was built on a platform running on $BUILDPLATFORM, building this image for $TARGETPLATFORM" > /log
+
 # Install prerequisites
 RUN npm install -g http-server
 
