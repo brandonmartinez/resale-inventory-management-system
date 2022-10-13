@@ -25,6 +25,7 @@ module resources 'resources.bicep' = {
   params: {
     kubernetesClusterName: kubernetesClusterName
     kubernetesClusterDNSName: kubernetesClusterDNSName
+    location: location
   }
 }
 

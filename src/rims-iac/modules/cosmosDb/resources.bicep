@@ -2,6 +2,7 @@
 //////////////////////////////////////////////////
 param cosmosDbAccountName string
 param cosmosDbDatabaseName string
+param location string = resourceGroup().location
 
 // Variables
 //////////////////////////////////////////////////
@@ -17,7 +18,7 @@ var cosmosDbDatabaseContainerNames = [
 //////////////////////////////////////////////////
 resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2021-06-15' = {
   name: cosmosDbAccountName
-  location: resourceGroup().location
+  location: location
   kind: 'GlobalDocumentDB'
   properties: {
     enableFreeTier: true
@@ -26,7 +27,7 @@ resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2021-06-15' = {
     }
     locations: [
       {
-        locationName: resourceGroup().location
+        locationName: location
       }
     ]
     databaseAccountOfferType: 'Standard'

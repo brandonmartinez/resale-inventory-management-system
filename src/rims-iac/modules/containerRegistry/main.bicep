@@ -22,6 +22,7 @@ module resources 'resources.bicep' = {
   scope: containerRegistryResourceGroup
   params: {
     containerRegistryName: containerRegistryName
+    location: location
   }
 }
 

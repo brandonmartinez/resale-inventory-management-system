@@ -26,6 +26,7 @@ module resources 'resources.bicep' = {
     storageFrontEndStorageAccountName: storageFrontEndStorageAccountName
     storageAssetsStorageAccountName: storageAssetsStorageAccountName
     storageWebJobsAccountName: storageWebJobsAccountName
+    location: location
   }
 }
 

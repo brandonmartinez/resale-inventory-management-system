@@ -32,5 +32,6 @@ module resources 'resources.bicep' = {
     cosmosDbResourceId: cosmosDbResourceId
     storageFrontEndStorageAccountResourceId: storageFrontEndStorageAccountResourceId
     storageAssetsStorageAccountResourceId: storageAssetsStorageAccountResourceId
+    location: location
   }
 }

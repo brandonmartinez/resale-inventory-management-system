@@ -3,12 +3,13 @@
 param storageFrontEndStorageAccountName string
 param storageAssetsStorageAccountName string
 param storageWebJobsAccountName string
+param location string = resourceGroup().location
 
 // Storage Accounts
 //////////////////////////////////////////////////
 resource storageWebJobsAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   kind: 'StorageV2'
-  location: resourceGroup().location
+  location: location
   name: storageWebJobsAccountName
   sku: {
     name: 'Standard_LRS'
@@ -20,7 +21,7 @@ resource storageWebJobsAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = 
 }
 resource storageFrontEndStorageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   kind: 'StorageV2'
-  location: resourceGroup().location
+  location: location
   name: storageFrontEndStorageAccountName
   sku: {
     name: 'Standard_LRS'
@@ -33,7 +34,7 @@ resource storageFrontEndStorageAccount 'Microsoft.Storage/storageAccounts@2021-0
 
 resource storageAssetsStorageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   kind: 'StorageV2'
-  location: resourceGroup().location
+  location: location
   name: storageAssetsStorageAccountName
   sku: {
     name: 'Standard_LRS'

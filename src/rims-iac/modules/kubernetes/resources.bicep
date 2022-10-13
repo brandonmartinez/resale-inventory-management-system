@@ -2,12 +2,13 @@
 //////////////////////////////////////////////////
 param kubernetesClusterName string
 param kubernetesClusterDNSName string
+param location string = resourceGroup().location
 
 // AKS Cluster
 //////////////////////////////////////////////////
 resource kubernetesCluster 'Microsoft.ContainerService/managedClusters@2021-03-01' = {
   name: kubernetesClusterName
-  location: resourceGroup().location
+  location: location
   identity: {
     type: 'SystemAssigned'
   }

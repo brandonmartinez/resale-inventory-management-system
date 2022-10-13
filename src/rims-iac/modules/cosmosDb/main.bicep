@@ -24,6 +24,7 @@ module resources 'resources.bicep' = {
   params: {
     cosmosDbAccountName: cosmosDbAccountName
     cosmosDbDatabaseName: cosmosDbDatabaseName
+    location: location
   }
 }
 

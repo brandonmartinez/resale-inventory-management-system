@@ -6,12 +6,13 @@ param dashboardsProductionResourcesFriendlyName string
 param cosmosDbResourceId string
 param storageFrontEndStorageAccountResourceId string
 param storageAssetsStorageAccountResourceId string
+param location string = resourceGroup().location
 
 // Dashboards
 //////////////////////////////////////////////////
 resource productionDashboard 'Microsoft.Portal/dashboards@2019-01-01-preview' = {
   name: dashboardsProductionResourcesName
-  location: resourceGroup().location
+  location: location
   tags: {
     'hidden-title': dashboardsProductionResourcesFriendlyName
   }
